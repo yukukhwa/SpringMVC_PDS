@@ -3,5 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.test.pds.gallery.service.GalleryMapper">
-
+	<!-- addGallery.jsp 폼 화면에서 받은 데이터를 데이터베이스에 insert시킨다 -->
+	<insert id="insertGallery" 
+			parameterType="com.test.pds.gallery.service.Gallery">
+		<!-- insert가 완료된후 마지막으로 등록한 insert행의 id값을 가져온다 -->
+		<selectKey resultType="integer" 
+					keyProperty="galleryId" 
+					order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO gallery
+		(gallery_title
+		, gallery_content)
+		VALUES 
+		(#{galleryTitle}
+		, #{galleryContent})
+	</insert>
 </mapper>
