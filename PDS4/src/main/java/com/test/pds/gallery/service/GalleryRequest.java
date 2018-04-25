@@ -12,7 +12,7 @@ public class GalleryRequest {
 	/*
 	 * 이미지파일이 2개 이상 넘어올 수 있기 때문에 리스트로 받는다
 	 */
-	private List<MultipartFile> list;
+	private List<MultipartFile> multipartFile;
 	public String getGalleryTitle() {
 		return galleryTitle;
 	}
@@ -25,15 +25,15 @@ public class GalleryRequest {
 	public void setGalleryContent(String galleryContent) {
 		this.galleryContent = galleryContent;
 	}
-	public List<MultipartFile> getList() {
-		return list;
+	public List<MultipartFile> getMultipartFile() {
+		return multipartFile;
 	}
-	public void setList(List<MultipartFile> list) {
-		this.list = list;
+	public void setMultipartFile(List<MultipartFile> multipartFile) {
+		this.multipartFile = multipartFile;
 	}
 	@Override
 	public String toString() {
-		return "GalleryRequest [galleryTitle=" + galleryTitle + ", galleryContent=" + galleryContent + ", list=" + list
-				+ "]";
+		return "GalleryRequest [galleryTitle=" + galleryTitle + ", galleryContent=" + galleryContent
+				+ ", multipartFile=" + multipartFile + "]";
 	}
 }
