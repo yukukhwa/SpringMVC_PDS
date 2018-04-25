@@ -13,6 +13,8 @@ public class ArticleFileDao {
 	final String NS = "com.test.pds.article.service.ArticleFileMapper.";
 	
 	public int insertArticleFile(ArticleFile articleFile) {
+		logger.debug("ArticleFileDao insertArticleFile");
+		logger.debug("articleFile : " + articleFile);
 		return sqlSession.insert(NS+"insertArticleFile", articleFile);
 	}
 }

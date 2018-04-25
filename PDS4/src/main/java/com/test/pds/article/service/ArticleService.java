@@ -46,7 +46,7 @@ public class ArticleService {
 		long fileSize = multipartFile.getSize();
 		
 		// 파일 저장(path를 이용)
-		File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+		File file = new File(SystemPath.DOWNLOAD_PATH_1+"\\"+fileName+"."+fileExt);
 		try {
 			multipartFile.transferTo(file); // 쉽게 알아볼 수 있는 파일명으로 변환해줌
 		} catch (IllegalStateException e) {

@@ -13,6 +13,8 @@ public class ArticleDao {
 	final String NS = "com.test.pds.article.service.ArticleMapper.";
 		
 	public int insertArticle(Article article) {
+		logger.debug("ArticleDao.insertArticle");
+		logger.debug("article : " + article);
 		sqlSession.insert(NS+"insertArticle", article);
 		return article.getArticleId();
 	}
