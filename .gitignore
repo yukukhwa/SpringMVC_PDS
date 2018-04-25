@@ -75,6 +75,10 @@ local.properties
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# mall1
+pom.properties
+*.MF
+
 # Package Files #
 *.jar
 *.war

@@ -18,74 +18,55 @@ import com.test.pds.SystemPath;
 @Transactional
 public class ArticleService {
 	
-	@Autowired
-	private ArticleDao articleDao;
-	@Autowired
-	private ArticleFileDao articleFileDao;
-	
+	@Autowired private ArticleDao articleDao;
+	@Autowired private ArticleFileDao articleFileDao;	
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
-	public List<Article> selectArticleList() {
-		return articleDao.selectArticle();
-	}
-	/*
-	 * articleRequest를 매개변수로 받아 article에 셋팅하고,
-	 * multipartFile을 얻어 대입하여 속성들을 얻은 후 Dao를 호출한다.
-	 */
+	// Article 등록(제목,내용 + 파일 업로드)
 	public void insertArticle(ArticleRequest articleRequest) {
+		logger.debug("ArticleService.addArticle");
+		logger.debug("articleRequest : "+articleRequest);	
+		
+		// file데이터 담을 multipartFile객체를 생성
 		MultipartFile multipartFile = articleRequest.getMultipartFile();
 		
-		/*
-		 * article title, content 셋팅
-		 */
-		Article article = new Article();
-		article.setArticleTitle(articleRequest.getArticleTitle());
-		article.setArticleContent(articleRequest.getArticleContent());
-		
-		/*
-		 * uuid활용하여 랜덤이름 생성 후 fileName에 대입
-		 */
-		ArticleFile articleFile = new ArticleFile();
-		UUID uuid = UUID.randomUUID();
+		// 파일이름
+		UUID uuid = UUID.randomUUID(); // 중복되는 이름을 가질수 없도록 자동으로 이름을 생성해주는 api
 		String fileName = uuid.toString();
-		fileName = fileName.replace("-", "");
+		fileName = fileName.replace("-", ""); // - 을 (없음)으로 리플레이스
 		
-		/*
-		 * ext, type, size 대입
-		 */
-		int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
-		String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
+		// 파일 확장자
+		int dotIndex = multipartFile.getOriginalFilename().lastIndexOf("."); // 오리지널 네임의 마지막.을 찾아서 몇번째인지 담음 
+		String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1); // 마지막 . 다음에 붙일 확장자명
 		
+		// 파일 컨텐트 타입
 		String fileType = multipartFile.getContentType();
 		
+		// 파일 사이즈
 		long fileSize = multipartFile.getSize();
 		
-		/*
-		 * 고정위치에 파일을 생성하여, 업로드 받은 파일을 그위치에 놓는다.
-		 */
-		File file = new File(SystemPath.UPLOAD_PATH+fileName+"."+fileExt);
+		// 파일 저장(path를 이용)
+		File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
 		try {
-			multipartFile.transferTo(file);
+			multipartFile.transferTo(file); // 쉽게 알아볼 수 있는 파일명으로 변환해줌
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}		
+
+		// 입력으로 쓸 객체 article 세팅(id(auto), title, content, articlefile)
+		Article article = new Article();
+		article.setArticleTitle(articleRequest.getArticleTitle());
+		article.setArticleContent(articleRequest.getArticleContent());
 		
-		/*
-		 * article을 insert하고 난후 id값을 리턴받는다.
-		 * 지금까지 file정보를 articleFile에 셋팅하고 Dao에 insert를 실행시킨다.
-		 */
+		// multipartFile 에 세팅된 데이터 담을 articleFile
+		ArticleFile articleFile = new ArticleFile();		
 		articleFile.setArticleId(articleDao.insertArticle(article));
 		articleFile.setArticleFileName(fileName);
 		articleFile.setArticleFileExt(fileExt);
 		articleFile.setArticleFileType(fileType);
 		articleFile.setArticleFileSize((int) fileSize);
-		
-		/*트랜잭션이 잘되나 확인용
-		if (true) {
-			throw new RuntimeException();
-		}*/
 
 		articleFileDao.insertArticleFile(articleFile);
 	}

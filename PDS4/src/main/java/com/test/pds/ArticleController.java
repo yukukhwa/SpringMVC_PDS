@@ -15,17 +15,9 @@ import com.test.pds.article.service.ArticleService;
 
 @Controller
 public class ArticleController {
-	@Autowired	private ArticleService articleService;	
+	@Autowired private ArticleService articleService;	
 	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
-	
-	@RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
-	public String selectArticleList(Model model, HttpSession session) {
-		String path = session.getServletContext().getRealPath("/resources/upload");
-		model.addAttribute("list", articleService.selectArticleList());
-		model.addAttribute("path", path);
-		return "article/getArticleList";
-	}
-	
+		
 	@RequestMapping(value = "/addArticle", method = RequestMethod.GET)
 	public String insertArticle() {
 		return "article/addArticle";
