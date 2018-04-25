@@ -4,5 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.test.pds.notice.service.NoticeFileMapper">
- 	
+ 	<insert id="insertNoticeFile" 
+ 			parameterType="com.test.pds.notice.service.NoticeFile">
+ 		INSERT INTO notice_file(
+ 			notice_id
+ 			, notice_file_name
+ 			, notice_file_ext
+ 			, notice_file_type
+ 			, notice_file_size
+ 		) 
+ 		VALUES(
+ 			#{noticeId}
+ 			, #{noticeFileName}
+ 			, #{noticeFileExt}
+ 			, #{noticeFileType}
+ 			, #{noticeFileSize})
+ 	</insert>
 </mapper>

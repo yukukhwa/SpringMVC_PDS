@@ -9,11 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class NoticeDao {
 	@Autowired private SqlSessionTemplate sqlSession;
-	private final static Logger logger = LoggerFactory.getLogger(NoticeDao.class);
-	private final String NS = "com.test.pds.notice.service.NoticeMapper.";
+	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeDao.class);
+	private final String NAMESPACE = "com.test.pds.notice.service.NoticeMapper.";
 	
-	public int addNotice(Notice notice) {
-		logger.debug("NoticeDao.addNotice 호출");
-		return sqlSession.insert(NS+"insertNotice",notice);
+	/* insertNotice */
+	public int insertNotice(Notice notice) {
+		LOGGER.debug("NoticeDao.insertNotice 호출");
+		sqlSession.insert(NAMESPACE+"insertNotice",notice);
+		return notice.getNoticeId();
 	}
 }

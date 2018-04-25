@@ -1,5 +1,6 @@
 package com.test.pds.notice.service;
 
+/*notice db에 올라가는*/
 public class Notice {
 	private int noticeId; // notice_id
 	private String noticeTitle; //notice_title

@@ -2,6 +2,7 @@ package com.test.pds.notice.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/* noticeRequest addNotice폼에서 받는 값*/
 public class NoticeRequest {
 	private String noticeTitle; // notice_title
 	private String noticeContent; // notice_content

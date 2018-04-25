@@ -18,22 +18,24 @@ public class NoticeController {
 		
 		private final static Logger logger = LoggerFactory.getLogger(NoticeController.class);
 		
+		// addNotice에서 post요청받아 addNotice.jsp로 리다이렉트 한다
 		@RequestMapping(value="/addNotice", method=RequestMethod.POST)
-		public String addNotice(NoticeRequest noticeRequest,HttpSession session) {
-			logger.debug("NoticeController addNotice Post");
+		public String insertNotice(NoticeRequest noticeRequest,HttpSession session) {
+			logger.debug("NoticeController insertNotice Post");
 			logger.debug("noticeRequest: "+noticeRequest.toString());
-			// session을 만들어주는 톰캣위치를 알려줘 path에 담는다
+			// 업로드 폴더의 실제 경로를 얻어온다
 			String path = session.getServletContext().getRealPath("\\resources\\upload");
 			logger.debug("path: "+path);
-			noticeService.addNotice(noticeRequest, path);
+			//noticeService의 insertNotice메서드 매개변수로noticeRequest와 path를 넘겨준다
+			noticeService.insertNotice(noticeRequest, path);
 			return "redirect:/addNotice";
 		}
 		
-		// addNotice에서 get요청을 받아 addNotice.jsp로 포워딩한다
+		// addNotice에서 get요청을 받아 addNotice.jsp로 포워드한다
 		@RequestMapping(value="/addNotice", method=RequestMethod.GET)
-		public String addNotice() {
-			logger.debug("NoticeController addNotice Get");
-			return "addNotice";
+		public String insertNotice() {
+			logger.debug("NoticeController insertNotice Get");
+			return "notice/addNotice";
 			
 		}
 }

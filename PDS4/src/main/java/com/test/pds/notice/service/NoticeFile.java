@@ -1,12 +1,14 @@
 package com.test.pds.notice.service;
 
+/*noticeFile의 db*/
 public class NoticeFile {
 	private int noticeFileId; //notice_file_id;
 	private int noticeId;	//notice_id
 	private String noticeFileName; // notice_file_name
 	private String noticeFileExt; // notice_file_ext
 	private String noticeFileType; // notice_file_type
-	private String noticeFileSize; // notice_file_size
+	private int noticeFileSize; // notice_file_size
+	
 	public int getNoticeFileId() {
 		return noticeFileId;
 	}
@@ -37,18 +39,18 @@ public class NoticeFile {
 	public void setNoticeFileType(String noticeFileType) {
 		this.noticeFileType = noticeFileType;
 	}
-	public String getNoticeFileSize() {
+	public int getNoticeFileSize() {
 		return noticeFileSize;
 	}
-	public void setNoticeFileSize(String noticeFileSize) {
+	public void setNoticeFileSize(int noticeFileSize) {
 		this.noticeFileSize = noticeFileSize;
 	}
-	
 	@Override
 	public String toString() {
 		return "NoticeFile [noticeFileId=" + noticeFileId + ", noticeId=" + noticeId + ", noticeFileName="
 				+ noticeFileName + ", noticeFileExt=" + noticeFileExt + ", noticeFileType=" + noticeFileType
 				+ ", noticeFileSize=" + noticeFileSize + "]";
 	}
+	
 	
 }
