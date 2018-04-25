@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.pds.article.service.ArticleFileMapper">
+	<!-- articleFile을 매개변수로 받아 id, name, ext, type, size를 입력하는 쿼리문 -->
+	<insert id="insertArticleFile" parameterType="com.test.pds.article.service.ArticleFile">
+		INSERT INTO article_file(
+			article_id
+			, article_file_name
+			, article_file_ext
+			, article_file_type
+			, article_file_size
+		)
+		VALUES (
+			#{articleId}
+			, #{articleFileName}
+			, #{articleFileExt}
+			, #{articleFileType}
+			, #{articleFileSize}
+		)
+	</insert>
+</mapper>
+
