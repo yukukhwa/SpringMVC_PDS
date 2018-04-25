@@ -1,9 +1,11 @@
 package com.test.pds.board.service;
-
+/*
+ * 데이터베이스 테이블 board 
+ */
 public class Board {
-	private int boardId;
-	private String boardTitle;
-	private String boardContent;
+	private int boardId; //board_id
+	private String boardTitle; //board_title
+	private String boardContent; //board_content
 	private BoardFile boardFile;
 	public int getBoardId() {
 		return boardId;

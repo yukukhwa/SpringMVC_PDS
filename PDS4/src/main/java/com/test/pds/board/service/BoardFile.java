@@ -1,14 +1,17 @@
 package com.test.pds.board.service;
+/*
+ * 데이터베이스 테이블 board_file 
+ */
 
 public class BoardFile {
-	private int boardFileId;
-	private int boardId;
-	private String boardFileName;
-	private String boardFileExt;
-	private String boardFileType;
-	private int boardFileSize;
+	private int boardFileId; //board_file_id
+	private int boardId; //board_id
+	private String boardFileName; //board_file_name
+	private String boardFileExt; //board_file_ext
+	private String boardFileType; //board_file_type
+	private int boardFileSize; //board_file_size
 	public int getBoardFileId() {
-		return boardFileId;
+		return boardFileId; 
 	}
 	public void setBoardFileId(int boardFileId) {
 		this.boardFileId = boardFileId;
