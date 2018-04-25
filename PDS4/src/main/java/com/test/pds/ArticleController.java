@@ -15,9 +15,7 @@ import com.test.pds.article.service.ArticleService;
 
 @Controller
 public class ArticleController {
-	@Autowired
-	private ArticleService articleService;
-	
+	@Autowired	private ArticleService articleService;	
 	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 	
 	@RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
@@ -27,11 +25,7 @@ public class ArticleController {
 		model.addAttribute("path", path);
 		return "article/getArticleList";
 	}
-	/*
-	 * insertArticle 매핑
-	 * get방식으로 입력창을 foward하고
-	 * post방식으로 service에 insert를 호출한 후 redirect한다.
-	 */
+	
 	@RequestMapping(value = "/addArticle", method = RequestMethod.GET)
 	public String insertArticle() {
 		return "article/addArticle";
