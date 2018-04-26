@@ -12,7 +12,7 @@
 				$('#upload').append('<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>');
 			});
 			$(document).on('click','#del',function(){
-				$('#del').parent('div').remove();
+				$(this).parent('div').remove();
 			});
 		});
 	</script>

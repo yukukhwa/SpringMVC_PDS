@@ -2,7 +2,10 @@ package com.test.pds.gallery.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -21,9 +24,12 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
-	public void getGalleryOne(int galleryId) {
+	public Map<String,Object> getGalleryOne(int galleryId) {
 		logger.debug("GalleryService.getGalleryOne 메서드 호출");
-		galleryDao.selectGalleryOne(galleryId);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("gallery", galleryDao.selectGalleryOne(galleryId));
+		map.put("list", galleryFileDao.selectGalleryFileList(galleryId));
+		return map;
 	}
 	
 	/**
@@ -32,6 +38,7 @@ public class GalleryService {
 	 */
 	public List<Gallery> getGalleryList() {
 		logger.debug("GalleryService.getGalleryList 메서드 호출");
+		logger.debug("list: "+ galleryDao.selectGalleryList());
 		return galleryDao.selectGalleryList();
 	}
 	

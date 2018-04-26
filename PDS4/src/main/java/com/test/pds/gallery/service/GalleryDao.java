@@ -18,10 +18,9 @@ public class GalleryDao {
 	@Autowired private SqlSessionTemplate sqlSessionTemplate;
 	private final String NAMESPACE = "com.test.pds.gallery.service.GalleryMapper.";
 	
-	public void selectGalleryOne(int galleryId) {
-		logger.debug("GalleryDao.selectGalleryOne 메서드 호출");
-		logger.debug("galleryId: "+galleryId);
-		sqlSessionTemplate.selectOne(NAMESPACE+"selectGalleryOne", galleryId);
+	public Gallery selectGalleryOne(int galleryId){
+		logger.debug("GalleryDao.selectGaelleryOne 메서드 호출");
+		return sqlSessionTemplate.selectOne(NAMESPACE+"selectGalleryOne", galleryId);
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package com.test.pds;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.gallery.service.Gallery;
 import com.test.pds.gallery.service.GalleryRequest;
 import com.test.pds.gallery.service.GalleryService;
 
@@ -26,7 +28,9 @@ public class GalleryController {
 	public String getGalleryOne(@RequestParam(value="galleryId",required=true)int galleryId,Model model) {
 		logger.debug("GalleryController.getGalleryOne get호출");
 		logger.debug("galleryId: "+galleryId);
-		galleryService.getGalleryOne(galleryId);
+		Map<String,Object> map = galleryService.getGalleryOne(galleryId);
+		model.addAttribute("gallery", map.get("gallery"));
+		model.addAttribute("list", map.get("list"));
 		return "gallery/getGalleryOne";
 	}
 	

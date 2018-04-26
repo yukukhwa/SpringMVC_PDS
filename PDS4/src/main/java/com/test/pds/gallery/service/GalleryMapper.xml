@@ -3,33 +3,45 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.test.pds.gallery.service.GalleryMapper">
-	<resultMap type="com.test.pds.gallery.service.Gallery" id="gallery">
+<!-- 	<resultMap type="com.test.pds.gallery.service.Gallery" id="gallery">
 		<id column="gallery_id" property="galleryId"/>
 		<result column="gallery_title" property="galleryTitle"/>
 		<result column="gallery_content" property="galleryContent"/>
-		<collection ofType="com.test.pds.gallery.service.GalleryFile" property="galleryFile">
+		<collection property="galleryFile" ofType="com.test.pds.gallery.service.GalleryFile">
 			<id column="gallery_file_id" property="galleryFileId"/>
 			<result column="gallery_file_name" property="galleryFileName"/>
 			<result column="gallery_file_ext" property="galleryFileExt"/>
 			<result column="gallery_file_type" property="galleryFileType"/>
 			<result column="gallery_file_size" property="galleryFileSize"/>
 		</collection>
-	</resultMap>
+	</resultMap> -->
 	
 	<!-- getGalleryOne.jsp 상세화면에 보여줄 데이터를 select한다 -->
-	<select id="selectGalleryOne"
+<!-- 	<select id="selectGalleryOne"
 			parameterType="integer"
 			resultMap="gallery">
 		SELECT
 			gallery.gallery_id
 			,gallery.gallery_title
 			,gallery.gallery_content
+			,gallery_file.gallery_file_id
 			,gallery_file.gallery_file_name
 			,gallery_file.gallery_file_ext
+			,gallery_file.gallery_file_type
 			,gallery_file.gallery_file_size
 		FROM gallery join gallery_file
 		ON gallery.gallery_id = gallery_file.gallery_id
 		WHERE gallery_file.gallery_id = #{galleryId}
+	</select> -->
+	
+	<select id="selectGalleryOne"
+			parameterType="integer"
+			resultType="com.test.pds.gallery.service.Gallery">
+		SELECT
+			gallery.gallery_title AS galleryTitle
+			,gallery.gallery_content AS galleryContent
+		FROM gallery
+		WHERE gallery.gallery_id=#{galleryId}
 	</select>
 	
 	<!-- getGalleryList.jsp 리스트화면에 보여줄 데이터를 select한다 -->
