@@ -1,6 +1,10 @@
 package com.test.pds.gallery.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 /*
@@ -9,8 +13,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class GalleryDao {
 	
+	private static final Logger logger = LoggerFactory.getLogger(GalleryDao.class);
+	
 	@Autowired private SqlSessionTemplate sqlSessionTemplate;
 	private final String NAMESPACE = "com.test.pds.gallery.service.GalleryMapper.";
+	
+	public void selectGalleryOne(int galleryId) {
+		logger.debug("GalleryDao.selectGalleryOne 메서드 호출");
+		logger.debug("galleryId: "+galleryId);
+		sqlSessionTemplate.selectOne(NAMESPACE+"selectGalleryOne", galleryId);
+	}
+	
+	/**
+	 * 등록된 gallery들의 리스트르를 보여주는 메서드
+	 * @return gallery리스트
+	 */
+	public List<Gallery> selectGalleryList() {
+		logger.debug("GalleryDao.selectGalleryList 메서드 호출");
+		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryList");
+	}
 	
 	/**
 	 * gallery를 등록하는 메서드
@@ -18,6 +39,7 @@ public class GalleryDao {
 	 * @return 등록된 행의 수
 	 */
 	public int insertGallery(Gallery gallery) {
+		logger.debug("GalleryDao.insertGallery 메서드 호출");
 		return sqlSessionTemplate.insert(NAMESPACE+"insertGallery", gallery);
 	}
 }

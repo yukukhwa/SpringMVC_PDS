@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Transactional
 public class GalleryService {
 
 	private static final Logger logger = LoggerFactory.getLogger(GalleryService.class);
@@ -19,6 +21,25 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
+	public void getGalleryOne(int galleryId) {
+		logger.debug("GalleryService.getGalleryOne 메서드 호출");
+		galleryDao.selectGalleryOne(galleryId);
+	}
+	
+	/**
+	 * 등록된 gallery리스트를 출력해주는 서비스
+	 * @return gallery리스트
+	 */
+	public List<Gallery> getGalleryList() {
+		logger.debug("GalleryService.getGalleryList 메서드 호출");
+		return galleryDao.selectGalleryList();
+	}
+	
+	/**
+	 * gallery를 등록해주는 서비스
+	 * @param galleryRequest
+	 * @param path
+	 */
 	public void addGallery(GalleryRequest galleryRequest, String path) {
 		logger.debug("GalleryService.addGallery 메서드 호출");
 		Gallery gallery = new Gallery();
