@@ -1,5 +1,7 @@
 package com.test.pds.notice.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,11 @@ public class NoticeDao {
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeDao.class);
 	private final String NAMESPACE = "com.test.pds.notice.service.NoticeMapper.";
 
+	// selectNoticeList메서드를 실행해 sql문 실행
+	public List<Notice> selectNoticeList() {
+		LOGGER.debug("NoticeDao.selectNoticeList 호출");
+		return sqlSession.selectList(NAMESPACE+"selectNoticeList");
+	}
 	
 	/* insertNotice */
 	public int insertNotice(Notice notice) {

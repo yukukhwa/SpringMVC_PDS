@@ -4,14 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.test.pds.notice.service.NoticeMapper">
- 	<!-- <select id="selectNoticeList"
- 			resultType="">
- 		SELECT *
+	<resultMap type="com.test.pds.notice.service.Notice" id="resultNotice">
+		<!-- property : 대상객체의 setter메소드명 지정 -->
+		<result column="notice_id" property="noticeId"/>
+        <result column="notice_title" property="noticeTitle"/>
+        <result column="notice_content" property="noticeContent"/>
+        <!-- ofType : 목록을 구성하는 객체의 타입을 지정.실제 반환타입은 List<>가 된다   -->
+        <collection property="noticeFile" ofType="com.test.pds.notice.service.NoticeFile">
+            <id column="notice_file_id" property="noticeFileId"/>
+            <result column="notice_id" property="noticeId"/>
+            <result column="notice_file_name" property="noticeFileName"/>
+            <result column="notice_file_ext" property="noticeFileExt"/>
+            <result column="notice_file_type" property="noticeFileType"/>
+            <result column="notice_file_size" property="noticeFileSize"/>
+        </collection>
+    </resultMap>
+
+ 	<select id="selectNoticeList"
+ 			resultMap="resultNotice">
+ 		SELECT notice.notice_id
+ 				, notice_file_id
+ 				, notice_title
+ 				, notice_content
+ 				, notice_file_name
+ 				, notice_file_ext
+ 				, notice_file_type
+ 				, notice_file_size
 		FROM notice
    		INNER JOIN notice_file
     	ON notice.notice_id = notice_file.notice_id 
-		WHERE notice.notice_id = #{noticeId}
- 	</select> -->
+ 	</select>
  	
  	<insert id="insertNotice" 
  			parameterType="com.test.pds.notice.service.Notice">

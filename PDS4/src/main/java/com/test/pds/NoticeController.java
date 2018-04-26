@@ -1,5 +1,7 @@
 package com.test.pds;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.test.pds.notice.service.Notice;
 import com.test.pds.notice.service.NoticeRequest;
 import com.test.pds.notice.service.NoticeService;
 
@@ -19,9 +21,13 @@ public class NoticeController {
 	@Autowired private NoticeService noticeService;
 		private final static Logger logger = LoggerFactory.getLogger(NoticeController.class);
 		
+		// getNoticeList에서 get으로 요청받아 notice/getNoticeList로 포워드한다
 		@RequestMapping(value="/getNoticeList", method=RequestMethod.GET)
-		public String getNoticeList() {
-			logger.debug("NoticeController.getNoticeList");
+		public String getNoticeList(Model model) {
+			logger.debug("NoticeController.getNoticeList 호출");
+			List<Notice> list = noticeService.selectNoticeList();
+			System.out.println("List<Notice>: "+list);
+			model.addAttribute("list", list);
 			return "notice/getNoticeList";
 		}
 		

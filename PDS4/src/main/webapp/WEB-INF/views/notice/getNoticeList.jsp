@@ -9,20 +9,25 @@
 <body>
 	<h1>getNoticeList</h1>
 	<fieldset>
-		<table>
+		<table border="1">
 			<caption>getNoticeList</caption>
-				<tr>
-					<th>Notice Title : </th>
-					<td></td>
-				</tr>
-				<tr>
-					<th>Notice Content : </th>
-					<td></td>
-				</tr>
-				<tr>
-					<th>Notice fileDownload : </th>
-					<td><a href="#">dw</a></td>
-				</tr>
+				<c:forEach var="notice" items="${list}">
+					<thead>
+						<tr>
+							<th>Notice Title</th>
+							<th>Notice Content</th>
+							<th>Notice File</th>
+							<th>삭제</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>${notice.noticeTitle}</td>
+							<td>${notice.noticeContent}</td>
+							<td></td>
+							<td><a href="#">삭제</a></td>
+						</tr>
+				</c:forEach>
 		</table>
 	</fieldset>
 	

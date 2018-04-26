@@ -20,11 +20,13 @@ public class NoticeService {
 	@Autowired NoticeDao noticeDao;
 	@Autowired NoticeFileDao noticeFileDao;
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeService.class);
-	/*
+	
+	// selectNoticeList서비스
 	public List<Notice> selectNoticeList(){
 		LOGGER.debug("NoticeService.selectNoticeList 호출");
-		return noticeDao.selectNoticeList();
-	}*/
+		List<Notice> list = noticeDao.selectNoticeList();
+		return list;
+	}
 	
 	// 매개변수로 noticeRequest와 path를 넘겨받는다
 	public void insertNotice(NoticeRequest noticeRequest, String path) {
@@ -43,12 +45,12 @@ public class NoticeService {
 		
 		/* for문: 파일이 두개이상이기 때문에
 		 * noticeRequest객체의 multipartFile정보들을 겟팅해  multipartFile에 담고 
-		 * 그 배열에 담긴 값들을 files변수에 대입해 반복할때마다 file객체에 저장해 업로드하고
+		 * 그 배열에 담긴 값들을 files변수에 대입해 반복할때마다
 		 * noticeFile에 파일의 이름, 확장자, 타입, 사이즈, Id 배열을 셋팅하고 
 		 * notice객체에 있는 noticeFile에 배열들을 셋팅해 주기 위해   */
 		for(MultipartFile files : multipartFile) {
 			/* 파일이름
-			 * randaomUUid:중복되지 못하도록 랜덤으로 이름 생성
+			 * randomUUid:중복되지 못하도록 랜덤으로 이름 생성
 			 * 생성후 uuid에 담는다
 			 * 생성한 문자열을 가져와 변수 fileName에 셋팅한다 
 			 * replace:일부 문자와 일부 문자를 교체하거나 함께 문자열에서 정규 표현식과 

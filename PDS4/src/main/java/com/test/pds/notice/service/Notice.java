@@ -1,13 +1,11 @@
 package com.test.pds.notice.service;
 
-import java.util.List;
-
 /*notice db에 올라가는*/
 public class Notice {
 	private int noticeId; // notice_id
 	private String noticeTitle; //notice_title
 	private String noticeContent; // notice_content
-	private NoticeFile noticeFile; //notice_file 일단은 1대1로 , 1:n으로 수정 중 
+	private NoticeFile noticeFile; 
 	
 	public int getNoticeId() {
 		return noticeId;
