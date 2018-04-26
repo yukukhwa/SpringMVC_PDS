@@ -7,12 +7,14 @@ public class GalleryFile {
 	/*
 	 * 데이터베이스 변수명  <-> 객체 변수명
 	 * gallery_file_id <-> galleryFileId
+	 * gallery_id <-> galleryId
 	 * gallery_file_name <-> galleryFileName
 	 * gallery_file_ext <-> galleryFileExt
 	 * gallery_file_type <-> galleryFileType
 	 * gallery_file_size <-> galleryFileSize
 	 */
 	private int galleryFileId;
+	private int galleryId;
 	private String galleryFileName;
 	private String galleryFileExt;
 	private String galleryFileType;
@@ -22,6 +24,12 @@ public class GalleryFile {
 	}
 	public void setGalleryFileId(int galleryFileId) {
 		this.galleryFileId = galleryFileId;
+	}
+	public int getGalleryId() {
+		return galleryId;
+	}
+	public void setGalleryId(int galleryId) {
+		this.galleryId = galleryId;
 	}
 	public String getGalleryFileName() {
 		return galleryFileName;
@@ -49,8 +57,8 @@ public class GalleryFile {
 	}
 	@Override
 	public String toString() {
-		return "GalleryFile [galleryFileId=" + galleryFileId + ", galleryFileName=" + galleryFileName
-				+ ", galleryFileExt=" + galleryFileExt + ", galleryFileType=" + galleryFileType + ", galleryFileSize="
-				+ galleryFileSize + "]";
+		return "GalleryFile [galleryFileId=" + galleryFileId + ", galleryId=" + galleryId + ", galleryFileName="
+				+ galleryFileName + ", galleryFileExt=" + galleryFileExt + ", galleryFileType=" + galleryFileType
+				+ ", galleryFileSize=" + galleryFileSize + "]";
 	}
 }

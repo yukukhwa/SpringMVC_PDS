@@ -18,10 +18,15 @@ public class GalleryDao {
 	@Autowired private SqlSessionTemplate sqlSessionTemplate;
 	private final String NAMESPACE = "com.test.pds.gallery.service.GalleryMapper.";
 	
-	public Gallery selectGalleryOne(int galleryId){
+	public List<Gallery> selectGalleryOne(int galleryId){
+		logger.debug("GalleryDao.selectGaelleryOne 메서드 호출");
+		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryOne", galleryId);
+	}
+	
+	/*public Gallery selectGalleryOne(int galleryId){
 		logger.debug("GalleryDao.selectGaelleryOne 메서드 호출");
 		return sqlSessionTemplate.selectOne(NAMESPACE+"selectGalleryOne", galleryId);
-	}
+	}*/
 	
 	/**
 	 * 등록된 gallery들의 리스트르를 보여주는 메서드

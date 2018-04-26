@@ -1,8 +1,6 @@
 package com.test.pds;
 
 import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.test.pds.gallery.service.Gallery;
 import com.test.pds.gallery.service.GalleryRequest;
 import com.test.pds.gallery.service.GalleryService;
 
@@ -24,13 +21,20 @@ public class GalleryController {
 	
 	@Autowired private GalleryService galleryService;
 	
+	@RequestMapping(value="/deleteGallery", method=RequestMethod.GET)
+	public String deleteGallery(@RequestParam(value="galleryId",required=true)int galleryId) {
+		logger.debug("GalleryController.deleteGallery get호출");
+		logger.debug("galleryId: "+galleryId);
+		return "gallery/getGalleryOne";
+	}
+	
 	@RequestMapping(value="/getGalleryOne", method=RequestMethod.GET)
 	public String getGalleryOne(@RequestParam(value="galleryId",required=true)int galleryId,Model model) {
 		logger.debug("GalleryController.getGalleryOne get호출");
 		logger.debug("galleryId: "+galleryId);
-		Map<String,Object> map = galleryService.getGalleryOne(galleryId);
-		model.addAttribute("gallery", map.get("gallery"));
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("list", galleryService.getGalleryOne(galleryId));
+		model.addAttribute("galleryTitle", galleryService.getGalleryOne(galleryId).get(0).getGalleryTitle());
+		model.addAttribute("galleryContent", galleryService.getGalleryOne(galleryId).get(0).getGalleryContent());
 		return "gallery/getGalleryOne";
 	}
 	

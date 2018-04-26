@@ -2,10 +2,7 @@ package com.test.pds.gallery.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -24,13 +21,19 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
-	public Map<String,Object> getGalleryOne(int galleryId) {
+	public List<Gallery> getGalleryOne(int galleryId) {
+		logger.debug("GalleryService.getGalleryOne 메서드 호출");
+		logger.debug("list: "+String.valueOf(galleryDao.selectGalleryOne(galleryId)));
+		return galleryDao.selectGalleryOne(galleryId);
+	}
+	
+	/*public Map<String,Object> getGalleryOne(int galleryId) {
 		logger.debug("GalleryService.getGalleryOne 메서드 호출");
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("gallery", galleryDao.selectGalleryOne(galleryId));
 		map.put("list", galleryFileDao.selectGalleryFileList(galleryId));
 		return map;
-	}
+	}*/
 	
 	/**
 	 * 등록된 gallery리스트를 출력해주는 서비스
@@ -52,7 +55,6 @@ public class GalleryService {
 		Gallery gallery = new Gallery();
 		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
 		gallery.setGalleryContent(galleryRequest.getGalleryContent());
-		
 		int row1 = galleryDao.insertGallery(gallery);
 		
 		GalleryFile galleryFile = new GalleryFile();
@@ -102,8 +104,12 @@ public class GalleryService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			gallery.setGalleryFile(galleryFile);
-			galleryFileDao.insertGalleryFile(gallery);
+			gallery.getGalleryFile().add(galleryFile);
+		}
+		logger.debug("gallertyFileList: "+gallery.getGalleryFile());
+		for(GalleryFile file:gallery.getGalleryFile()) {
+			file.setGalleryId(gallery.getGalleryId());
+			galleryFileDao.insertGalleryFile(file);
 		}
 	}
 

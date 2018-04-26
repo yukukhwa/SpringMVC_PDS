@@ -1,4 +1,8 @@
 package com.test.pds.gallery.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * DB : pds
  * table : gallery
@@ -16,7 +20,16 @@ public class Gallery {
 	/*
 	 * join table : gallery_file
 	 */
-	private GalleryFile galleryFile;
+	private List<GalleryFile> galleryFile;
+	
+	/**
+	 * Gallery생성자 메서드
+	 * 객체 생성과 동시에 GalleryFile객체 리스트 공간도 생성한다
+	 */
+	public Gallery() {
+		this.galleryFile = new ArrayList<GalleryFile>();
+	}
+	
 	public int getGalleryId() {
 		return galleryId;
 	}
@@ -35,10 +48,10 @@ public class Gallery {
 	public void setGalleryContent(String galleryContent) {
 		this.galleryContent = galleryContent;
 	}
-	public GalleryFile getGalleryFile() {
+	public List<GalleryFile> getGalleryFile() {
 		return galleryFile;
 	}
-	public void setGalleryFile(GalleryFile galleryFile) {
+	public void setGalleryFile(List<GalleryFile> galleryFile) {
 		this.galleryFile = galleryFile;
 	}
 	@Override
