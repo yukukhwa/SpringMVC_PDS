@@ -17,6 +17,5 @@ public class NoticeFileDao {
 		LOGGER.debug("NoticeFile.noticeFile 호출");
 		LOGGER.debug("noticeFileDao noticeFile: "+noticeFile);
 		sqlSession.insert(NAMESPACE+"insertNoticeFile", noticeFile);
-		System.out.println(noticeFile.getNoticeId());
 	}
 }

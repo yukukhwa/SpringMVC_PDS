@@ -11,6 +11,7 @@ public class NoticeDao {
 	@Autowired private SqlSessionTemplate sqlSession;
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeDao.class);
 	private final String NAMESPACE = "com.test.pds.notice.service.NoticeMapper.";
+
 	
 	/* insertNotice */
 	public int insertNotice(Notice notice) {

@@ -1,12 +1,14 @@
 package com.test.pds.notice.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 /* noticeRequest addNotice폼에서 받는 값*/
 public class NoticeRequest {
 	private String noticeTitle; // notice_title
 	private String noticeContent; // notice_content
-	private MultipartFile multipartFile;
+	private List<MultipartFile> multipartFile;
 	
 	public String getNoticeTitle() {
 		return noticeTitle;
@@ -20,10 +22,10 @@ public class NoticeRequest {
 	public void setNoticeContent(String noticeContent) {
 		this.noticeContent = noticeContent;
 	}
-	public MultipartFile getMultipartFile() {
+	public List<MultipartFile> getMultipartFile() {
 		return multipartFile;
 	}
-	public void setMultipartFile(MultipartFile multipartFile) {
+	public void setMultipartFile(List<MultipartFile> multipartFile) {
 		this.multipartFile = multipartFile;
 	}
 	
@@ -31,5 +33,6 @@ public class NoticeRequest {
 	public String toString() {
 		return "NoticeRequest [noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent + ", multipartFile="
 				+ multipartFile + "]";
-	}	
+	}
+	
 }
