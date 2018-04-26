@@ -1,7 +1,5 @@
 package com.test.pds;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +19,9 @@ public class ResumeController {
 	final private Logger LOGGER = LoggerFactory.getLogger(ResumeController.class);
 	
 	// getResumeList.jsp 포워드
-	@RequestMapping(value="/getResume", method=RequestMethod.GET)
-	public String selectResumeList(Model model, HttpSession session) {
+	@RequestMapping(value="/getResumeList", method=RequestMethod.GET)
+	public String selectResumeList(Model model) {
 		LOGGER.debug("ResumeController selectResumeList GET");
-		String path = session.getServletContext().getRealPath("/resources/upload");
-		//model.addAttribute("path", path);
 		model.addAttribute("list", resumeService.selectResumeList());
 		return "resume/getResumeList";
 	}	

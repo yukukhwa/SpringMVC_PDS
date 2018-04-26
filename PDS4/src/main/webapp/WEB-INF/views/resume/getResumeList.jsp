@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>getResumeList</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>getResumeList</title>
 </head>
 <body>
 	<h1>Resume List</h1>
@@ -19,14 +19,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${list}"  var="resume">
+			<c:forEach items="${list}"  var="list">
 				<tr>
-					<td>${resume.resumeId }</td>
-					<td>${resume.resumeTitle }</td>
-					<td>${resume.resumeContent }</td>
-					<td>${resume.resumeFileName }.${resume.resumeFileExt }</td>
-					<td>${resume.resumeFileSize }</td>
-				</tr>		
+					<td>${list.resumeId}</td>
+					<td>${list.resumeTitle}</td>
+					<td>${list.resumeContent}</td>
+					<td><a href="${pageContext.request.contextPath}/resources/upload/${list.resumeFile.resumeFileName}.${list.resumeFile.resumeFileExt}" download>
+							${list.resumeFile.resumeFileName}.${list.resumeFile.resumeFileExt}</a></td>
+					<td>${list.resumeFile.resumeFileSize } KB</td>
+				</tr>
 			</c:forEach>
 		</tbody>	
 	</table>
