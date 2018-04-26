@@ -14,15 +14,16 @@
 		 다른 테이블과 조인한다는 가정하에 1:1 관계에서는 association, 1:N 관계에서는 collection 
 		기능적으로 동일하지만 association에서 속성javaType,  collection에서 속성ofType 으로 구분된다. -->
 	<resultMap id="resultResumeMap" type="com.test.pds.resume.service.Resume">
-       <!--  <id column="resume_id" jdbcType="int" property="resumeId" /> -->
-        <result column="resume_title" jdbcType="VARCHAR" property="resumeTitle" />
-        <result column="resume_content" jdbcType="VARCHAR" property="resumeContent" />
-        <association property="resumeFile" javaType="com.test.pds.resume.service.ResumeFile">
-            <id column="resume_id" property="resumeId"/>	            
-            <result column="resume_file_name" property="resumeFileName"/>
-            <result column="resume_file_ext" property="resumeFileExt"/>
-            <result column="resume_file_size" property="resumeFileSize"/>
-		</association>        
+        <id column="resume_id" property="resumeId" />
+        <result column="resume_title" property="resumeTitle" />
+        <result column="resume_content" property="resumeContent" />
+        <association property="resumeFile" column="resumeId" javaType="com.test.pds.resume.service.ResumeFile">
+			<id property="resumeFileId" column="resume_file_id" />
+            <result property="resumeFileName" column="resume_file_name" />
+            <result property="resumeFileSize" column="resume_file_size" />
+            <result property="resumeFileExt" column="resume_file_ext" />
+            <result property="resumeFileType" column="resume_file_type" />
+        </association>
 	</resultMap>
 
 	<!-- resume 리스트 select -->
@@ -36,6 +37,7 @@
 				,resume_file.resume_file_name
 				,resume_file.resume_file_ext
 				,resume_file.resume_file_size
+				,resume_file.resume_file_type
 			FROM resume
 			INNER JOIN resume_file
 			ON resume.resume_id = resume_file.resume_id;

@@ -21,6 +21,14 @@ public class ArticleService {
 	@Autowired private ArticleFileDao articleFileDao;	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleService.class);
 	
+	// Resume 리스트
+	public List<Article> selectArticleList() {
+		LOGGER.debug("ArticleService selectArticleList");
+		System.out.println("=============Service=========");
+		System.out.println(articleDao.selectArticleList());
+		return articleDao.selectArticleList();
+	}
+
 	// Article 등록(제목,내용 + 파일 업로드)
 	public void insertArticle(ArticleRequest articleRequest) {
 		LOGGER.debug("ArticleService.addArticle");

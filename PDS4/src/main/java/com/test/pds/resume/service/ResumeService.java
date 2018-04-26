@@ -50,7 +50,7 @@ public class ResumeService {
 		// 파일 사이즈
 		long fileSize = multipartFile.getSize();
 		
-		// 파일 저장(path를 이용)
+		// 파일 저장(SystemPath를 이용)
 		File file = new File(SystemPath.DOWNLOAD_PATH_1+"\\"+fileName+"."+fileExt);
 		try {
 			multipartFile.transferTo(file);

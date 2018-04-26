@@ -9,13 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ArticleFileDao {	
 	@Autowired private SqlSessionTemplate sqlSession;	
-	private static final Logger logger = LoggerFactory.getLogger(ArticleFileDao.class);	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleFileDao.class);	
 	final private String NAMESPACE = "com.test.pds.article.service.ArticleFileMapper.";
 	
 	// ArticleFile 입력
 	public int insertArticleFile(ArticleFile articleFile) {
-		logger.debug("ArticleFileDao insertArticleFile");
-		logger.debug("articleFile : " + articleFile);
+		LOGGER.debug("ArticleFileDao insertArticleFile");
+		LOGGER.debug("articleFile : " + articleFile);
 		return sqlSession.insert(NAMESPACE+"insertArticleFile", articleFile);
 	}
 }
