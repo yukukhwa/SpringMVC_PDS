@@ -1,54 +1,56 @@
 package com.test.pds.resume.service;
 
+/*
+ * resume_file table
+ */
 public class ResumeFile {
-	private int ResumeFileId;
-	private int ResumeId;
-	private String ResumeFileName;
-	private String ResumeFileExt;
-	private String ResumeFileType;
-	private int ResumeFileSize;
+	private int resumeFileId;
+	private int resumeId;
+	private String resumeFileName;
+	private String resumeFileExt;
+	private String resumeFileType;
+	private int resumeFileSize;
 	
 	public int getResumeFileId() {
-		return ResumeFileId;
+		return resumeFileId;
 	}
 	public void setResumeFileId(int resumeFileId) {
-		ResumeFileId = resumeFileId;
+		this.resumeFileId = resumeFileId;
 	}
 	public int getResumeId() {
-		return ResumeId;
+		return resumeId;
 	}
 	public void setResumeId(int resumeId) {
-		ResumeId = resumeId;
+		this.resumeId = resumeId;
 	}
 	public String getResumeFileName() {
-		return ResumeFileName;
+		return resumeFileName;
 	}
 	public void setResumeFileName(String resumeFileName) {
-		ResumeFileName = resumeFileName;
+		this.resumeFileName = resumeFileName;
 	}
 	public String getResumeFileExt() {
-		return ResumeFileExt;
+		return resumeFileExt;
 	}
 	public void setResumeFileExt(String resumeFileExt) {
-		ResumeFileExt = resumeFileExt;
+		this.resumeFileExt = resumeFileExt;
 	}
 	public String getResumeFileType() {
-		return ResumeFileType;
+		return resumeFileType;
 	}
 	public void setResumeFileType(String resumeFileType) {
-		ResumeFileType = resumeFileType;
+		this.resumeFileType = resumeFileType;
 	}
 	public int getResumeFileSize() {
-		return ResumeFileSize;
+		return resumeFileSize;
 	}
 	public void setResumeFileSize(int resumeFileSize) {
-		ResumeFileSize = resumeFileSize;
+		this.resumeFileSize = resumeFileSize;
 	}
 	@Override
 	public String toString() {
-		return "ResumeFile [ResumeFileId=" + ResumeFileId + ", ResumeId=" + ResumeId + ", ResumeFileName="
-				+ ResumeFileName + ", ResumeFileExt=" + ResumeFileExt + ", ResumeFileType=" + ResumeFileType
-				+ ", ResumeFileSize=" + ResumeFileSize + "]";
-	}
-	
+		return "ResumeFile [resumeFileId=" + resumeFileId + ", resumeId=" + resumeId + ", resumeFileName="
+				+ resumeFileName + ", resumeFileExt=" + resumeFileExt + ", resumeFileType=" + resumeFileType
+				+ ", resumeFileSize=" + resumeFileSize + "]";
+	}	
 }

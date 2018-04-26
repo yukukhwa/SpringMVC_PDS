@@ -4,8 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.test.pds.article.service.ArticleMapper">	
     
-   	<insert id="insertArticle" parameterType="com.test.pds.article.service.Article">
-		<selectKey resultType="int" keyProperty="articleId" order="AFTER">
+    <!-- article 입력하고나서(after) PK(articleId)를 셀렉트키로 리턴 -->
+   	<insert id="insertArticle" 
+   			parameterType="com.test.pds.article.service.Article">
+		<selectKey resultType="int" 
+					keyProperty="articleId" 
+					order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		INSERT INTO article(

@@ -2,10 +2,14 @@ package com.test.pds.resume.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/*
+ * addResume.jsp
+ */
 public class ResumeRequest {
 	private String ResumeTitle;
 	private String ResumeContent;
 	private MultipartFile Multipartfile;
+	
 	public String getResumeTitle() {
 		return ResumeTitle;
 	}

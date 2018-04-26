@@ -10,12 +10,13 @@ import org.springframework.stereotype.Repository;
 public class ArticleDao {	
 	@Autowired private SqlSessionTemplate sqlSession;
 	private static final Logger logger = LoggerFactory.getLogger(ArticleDao.class);	
-	final String NS = "com.test.pds.article.service.ArticleMapper.";
+	final private String NAMESPACE = "com.test.pds.article.service.ArticleMapper.";
 		
+	// article 입력 메서드
 	public int insertArticle(Article article) {
 		logger.debug("ArticleDao.insertArticle");
 		logger.debug("article : " + article);
-		sqlSession.insert(NS+"insertArticle", article);
+		sqlSession.insert(NAMESPACE+"insertArticle", article);
 		return article.getArticleId();
 	}
 }

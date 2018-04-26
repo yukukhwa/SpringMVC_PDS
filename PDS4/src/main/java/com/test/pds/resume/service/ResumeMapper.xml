@@ -3,4 +3,60 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.test.pds.resume.service.ResumeMapper">
+
+	<!--프로젝트의 데이터 베이스와 모델클래스간의 명명규칙이 언더 바와 낙타기법이라면, mapUnderscoreToCamelCase설정을 true로 설정함으로써 
+		결과매핑 정의를 하지 않아도 된다.	
+	<settings>
+       	<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>-->
+
+	<!-- 디비 컬럼명과 모델 클래스간에 자동 세팅을 위해 셀렉트 결과를 맵핑한다. 
+		 다른 테이블과 조인한다는 가정하에 1:1 관계에서는 association, 1:N 관계에서는 collection 
+		기능적으로 동일하지만 association에서 속성javaType,  collection에서 속성ofType 으로 구분된다. -->
+	<resultMap id="resultResumeMap" type="com.test.pds.resume.service.Resume">
+       <!--  <id column="resume_id" jdbcType="int" property="resumeId" /> -->
+        <result column="resume_title" jdbcType="VARCHAR" property="resumeTitle" />
+        <result column="resume_content" jdbcType="VARCHAR" property="resumeContent" />
+        <association property="resumeFile" javaType="com.test.pds.resume.service.ResumeFile">
+            <id column="resume_id" property="resumeId"/>	            
+            <result column="resume_file_name" property="resumeFileName"/>
+            <result column="resume_file_ext" property="resumeFileExt"/>
+            <result column="resume_file_size" property="resumeFileSize"/>
+		</association>        
+	</resultMap>
+
+	<!-- resume 리스트 select -->
+	<select id="selectResumeList"
+			parameterType="com.test.pds.resume.service.Resume"
+			resultMap="resultResumeMap">
+			SELECT
+				resume.resume_id
+				,resume.resume_title
+				,resume.resume_content
+				,resume_file.resume_file_name
+				,resume_file.resume_file_ext
+				,resume_file.resume_file_size
+			FROM resume
+			INNER JOIN resume_file
+			ON resume.resume_id = resume_file.resume_id;
+	</select>
+
+	<!-- resume 입력하고난 다음(after) 셀렉트키로 PK(resumeId)를 리턴 -->
+	<!-- parameterType은 만일 <typeAlias>설정을 하지 않았다면 패키지 명+클래스 전체이름으로 설정-->
+	<insert id="insertResume"
+			parameterType="com.test.pds.resume.service.Resume"> 
+		<selectKey resultType="int"
+					keyProperty="resumeId"
+					order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO resume(
+			resume_title
+			, resume_content
+		)
+		VALUES (
+			#{resumeTitle}
+			,#{resumeContent}
+		)	
+	</insert>
 </mapper>

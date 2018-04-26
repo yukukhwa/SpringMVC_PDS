@@ -1,5 +1,7 @@
 package com.test.pds.article.service;
 
+import java.util.List;
+
 /*
  * article table
  */
@@ -8,7 +10,6 @@ public class Article {
 	private String articleTitle;
 	private String articleContent;
 	private ArticleFile articleFile;
-	
 	public int getArticleId() {
 		return articleId;
 	}
@@ -33,10 +34,10 @@ public class Article {
 	public void setArticleFile(ArticleFile articleFile) {
 		this.articleFile = articleFile;
 	}
-
 	@Override
 	public String toString() {
 		return "Article [articleId=" + articleId + ", articleTitle=" + articleTitle + ", articleContent="
 				+ articleContent + ", articleFile=" + articleFile + "]";
 	}
+	
 }

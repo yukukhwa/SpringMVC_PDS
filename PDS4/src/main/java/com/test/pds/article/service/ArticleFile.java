@@ -1,5 +1,8 @@
 package com.test.pds.article.service;
 
+/*
+ * article_file table
+ */
 public class ArticleFile {
 	private int articleFileId;
 	private int articleId;

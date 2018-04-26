@@ -10,11 +10,12 @@ import org.springframework.stereotype.Repository;
 public class ArticleFileDao {	
 	@Autowired private SqlSessionTemplate sqlSession;	
 	private static final Logger logger = LoggerFactory.getLogger(ArticleFileDao.class);	
-	final String NS = "com.test.pds.article.service.ArticleFileMapper.";
+	final private String NAMESPACE = "com.test.pds.article.service.ArticleFileMapper.";
 	
+	// ArticleFile 입력
 	public int insertArticleFile(ArticleFile articleFile) {
 		logger.debug("ArticleFileDao insertArticleFile");
 		logger.debug("articleFile : " + articleFile);
-		return sqlSession.insert(NS+"insertArticleFile", articleFile);
+		return sqlSession.insert(NAMESPACE+"insertArticleFile", articleFile);
 	}
 }

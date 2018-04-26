@@ -1,5 +1,8 @@
 package com.test.pds.resume.service;
 
+/*
+ * resume table
+ */
 public class Resume {
 	private int resumeId;
 	private String resumeTitle;

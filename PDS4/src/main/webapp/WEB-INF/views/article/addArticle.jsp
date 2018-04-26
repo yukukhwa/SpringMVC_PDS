@@ -10,7 +10,9 @@
 	<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/addArticle" method="post">
 		<div>articleTitle : <input type="text" name="articleTitle"></div>
 		<div>articleContent : <input type="text" name="articleContent"></div>
-		<div>articleFile : <input type="file" name="multipartFile"></div>
+		<div>articleFile1 : <input type="file" name="multipartFile"></div>
+		<div>articleFile2 : <input type="file" name="multipartFile"></div>
+		<div>articleFile3 : <input type="file" name="multipartFile"></div>
 		<button type="submit">등록</button>
 	</form>
 </body>

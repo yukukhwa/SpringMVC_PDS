@@ -8,9 +8,9 @@
 <body>
 	<h1>addResume</h1>
 	<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/addResume" method="post">
-		<div> : <input type="text" name=""></div>
-		<div> : <input type="text" name=""></div>
-		<div> : <input type="file" name=""></div>
+		<div>ResumeTitle : <input type="text" name="ResumeTitle"></div>
+		<div>ResumeContent : <input type="text" name="ResumeContent"></div>
+		<div>Multipartfile : <input type="file" name="Multipartfile"></div>
 		<button type="submit">등록</button>
 	</form>
 </body>

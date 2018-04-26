@@ -3,4 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.test.pds.resume.service.ResumeFileMapper">
+
+	<!-- resumeFile 입력 -->
+	<insert id="insertResumeFile"
+			parameterType="com.test.pds.resume.service.ResumeFile">
+		INSERT INTO resume_file(
+			resume_id
+			, resume_file_name
+			, resume_file_ext
+			, resume_file_type
+			, resume_file_size)
+		VALUES (
+			#{resumeId}
+			, #{resumeFileName}
+			, #{resumeFileExt}
+			, #{resumeFileType}
+			, #{resumeFileSize}
+		)	
+	</insert>
 </mapper>
