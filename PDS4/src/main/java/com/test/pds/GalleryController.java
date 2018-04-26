@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.gallery.service.Gallery;
 import com.test.pds.gallery.service.GalleryRequest;
 import com.test.pds.gallery.service.GalleryService;
 
@@ -25,23 +26,28 @@ public class GalleryController {
 	public String deleteGallery(@RequestParam(value="galleryId",required=true)int galleryId) {
 		logger.debug("GalleryController.deleteGallery get호출");
 		logger.debug("galleryId: "+galleryId);
-		return "gallery/getGalleryOne";
+		String path = SystemPath.DOWNLOAD_PATH_2;
+		galleryService.deleteGallery(galleryId, path);
+		return "redirect:/getGalleryList";
 	}
 	
 	@RequestMapping(value="/getGalleryOne", method=RequestMethod.GET)
 	public String getGalleryOne(@RequestParam(value="galleryId",required=true)int galleryId,Model model) {
 		logger.debug("GalleryController.getGalleryOne get호출");
 		logger.debug("galleryId: "+galleryId);
-		model.addAttribute("list", galleryService.getGalleryOne(galleryId));
-		model.addAttribute("galleryTitle", galleryService.getGalleryOne(galleryId).get(0).getGalleryTitle());
-		model.addAttribute("galleryContent", galleryService.getGalleryOne(galleryId).get(0).getGalleryContent());
+		List<Gallery> list = galleryService.getGalleryOne(galleryId);
+		model.addAttribute("galleryFileList", list.get(0).getGalleryFile());
+		model.addAttribute("galleryTitle", list.get(0).getGalleryTitle());
+		model.addAttribute("galleryContent", list.get(0).getGalleryContent());
+		model.addAttribute("galleryId", list.get(0).getGalleryId());
 		return "gallery/getGalleryOne";
 	}
 	
 	@RequestMapping(value="/getGalleryList", method=RequestMethod.GET)
 	public String getGalleryList(Model model) {
 		logger.debug("GalleryController.getGalleryList get호출");
-		model.addAttribute("list", galleryService.getGalleryList());
+		List<Gallery> list = galleryService.getGalleryList();
+		model.addAttribute("list", list);
 		return "gallery/getGalleryList";
 	}
 	

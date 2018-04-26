@@ -21,10 +21,36 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
+	
+	public void deleteGallery(int galleryId,String path) {
+		logger.debug("GalleryService.deleteGallery 메서드 호출");
+		String fileName = null;
+		String fileExt = null;
+		List<GalleryFile> list = galleryFileDao.selectGalleryFileList(galleryId);
+		logger.debug("list: "+list);
+		for(GalleryFile galleryFile : list) {
+			fileName = galleryFile.getGalleryFileName();
+			fileExt = galleryFile.getGalleryFileExt();
+			logger.debug("파일명: "+fileName+"."+fileExt);
+			File file = new File(path+"\\"+fileName+"."+fileExt);
+			logger.debug("삭제 전 파일 존재여부 확인"+file.exists());
+			file.delete();
+			logger.debug("삭제 후 파일 존재여부 확인"+file.exists());
+		}
+		galleryFileDao.deleteGalleryFile(galleryId);
+		galleryDao.deleteGallery(galleryId);
+	}
+	
+	/**
+	 * 선택한 gallery의 상세내용을 출력해주는 서비스이다
+	 * @param galleryId
+	 * @return 선택한 gallry의 상세내용
+	 */
 	public List<Gallery> getGalleryOne(int galleryId) {
 		logger.debug("GalleryService.getGalleryOne 메서드 호출");
-		logger.debug("list: "+String.valueOf(galleryDao.selectGalleryOne(galleryId)));
-		return galleryDao.selectGalleryOne(galleryId);
+		List<Gallery> list = galleryDao.selectGalleryOne(galleryId);
+		logger.debug("list: "+String.valueOf(list));
+		return list;
 	}
 	
 	/*public Map<String,Object> getGalleryOne(int galleryId) {
@@ -57,9 +83,9 @@ public class GalleryService {
 		gallery.setGalleryContent(galleryRequest.getGalleryContent());
 		int row1 = galleryDao.insertGallery(gallery);
 		
-		GalleryFile galleryFile = new GalleryFile();
 		List<MultipartFile> list = galleryRequest.getMultipartFile();
 		for(MultipartFile multipartFile : list) {
+			GalleryFile galleryFile = new GalleryFile();
 			/*
 			 * 파일 이름 생성
 			 */
@@ -91,6 +117,7 @@ public class GalleryService {
 			logger.debug("fileSize: "+String.valueOf(fileSize));
 			galleryFile.setGalleryFileSize(fileNameSize);
 			
+			gallery.getGalleryFile().add(galleryFile);
 			/*
 			 * 서버내 upload폴더에 화면에서 받아온 데이터와 같은 확장자로 임시파일 생성 후 업로드하고자 하는 파일데이터를 덮어쓰기
 			 */
@@ -104,7 +131,6 @@ public class GalleryService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			gallery.getGalleryFile().add(galleryFile);
 		}
 		logger.debug("gallertyFileList: "+gallery.getGalleryFile());
 		for(GalleryFile file:gallery.getGalleryFile()) {

@@ -17,11 +17,16 @@
 		</collection>
 	</resultMap>
 	
+	<delete id="deleteGallery"
+			parameterType="integer">
+		DELETE FROM gallery WHERE galley_id = #{galleryId}
+	</delete>
+	
 	<!-- getGalleryOne.jsp 상세화면에 보여줄 데이터를 select한다 -->
 	<select id="selectGalleryOne"
 			parameterType="integer"
 			resultMap="gallery">
-		SELECT
+		<!-- SELECT
 			gallery.gallery_id
 			,gallery.gallery_title
 			,gallery.gallery_content
@@ -32,7 +37,21 @@
 			,gallery_file.gallery_file_size
 		FROM gallery join gallery_file
 		ON gallery.gallery_id = gallery_file.gallery_id
-		WHERE gallery_file.gallery_id = #{galleryId}
+		WHERE gallery_file.gallery_id = #{galleryId} -->
+		
+		select
+			gallery.galley_id
+			,gallery.gallery_title
+			,gallery.gallery_content
+			,gallery_file.gallery_file_id
+			,gallery_file.gallery_id
+			,gallery_file.gallery_file_name
+			,gallery_file.gallery_file_ext
+			,gallery_file.gallery_file_type
+			,gallery_file.gallery_file_size
+		from gallery join gallery_file
+		on gallery.galley_id = gallery_file.gallery_id
+		where gallery.galley_id = #{galleryId}
 	</select>
 	
 	<!-- <select id="selectGalleryOne"
@@ -49,12 +68,19 @@
 	<!-- getGalleryList.jsp 리스트화면에 보여줄 데이터를 select한다 -->
 	<select id="selectGalleryList"
 			resultType="com.test.pds.gallery.service.Gallery">
-		SELECT
+		<!-- SELECT
 			gallery.gallery_id AS galleryId
 			,gallery.gallery_title AS galleryTitle
 			,gallery.gallery_content AS galleryContent
 		FROM gallery
-		ORDER BY gallery.gallery_id DESC
+		ORDER BY gallery.gallery_id DESC -->
+		
+		select
+			gallery.galley_id as galleryId
+			,gallery.gallery_title as galleryTitle
+			,gallery.gallery_content as galleryContent
+		from gallery
+		order by gallery.galley_id desc
 	</select>
 	
 	<!-- addGallery.jsp 폼 화면에서 받은 데이터를 데이터베이스에 insert시킨다 -->

@@ -18,6 +18,21 @@ public class GalleryDao {
 	@Autowired private SqlSessionTemplate sqlSessionTemplate;
 	private final String NAMESPACE = "com.test.pds.gallery.service.GalleryMapper.";
 	
+	/**
+	 * 선택한 gallery를 삭제하는 메서드
+	 * @param galleryId
+	 * @return 삭제된 행의 수
+	 */
+	public int deleteGallery(int galleryId) {
+		logger.debug("GalleryDao.deleteGallery 메서드 호출");
+		return sqlSessionTemplate.delete(NAMESPACE+"deleteGallery", galleryId);
+	}
+	
+	/**
+	 * 선택한 gallery의 상세내용을 보여주는 메서드
+	 * @param galleryId
+	 * @return 선택된 gallery의 상세내용
+	 */
 	public List<Gallery> selectGalleryOne(int galleryId){
 		logger.debug("GalleryDao.selectGaelleryOne 메서드 호출");
 		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryOne", galleryId);
