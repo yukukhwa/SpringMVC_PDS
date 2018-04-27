@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>addBoard</title>
 </head>
 <body>
@@ -13,6 +14,12 @@
 		</div><br>
 		<div>
 			boardContent : <textarea name="boardContent"></textarea>
+		</div><br>
+		<div>
+			boardTitleFile : <input type="file" name="multipartFile">
+		</div><br>
+		<div>
+			boardTitleFile : <input type="file" name="multipartFile">
 		</div><br>
 		<div>
 			boardTitleFile : <input type="file" name="multipartFile">

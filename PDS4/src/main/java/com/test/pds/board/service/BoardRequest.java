@@ -1,5 +1,7 @@
 package com.test.pds.board.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 /*
  * board
@@ -31,4 +33,7 @@ public class BoardRequest {
 		return "BoardRequest [boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", multipartFile="
 				+ multipartFile + "]";
 	}
+	
+	
+	
 }

@@ -3,6 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.test.pds.board.service.BoardFileMapper">
+	<select id="selectBoardFileList" 
+			parameterType="Integer"
+			resultType="com.test.pds.board.service.BoardFile">
+	SELECT
+		board_file_id as boardFileId
+		,board_file_name as boarsFileName
+		,board_file_ext as baordFileExt
+		,board_file_type as boardFileType
+		,board_file_size as boardFileSize
+	FROM board_file
+	WHERE board_file.board_id = #{boardId}	
+	</select>
+	
 	<insert id="insertBoardFile" 
 			parameterType="com.test.pds.board.service.BoardFile">
 		INSERT INTO board_file(

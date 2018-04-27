@@ -2,6 +2,9 @@ package com.test.pds.board.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -22,9 +25,33 @@ public class BoardService {
 	@Autowired private BoardDao boardDao;
 	@Autowired private BoardFileDao boardFileDao;
 	
+	public Map<String, Object> selectBoardOne(int boardId){
+		Board board = boardDao.selectBoardone(boardId);
+		List<BoardFile> boardFile = boardFileDao.selectBoardFileList(boardId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board", board);
+		map.put("boardFile", boardFile);
+		return map;
+	}
+	
+	public List<Board> selectBoardList() {
+		return boardDao.selectBoardList();
+	}
+	
 	public void insertBoard(BoardRequest boardRequest) {
+
+		Board board = new Board();
+		board.setBoardTitle(boardRequest.getBoardTitle());
+		board.setBoardContent(boardRequest.getBoardContent());
+		
+		int boardRow = boardDao.insertBoard(board);
+		
+		BoardFile boardFile = new BoardFile();
 		
 		MultipartFile multipartFile = boardRequest.getMultipartFile();
+		
+			
+		
 		
 		// 파일이름
 		UUID uuid = UUID.randomUUID(); // 중복되는 이름을 가질 수 없도록 자동으로 이름을 생성해주는 api
@@ -59,12 +86,8 @@ public class BoardService {
 			e.printStackTrace();
 		}
 		
-		Board board = new Board();
-		board.setBoardTitle(boardRequest.getBoardTitle());
-		board.setBoardContent(boardRequest.getBoardContent());
 		
-		BoardFile boardFile = new BoardFile();
-		boardFile.setBoardId(boardDao.insertBoard(board));
+		boardFile.setBoardId(boardRow);
 		boardFile.setBoardFileName(fileName);
 		boardFile.setBoardFileExt(fileExt);
 		boardFile.setBoardFileType(fileType);
@@ -73,7 +96,7 @@ public class BoardService {
 		//BoardFileDao 호출
 		boardFileDao.insertBoardFile(boardFile);
 		
-	}
+		}
 	
 
 }
