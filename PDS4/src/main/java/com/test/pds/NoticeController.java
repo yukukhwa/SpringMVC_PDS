@@ -23,11 +23,11 @@ public class NoticeController {
 		
 		// getNoticeList에서 get으로 요청받아 notice/getNoticeList로 포워드한다
 		@RequestMapping(value="/getNoticeList", method=RequestMethod.GET)
-		public String getNoticeList(Model model) {
+		public String getNoticeList(Model model, HttpSession session) {
 			logger.debug("NoticeController.getNoticeList 호출");
 			List<Notice> list = noticeService.selectNoticeList();
 			System.out.println("List<Notice>: "+list);
-			model.addAttribute("list", list);
+			model.addAttribute("list",list);
 			return "notice/getNoticeList";
 		}
 		

@@ -21,7 +21,7 @@ public class NoticeService {
 	@Autowired NoticeFileDao noticeFileDao;
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeService.class);
 	
-	// selectNoticeList서비스
+	// 리스트를 출력
 	public List<Notice> selectNoticeList(){
 		LOGGER.debug("NoticeService.selectNoticeList 호출");
 		List<Notice> list = noticeDao.selectNoticeList();

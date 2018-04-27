@@ -8,7 +8,6 @@
 </head>
 <body>
 	<h1>getNoticeList</h1>
-	<fieldset>
 		<table border="1">
 			<caption>getNoticeList</caption>
 				<c:forEach var="notice" items="${list}">
@@ -24,12 +23,10 @@
 						<tr>
 							<td>${notice.noticeTitle}</td>
 							<td>${notice.noticeContent}</td>
-							<td></td>
+							<td>${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}</a></td>
 							<td><a href="#">삭제</a></td>
 						</tr>
 				</c:forEach>
 		</table>
-	</fieldset>
-	
 </body>
 </html>
