@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.test.pds.notice.service.NoticeFileMapper">
+ 	<!-- notice의 파일 내용들을 인서트 한다 -->
  	<insert id="insertNoticeFile" 
  			parameterType="com.test.pds.notice.service.NoticeFile">
  		INSERT INTO notice_file(

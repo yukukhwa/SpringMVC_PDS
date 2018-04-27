@@ -10,9 +10,10 @@
 	<h1>getNoticeList</h1>
 		<table border="1">
 			<caption>getNoticeList</caption>
-				<c:forEach var="notice" items="${list}">
+				<c:forEach var="notice" items="${list}" >
 					<thead>
 						<tr>
+							<th>Notice Id</th>
 							<th>Notice Title</th>
 							<th>Notice Content</th>
 							<th>Notice File</th>
@@ -21,12 +22,26 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>${notice.noticeTitle}</td>
-							<td>${notice.noticeContent}</td>
-							<td>${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}</a></td>
-							<td><a href="#">삭제</a></td>
+								<td>${notice.noticeId}</td>
+								<td>${notice.noticeTitle}</td>
+								<td>${notice.noticeContent}</td>		
+								<td>
+									<a href="${pageContext.request.contextPath}/resources/upload/${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}" download>${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}</a>
+								</td>
+								<td><a href="#">삭제</a></td>
 						</tr>
 				</c:forEach>
 		</table>
+		<!-- 페이징 -->
+		<c:if test="${currnetPage>=1}">
+			<a href="${pageContext.request.contextPath}/getNoticeList?currentPage=1">[처음으로]</a>
+			<a href="${pageContext.request.contextPath}/getNoticeList?currentPage=${currentPage-1}">[◀]</a>
+		</c:if>
+		<c:if test="${currentPage!=lastPage && currentPage<=1}">
+			<a href="${pageContext.request.contextPath}/getNoticeList?currentPage=${currentPage+1}">[▶]</a>
+		</c:if>
+		<c:if test="${currentPage!=lastPage}">
+			<a href="${pageCottext.request.contextPath}/getNoticeList?lastPage=${lastPage}">[마지막으로]</a>
+		</c:if>
 </body>
 </html>

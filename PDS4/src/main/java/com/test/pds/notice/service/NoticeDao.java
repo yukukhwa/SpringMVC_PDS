@@ -1,6 +1,7 @@
 package com.test.pds.notice.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -13,11 +14,19 @@ public class NoticeDao {
 	@Autowired private SqlSessionTemplate sqlSession;
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeDao.class);
 	private final String NAMESPACE = "com.test.pds.notice.service.NoticeMapper.";
-
-	// selectNoticeList메서드를 실행해 sql문 실행
-	public List<Notice> selectNoticeList() {
+	
+	// notice의 카운트 조회하는 메서드
+	public int selectNoticeCount() {
+		LOGGER.debug("NoticeDao.selectNoticeCount 호출");
+		System.out.println("카운트 갯수 몇개임? ==>"+sqlSession.selectOne(NAMESPACE+"selectNoticeCount"));
+		return sqlSession.selectOne(NAMESPACE+"selectNoticeCount");
+	}
+	
+	// pagePerRow와 beginRow가 저장되어있는 map을 매개변수로 받아 리스트를 출력하는 메서드
+	public List<Notice> selectNoticeList(Map<String, Integer> map) {
 		LOGGER.debug("NoticeDao.selectNoticeList 호출");
-		return sqlSession.selectList(NAMESPACE+"selectNoticeList");
+		System.out.println("noticeDao 리스트: "+sqlSession.selectList(NAMESPACE+"selectNoticeList", map));
+		return sqlSession.selectList(NAMESPACE+"selectNoticeList", map);
 	}
 	
 	/* insertNotice */
@@ -26,4 +35,6 @@ public class NoticeDao {
 		sqlSession.insert(NAMESPACE+"insertNotice",notice);
 		return notice.getNoticeId();
 	}
+
+	
 }

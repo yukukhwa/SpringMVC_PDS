@@ -2,7 +2,9 @@ package com.test.pds.notice.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -21,12 +23,37 @@ public class NoticeService {
 	@Autowired NoticeFileDao noticeFileDao;
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeService.class);
 	
-	// 리스트를 출력
-	public List<Notice> selectNoticeList(){
-		LOGGER.debug("NoticeService.selectNoticeList 호출");
-		List<Notice> list = noticeDao.selectNoticeList();
-		return list;
-	}
+		/* 리스트 출력 + 페이징 하기 위해 int타입의 currentPage와 pagePerRow를 매개변수로 받는다 */
+		public Map<String, Object> selectNoticeList(int currentPage, int pagePerRow){
+			LOGGER.debug("NoticeService.selectNoticeList 호출");
+			LOGGER.debug("currentPage, pagePerRow :"+currentPage+","+pagePerRow);
+			/*Map객체 생성하고 currentPage와 pagePerRow를 사용해 시작페이지를 구한다.
+			 * 구한 시작페이지를 맵에다 저장하고, pagePerRow도 map에다 저장한다. 
+			 * notice에 list객체를 생성해 리스트에다가 map을 매개변수로 dao에 있는 selectNoticeList메서드를 실행해
+			 * 리턴받은 조회결과를 담는다*/
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			int beginRow = (currentPage-1)*pagePerRow;
+			System.out.println("NoticeService beginRow =>"+beginRow);
+			map.put("beginRow", beginRow);
+			map.put("pagePerRow", pagePerRow);
+			/* dao에 list의 전체 갯수를 구하는 메서드를 실행한 결과를 담아 int타입의 total변수에 저장하고
+			 * 전체갯수와 pagePerRow를 나눈 결과를 lastPage변수에 담는다
+			 * 만약 전체갯수와 pagePerRow의 나머지가 0이 아니라면 페이지를 하나씩 더해줘야하 하므로 lastPage를 하나씩 더해준다.*/
+			List<Notice> list = noticeDao.selectNoticeList(map);
+			int total = noticeDao.selectNoticeCount();
+			System.out.println("total => "+total);
+			int lastPage = total/pagePerRow;
+			if(total%pagePerRow != 0) {
+				lastPage++;
+			}
+			System.out.println("lastPage =>"+lastPage);
+			/* 새로운 맵객체를 생성해주고 그 맵객체가 있는 returnMap에 lastPage와 beginRow와 pagePerRow가 있는 
+			 * list를 리턴맵에 저장하여 리턴한다*/
+			Map<String, Object> returnMap = new HashMap<String, Object>();
+			returnMap.put("lastPage", lastPage);
+			returnMap.put("list", list);
+			return returnMap;
+		}
 	
 	// 매개변수로 noticeRequest와 path를 넘겨받는다
 	public void insertNotice(NoticeRequest noticeRequest, String path) {
@@ -94,6 +121,7 @@ public class NoticeService {
 			noticeFile.setNoticeFileSize((int)fileSize);
 			noticeFile.setNoticeId(noticeId);
 			notice.setNoticeFile(noticeFile);
+			/*notice.setNoticeFile(noticeFile);*/
 			/* noticeFile을 매개변수로 넘겨 insertNoticeFile메소드를 실행해
 			 * noticeFile정보들을 noticeFiledb에 저장하는 sql문을 실행해 배열들을 저장한다 */
 			noticeFileDao.insertNoticeFile(noticeFile);

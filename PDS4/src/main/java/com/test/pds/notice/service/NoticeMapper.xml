@@ -19,8 +19,16 @@
             <result column="notice_file_size" property="noticeFileSize"/>
         </collection>
     </resultMap>
+    
+    <!-- notice 카운트 구하기 -->
+	<select id="selectNoticeCount"
+			resultType="integer">
+		SELECT count(*) FROM notice
+	</select>
 
+	<!-- notice와 noticeFile을 조인시켜 리스트를 조회 -->
  	<select id="selectNoticeList"
+ 			parameterType="java.util.Map"
  			resultMap="resultNotice">
  		SELECT notice.notice_id
  				, notice_file_id
@@ -32,9 +40,11 @@
  				, notice_file_size
 		FROM notice
    		INNER JOIN notice_file
-    	ON notice.notice_id = notice_file.notice_id 
+    	ON notice.notice_id = notice_file.notice_id
+    	LIMIT #{beginRow}, #{pagePerRow} 
  	</select>
  	
+ 	<!-- Notice의 타이틀과 내용을 인서트하고 그 후에 pk값을 return한다  -->
  	<insert id="insertNotice" 
  			parameterType="com.test.pds.notice.service.Notice">
  		<!-- selectKey: 우선 입력한 값의 결과값을 다음 쿼리로 바로 return 시켜줌  -->
