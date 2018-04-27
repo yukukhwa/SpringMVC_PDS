@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pds.board.service.Board;
 import com.test.pds.board.service.BoardRequest;
@@ -28,10 +29,14 @@ public class BoardController {
 		model.addAttribute("map", map);
 		return "board/getBoardOne";
 	}
+	
 	@RequestMapping(value = "/getBoardList", method = RequestMethod.GET)
-	public String selectBoardList(Model model) {
-		List<Board> list = boardService.selectBoardList();
-		model.addAttribute("list", list);
+	public String selectBoardList(Model model, @RequestParam(value="currentPage",defaultValue="1") int currentPage, @RequestParam(value="pagePerRow",defaultValue="3") int pagePerRow) {
+		Map<String, Object> map = boardService.selectBoardList(currentPage, pagePerRow);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pagePerRow", pagePerRow);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastPage", map.get("lastPage"));
 		return "board/getBoardList";
 	}
 	@RequestMapping(value = "/addBoard", method = RequestMethod.GET)

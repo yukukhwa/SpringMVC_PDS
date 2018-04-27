@@ -17,20 +17,27 @@
 		</collection>		
 	</resultMap>
 	<select id="selectBoardOne"
-			parameterType="Integer"
+			parameterType="java.util.Map"
 			resultMap="board">
-	select
-		board.board_id
-		,board.board_title
-		,board.board_content
-		,board_file.board_file_id
-		,board_file.board_file_name
-		,board_file.board_file_ext
-		,board_file.board_file_type
-		,board_file.board_file_size
-	from board join board_file
-	on board.board_id = board_file.board_id
-	where board_file.board_id = #{boardId}		
+		select
+			board.board_id
+			,board.board_title
+			,board.board_content
+			,board_file.board_file_id
+			,board_file.board_file_name
+			,board_file.board_file_ext
+			,board_file.board_file_type
+			,board_file.board_file_size
+		from board join board_file
+		on board.board_id = board_file.board_id
+		where board_file.board_id = #{boardId}
+		ORDER BY board_id DESC
+		LIMIT #{beginRow},#{pagePerRow}			
+	</select>
+	
+	<select id="totalCountBoard"
+			resultType="Integer">
+		SELECT COUNT(*) FROM board
 	</select>
 	
 	<select id="selectBoardList" 
@@ -41,6 +48,9 @@
 		,board.board_title
 		,board.board_content
 	from board
+	ORDER BY board_id DESC
+	LIMIT #{beginRow},#{pagePerRow}
+
 	</select>
 	
 	<insert id="insertBoard" 

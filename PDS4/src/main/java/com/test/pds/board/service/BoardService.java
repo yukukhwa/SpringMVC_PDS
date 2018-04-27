@@ -34,8 +34,20 @@ public class BoardService {
 		return map;
 	}
 	
-	public List<Board> selectBoardList() {
-		return boardDao.selectBoardList();
+	public Map<String, Object> selectBoardList(int currentPage, int pagePerRow) {
+		int beginRow = (currentPage-1)*pagePerRow;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		
+		Map<String, Object> returnMap = boardDao.selectBoardList(map);
+		int total = (Integer) returnMap.get("total");
+		int lastPage = total/pagePerRow;
+		if(total%pagePerRow != 0) {
+			++lastPage;
+		}
+		returnMap.put("lastPage",lastPage);
+		return returnMap;
 	}
 	
 	public void insertBoard(BoardRequest boardRequest) {
@@ -49,10 +61,7 @@ public class BoardService {
 		BoardFile boardFile = new BoardFile();
 		
 		MultipartFile multipartFile = boardRequest.getMultipartFile();
-		
-			
-		
-		
+				
 		// 파일이름
 		UUID uuid = UUID.randomUUID(); // 중복되는 이름을 가질 수 없도록 자동으로 이름을 생성해주는 api
 		String fileName = uuid.toString(); // 만들어진 이름값을 불러와 셋팅한다

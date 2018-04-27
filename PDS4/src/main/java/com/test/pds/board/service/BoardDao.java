@@ -1,6 +1,8 @@
 package com.test.pds.board.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,13 @@ public class BoardDao {
 		return sqlSession.selectOne(NAMESPACE+"selectBoardOne", boardId);
 	}
 	
-	public List<Board> selectBoardList() {
-		return sqlSession.selectList(NAMESPACE+"selectBoardList");
+	public Map<String, Object> selectBoardList(Map<String, Object> map) {
+		List<Board> list = sqlSession.selectList(NAMESPACE+"selectBoardList", map);
+		int total = sqlSession.selectOne(NAMESPACE+"totalCountBoard");
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("list", list);
+		returnMap.put("total", total);		
+		return returnMap;
 	}
 	public int insertBoard(Board board) {
 		return sqlSession.insert(NAMESPACE+"insertBoard", board);
