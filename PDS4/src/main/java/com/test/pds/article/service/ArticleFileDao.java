@@ -12,10 +12,18 @@ public class ArticleFileDao {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleFileDao.class);	
 	final private String NAMESPACE = "com.test.pds.article.service.ArticleFileMapper.";
 	
+	// ArticleFile 삭제
+	public int deleteArticleFile(ArticleFile articleFile) {
+		LOGGER.debug("ArticleFileDao deleteArticleFile");
+		LOGGER.debug("articleFile.articleId : " + articleFile.getArticleId());
+		sqlSession.delete(NAMESPACE+"deleteArticleFile", articleFile);
+		return articleFile.getArticleId();
+	}
+	
 	// ArticleFile 입력
 	public int insertArticleFile(ArticleFile articleFile) {
 		LOGGER.debug("ArticleFileDao insertArticleFile");
-		LOGGER.debug("articleFile : " + articleFile);
+		LOGGER.debug("articleFile.articleId : " + articleFile.getArticleId());
 		return sqlSession.insert(NAMESPACE+"insertArticleFile", articleFile);
 	}
 }

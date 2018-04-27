@@ -15,14 +15,25 @@ public class ArticleDao {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleDao.class);	
 	final private String NAMESPACE = "com.test.pds.article.service.ArticleMapper.";
 	
-	// resume List 메서드
-		// resultMap의 결과를 List로 받아 리턴
-		public List<Article> selectArticleList() {
-			LOGGER.debug("ArticleDao selectArticleList");
-			System.out.println("=============DAo==========");
-			System.out.println(sqlSession.selectList(NAMESPACE+"selectArticleList"));
-			return sqlSession.selectList(NAMESPACE+"selectArticleList");
-		}
+	// delete Article 메서드
+	public int deleteArticle(int articleId) {
+		LOGGER.debug("ArticleDao deleteArticle");
+		return sqlSession.delete(NAMESPACE+"deleteArticle", articleId);
+	}
+	
+	// selectOne 메서드
+	public List<Article> selectArticleOne(Article article) {
+		LOGGER.debug("ArticleDao selectArticleOne");	
+		return sqlSession.selectList(NAMESPACE+"selectArticleOne", article);		
+	}
+	
+	// article List 메서드
+	// resultMap의 결과를 List로 받아 리턴
+	public List<Article> selectArticleList() {
+		LOGGER.debug("ArticleDao selectArticleList");
+		//beginRow, perPage 입력받아야함
+		return sqlSession.selectList(NAMESPACE+"selectArticleList");
+	}
 	
 	
 	// article 입력 메서드

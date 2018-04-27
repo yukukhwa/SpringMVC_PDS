@@ -24,7 +24,8 @@
 					<td>${list.resumeId}</td>
 					<td>${list.resumeTitle}</td>
 					<td>${list.resumeContent}</td>
-					<td><a href="${pageContext.request.contextPath}/resources/upload/${list.resumeFile.resumeFileName}.${list.resumeFile.resumeFileExt}" download>
+					<td><a href="${pageContext.request.contextPath}/resources/upload/
+							${list.resumeFile.resumeFileName}.${list.resumeFile.resumeFileExt}" download>
 							${list.resumeFile.resumeFileName}.${list.resumeFile.resumeFileExt}</a></td>
 					<td>${list.resumeFile.resumeFileSize } KB</td>
 				</tr>

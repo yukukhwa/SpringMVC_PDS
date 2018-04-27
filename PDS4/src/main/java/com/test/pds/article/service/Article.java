@@ -1,15 +1,14 @@
 package com.test.pds.article.service;
 
-import java.util.List;
-
 /*
  * article table
  */
 public class Article {
 	private int articleId;
 	private String articleTitle;
-	private String articleContent;
+	private String articleContent;	
 	private ArticleFile articleFile;
+	
 	public int getArticleId() {
 		return articleId;
 	}
@@ -39,5 +38,6 @@ public class Article {
 		return "Article [articleId=" + articleId + ", articleTitle=" + articleTitle + ", articleContent="
 				+ articleContent + ", articleFile=" + articleFile + "]";
 	}
+	
 	
 }

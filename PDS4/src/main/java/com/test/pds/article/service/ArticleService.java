@@ -21,11 +21,28 @@ public class ArticleService {
 	@Autowired private ArticleFileDao articleFileDao;	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleService.class);
 	
-	// Resume 리스트
+	// Article 삭제
+	public void deleteArticle(Article article) {
+		LOGGER.debug("ArticleService deleteArticle");
+		ArticleFile articleFile = new ArticleFile();
+		articleFile.setArticleId(article.getArticleId());
+		int resultArticle = articleDao.deleteArticle(articleFileDao.deleteArticleFile(articleFile));
+		LOGGER.debug("삭제성공시 1 : " + resultArticle);
+	}
+	
+	// Article 셀렉트원
+	public List<Article> selectArticleOne(Article article) {
+		LOGGER.debug("ArticleService selectArticleOne");
+		return articleDao.selectArticleOne(article);
+	}
+	
+	// Article 리스트
 	public List<Article> selectArticleList() {
 		LOGGER.debug("ArticleService selectArticleList");
-		System.out.println("=============Service=========");
-		System.out.println(articleDao.selectArticleList());
+		// 페이징
+		// 레코드시작행beginRow = 0, 5, 10, 15, ... -> /perPage 하면 0, 1, 2, 3, 4, ... beginRow=(beginRow+1)*perPage
+		// perPage = 5; 입력파라미터로 받기
+		// listPage = (총 레코드수/perPage) 
 		return articleDao.selectArticleList();
 	}
 
@@ -46,10 +63,10 @@ public class ArticleService {
 		ArticleFile articleFile = new ArticleFile();
 		
 		// file데이터 담을 multipartFile객체를 생성
-		List<MultipartFile> multipartFileList = articleRequest.getMultipartFile();
+		List<MultipartFile> list = articleRequest.getMultipartFile();
 		
 		// article_id당 여러개의 파일이 올라가야 하니까 리스트[0] 올리고, 리스트[1] 올리고, ... 리스트[N]까지.
-		for(MultipartFile multipartFile : multipartFileList){
+		for(MultipartFile multipartFile : list){
 						
 			// 파일이름
 			UUID uuid = UUID.randomUUID(); // 중복되는 이름을 가질수 없도록 자동으로 이름을 생성해주는 api
@@ -82,11 +99,12 @@ public class ArticleService {
 			articleFile.setArticleFileType(fileType);
 			articleFile.setArticleFileSize((int) fileSize);
 			
-			// for문이 돌때마다 멀티파트파일 리스트[0,1,2,...]
-			// 세팅된 articlefile 객체가 article에 세팅된다.
-			article.setArticleFile(articleFile);
-			// for문이 돌때마다 파일인서트
-			articleFileDao.insertArticleFile(articleFile);
+			// for문이 돌때마다 멀티파트파일 리스트[0,1,2,...] 
+			// 세팅된 articlefile 객체가 article에 세팅된다. 
+			article.setArticleFile(articleFile); 
+			// for문이 돌때마다 파일인서트 
+			articleFileDao.insertArticleFile(articleFile); 			
 		}				
+	
 	}
 }

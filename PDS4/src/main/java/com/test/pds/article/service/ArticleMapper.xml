@@ -2,9 +2,17 @@
 <!DOCTYPE mapper 
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="com.test.pds.article.service.ArticleMapper">	
-    
-    <!-- selectList resultMap -->
+<mapper namespace="com.test.pds.article.service.ArticleMapper">
+
+	<!-- delete Article -->
+	<delete id="deleteArticle"
+			parameterType="int">		
+			DELETE 
+			FROM article 
+			WHERE article_id=#{articleId}
+	</delete>
+
+	<!-- select resultMap -->
     <resultMap id="resultArticleMap" type="com.test.pds.article.service.Article">
         <id column="article_id" property="articleId" />
         <result column="article_title" property="articleTitle" />
@@ -17,7 +25,25 @@
             <result property="articleFileType" column="article_file_type" />
         </collection>
 	</resultMap>
-    
+		
+	<!-- article join article_file selectOne -->
+	<select id="selectArticleOne"
+			parameterType="com.test.pds.article.service.Article"
+			resultMap="resultArticleMap">
+			SELECT 
+				article.article_id
+				, article.article_title
+				, article.article_content
+				, article_file.article_file_name
+				, article_file.article_file_ext
+				, article_file.article_file_type
+				, article_file.article_file_size
+			FROM article
+			INNER JOIN article_file
+			ON article.article_id = article_file.article_id
+			WHERE article.article_id=#{articleId}
+	</select>
+        
     <!-- article join article_file selectList -->
     <select id="selectArticleList"
 		parameterType="com.test.pds.article.service.Article"
@@ -33,6 +59,7 @@
 			FROM article
 			INNER JOIN article_file
 			ON article.article_id = article_file.article_id
+			
 	</select>
     
     
