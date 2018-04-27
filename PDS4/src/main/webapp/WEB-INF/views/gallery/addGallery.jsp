@@ -17,6 +17,10 @@
 			
 			/* 지우기버튼 클릭시 해당 파일공간 전체를 지운다 */
 			$(document).on('click','#del',function(){
+					if($(document).find('input[type="file"]').length == 1){
+					alert('이미지파일 1개 이상은 등록해주세요.');
+					return;
+				}
 				$(this).parent('div').remove();
 			});
 			
@@ -26,12 +30,21 @@
 				/* galleryTitle를 작성했는지 검사 */
 				if($('input[name="galleryTitle"]').val() == ''){
 					alert('galleryTitle를 작성해주세요.');
+					insert = false;
 					return;
 				}
 				
 				/* galleryContent를 작성했는지 검사  */
 				if($('textarea[name="galleryContent"]').val() == ''){
 					alert('galleryContent를 작성해주세요');
+					insert = false;
+					return;
+				}
+				
+				/* galleryFile 최대 3개까지 등록가능하도록 제한 */
+				if($(document).find('input[type="file"]').length >= 4){
+					alert('이미지파일을 최대 3개까지 등록가능합니다.');
+					insert = false;
 					return;
 				}
 				
@@ -71,10 +84,9 @@
 			<textarea name="galleryContent" rows="5" cols="100" placeholder="등록한 이미지에 관한 부연설명을 입력해주세요">${galleryContent}</textarea>
 		</div>
 		<div id="upload">
-			이미지업로드
-			<div><input name="multipartFile" type="file"></div>
+			<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>
 		</div>
-		<button id="add" type="button">추가</button>
+		<button id="add" type="button">이미지추가</button>
 		<br><button id="insert" type="button">Gallery등록</button>
 	</form>
 </body>

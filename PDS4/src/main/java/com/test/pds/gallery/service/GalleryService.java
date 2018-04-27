@@ -20,9 +20,70 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
-	public void updateGallery(GalleryRequest galleryRequest,String path) {
+	public void updateGallery(GalleryRequest galleryRequest,String path,int galleryId) {
 		logger.debug("GalleryService.updateGallery 메서드 호출");
+		Gallery gallery = new Gallery();
+		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
+		gallery.setGalleryContent(galleryRequest.getGalleryContent());
+		gallery.setGalleryId(galleryId);
+		galleryDao.updateGallery(gallery);
 		
+		List<MultipartFile> list = galleryRequest.getMultipartFile();
+		for(int i=0; i<list.size(); i++) {
+			GalleryFile galleryFile = new GalleryFile();
+			
+			/*
+			 * 파일 이름 생성
+			 */
+			UUID uuid = UUID.randomUUID(); // 이름을 렌덤으로 생성해준다
+			logger.debug("uuid: "+uuid);
+			String fileName = uuid.toString().replace("-", "");
+			logger.debug("fileName: "+fileName);
+			galleryFile.setGalleryFileName(fileName);
+			
+			/*
+			 * 파일 확장자
+			 */
+			int fileNameSize = list.get(i).getOriginalFilename().indexOf(".");
+			String fileExt = list.get(i).getOriginalFilename().substring(fileNameSize+1);
+			logger.debug("fileExt: "+fileExt);
+			galleryFile.setGalleryFileExt(fileExt);
+			
+			/*
+			 * 파일 데이터 타입
+			 */
+			String fileType = list.get(i).getContentType();
+			logger.debug("fileType: "+fileType);
+			galleryFile.setGalleryFileType(fileType);
+			
+			/*
+			 * 파일 데이터 크기
+			 */
+			long fileSize = list.get(i).getSize();
+			logger.debug("fileSize: "+String.valueOf(fileSize));
+			galleryFile.setGalleryFileSize(fileNameSize);
+			
+			gallery.getGalleryFile().add(galleryFile);
+			
+			/*
+			 * 서버내 upload폴더에 화면에서 받아온 파일데이터를 수정하고자하는 파일에 덮어쓰기
+			 */
+			File file = new File(path+"\\"+fileName+"."+fileExt);
+			try {
+				list.get(i).transferTo(file);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for(GalleryFile file:gallery.getGalleryFile()) {
+			file.setGalleryId(galleryId);
+			logger.debug("file: "+file);
+			galleryFileDao.updateGalleryFile(file);
+		}
 	}
 	
 	/**

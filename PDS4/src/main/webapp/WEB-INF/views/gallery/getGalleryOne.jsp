@@ -16,11 +16,11 @@
 		본문<br>
 		<textarea name="galleryContent" rows="5" cols="100" disabled="disabled">${galleryContent}</textarea>
 	</div>
-	<div>
-		<c:forEach var="galleryFile" items="${galleryFileList}">
+	<c:forEach var="galleryFile" items="${galleryFileList}">
+		<div>
 			<img width="400px" height="300px" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
-		</c:forEach>
-	</div>
+		</div>
+	</c:forEach>
 	<a href="${pageContext.request.contextPath}/updateGallery?galleryId=${galleryId}">수정하기</a>
 	<a href="${pageContext.request.contextPath}/deleteGallery?galleryId=${galleryId}">삭제하기</a>
 </body>

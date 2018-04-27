@@ -23,16 +23,25 @@ public class GalleryController {
 	@Autowired private GalleryService galleryService;
 	
 	@RequestMapping(value="/updateGallery", method=RequestMethod.POST)
-	public String updateGallery(GalleryRequest galleryRequest) {
+	public String updateGallery(@RequestParam(value="galleryId",required=true)int galleryId
+								,@RequestParam(value="galleryTitle",required=false)String galleryTitle
+								,@RequestParam(value="galleryContent",required=false)String galleryContent
+								,@RequestParam(value="multipartFile",required=false)List<MultipartFile> multipartFile) {
 		logger.debug("GalleryController.updateGallery post호출");
+		GalleryRequest galleryRequest = new GalleryRequest();
+		galleryRequest.setGalleryTitle(galleryTitle);
+		galleryRequest.setGalleryContent(galleryContent);
+		galleryRequest.setMultipartFile(multipartFile);
+		logger.debug("galleryRequest: "+galleryRequest);
 		String path = SystemPath.DOWNLOAD_PATH_2;
 		logger.debug("path: "+path);
-		galleryService.updateGallery(galleryRequest, path);
+		galleryService.updateGallery(galleryRequest, path, galleryId);
 		return "redirect:/getGalleryList";
 	}
 	
 	@RequestMapping(value="/updateGallery", method=RequestMethod.GET)
-	public String updateGallery(@RequestParam(value="galleryId",required=true)int galleryId,Model model) {
+	public String updateGallery(@RequestParam(value="galleryId",required=true)int galleryId
+								,Model model) {
 		logger.debug("GalleryController.updateGallery get호출");
 		logger.debug("galleryId: "+galleryId);
 		List<Gallery> list = galleryService.getGalleryOne(galleryId);
@@ -56,7 +65,8 @@ public class GalleryController {
 	}
 	
 	@RequestMapping(value="/getGalleryOne", method=RequestMethod.GET)
-	public String getGalleryOne(@RequestParam(value="galleryId",required=true)int galleryId,Model model) {
+	public String getGalleryOne(@RequestParam(value="galleryId",required=true)int galleryId
+								,Model model) {
 		logger.debug("GalleryController.getGalleryOne get호출");
 		logger.debug("galleryId: "+galleryId);
 		/*
@@ -82,16 +92,18 @@ public class GalleryController {
 	}
 	
 	@RequestMapping(value="/addGallery", method=RequestMethod.POST)
-	public String addGallery(GalleryRequest galleryRequest, Model model) {
+	public String addGallery(GalleryRequest galleryRequest
+							,Model model) {
 		logger.debug("GalleryController.addGallery post호출");
+		logger.debug("galleryRequest: "+galleryRequest);
 		List<MultipartFile> list = galleryRequest.getMultipartFile();
 		logger.debug("list: "+list);
 		/*
 		 * addGallery에서 받아온 파일리스트에서 각각의 파일 데이터 타입을 분석하여 이미지 파일인지 아닌지 구분한다
 		 * 만약 하나라도 이미지 파일이 아니라면 다시 addGallery화면으로 포워딩하여 재등록하도록 유도한다
 		 */
-		for(MultipartFile multipartFile : list) {
-			String fileType = multipartFile.getContentType();
+		for(MultipartFile file : list) {
+			String fileType = file.getContentType();
 			if(!fileType.equals("image/jpeg") && !fileType.equals("image/gif") && !fileType.equals("image/x-icon") && !fileType.equals("image/svg+xml") 
 					&& !fileType.equals("image/tiff") && !fileType.equals("image/webp") && !fileType.equals("image/png") && !fileType.equals("image/bmp")) {
 				logger.debug("fileType: "+fileType);

@@ -1,5 +1,6 @@
 package com.test.pds.gallery.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +14,10 @@ public class GalleryRequest {
 	 * 이미지파일이 2개 이상 넘어올 수 있기 때문에 리스트로 받는다
 	 */
 	private List<MultipartFile> multipartFile;
+	
+	public GalleryRequest() {
+		this.multipartFile = new ArrayList<MultipartFile>();
+	}
 	public String getGalleryTitle() {
 		return galleryTitle;
 	}
