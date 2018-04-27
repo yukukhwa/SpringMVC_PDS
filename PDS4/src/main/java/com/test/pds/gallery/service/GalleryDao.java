@@ -19,6 +19,15 @@ public class GalleryDao {
 	private final String NAMESPACE = "com.test.pds.gallery.service.GalleryMapper.";
 	
 	/**
+	 * 선택한 gallery를 수정하는 메서드
+	 * @param gallery
+	 * @return 수정된 행의 수
+	 */
+	public int updateGallery(Gallery gallery) {
+		return sqlSessionTemplate.update(NAMESPACE+"updateGallery", gallery);
+	}
+	
+	/**
 	 * 선택한 gallery를 삭제하는 메서드
 	 * @param galleryId
 	 * @return 삭제된 행의 수

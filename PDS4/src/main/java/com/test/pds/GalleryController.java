@@ -22,10 +22,34 @@ public class GalleryController {
 	
 	@Autowired private GalleryService galleryService;
 	
+	@RequestMapping(value="/updateGallery", method=RequestMethod.POST)
+	public String updateGallery(GalleryRequest galleryRequest) {
+		logger.debug("GalleryController.updateGallery post호출");
+		String path = SystemPath.DOWNLOAD_PATH_2;
+		logger.debug("path: "+path);
+		galleryService.updateGallery(galleryRequest, path);
+		return "redirect:/getGalleryList";
+	}
+	
+	@RequestMapping(value="/updateGallery", method=RequestMethod.GET)
+	public String updateGallery(@RequestParam(value="galleryId",required=true)int galleryId,Model model) {
+		logger.debug("GalleryController.updateGallery get호출");
+		logger.debug("galleryId: "+galleryId);
+		List<Gallery> list = galleryService.getGalleryOne(galleryId);
+		model.addAttribute("galleryFileList", list.get(0).getGalleryFile());
+		model.addAttribute("galleryTitle", list.get(0).getGalleryTitle());
+		model.addAttribute("galleryContent", list.get(0).getGalleryContent());
+		model.addAttribute("galleryId", list.get(0).getGalleryId());
+		return "gallery/updateGallery";
+	}
+	
 	@RequestMapping(value="/deleteGallery", method=RequestMethod.GET)
 	public String deleteGallery(@RequestParam(value="galleryId",required=true)int galleryId) {
 		logger.debug("GalleryController.deleteGallery get호출");
 		logger.debug("galleryId: "+galleryId);
+		/*
+		 * 삭제요청이 들어온 gallery정보를 서비스에 넘겨 삭제처리를 해준다
+		 */
 		String path = SystemPath.DOWNLOAD_PATH_2;
 		galleryService.deleteGallery(galleryId, path);
 		return "redirect:/getGalleryList";
@@ -35,6 +59,9 @@ public class GalleryController {
 	public String getGalleryOne(@RequestParam(value="galleryId",required=true)int galleryId,Model model) {
 		logger.debug("GalleryController.getGalleryOne get호출");
 		logger.debug("galleryId: "+galleryId);
+		/*
+		 * 선택한 gallery의 상세화면에 보여줄 데이터를 서비스에 요청한다
+		 */
 		List<Gallery> list = galleryService.getGalleryOne(galleryId);
 		model.addAttribute("galleryFileList", list.get(0).getGalleryFile());
 		model.addAttribute("galleryTitle", list.get(0).getGalleryTitle());
@@ -46,6 +73,9 @@ public class GalleryController {
 	@RequestMapping(value="/getGalleryList", method=RequestMethod.GET)
 	public String getGalleryList(Model model) {
 		logger.debug("GalleryController.getGalleryList get호출");
+		/*
+		 * 서비스에서 gallery 전체리스트를 요청하여 화면에 뿌려준다
+		 */
 		List<Gallery> list = galleryService.getGalleryList();
 		model.addAttribute("list", list);
 		return "gallery/getGalleryList";
@@ -72,6 +102,9 @@ public class GalleryController {
 				return "gallery/addGallery";
 			}
 		}
+		/*
+		 * 이미지파일만 들어왔다면 등록처리를 해준다
+		 */
 		String path = SystemPath.DOWNLOAD_PATH_2;
 		logger.debug("path: "+path);
 		galleryService.addGallery(galleryRequest, path);

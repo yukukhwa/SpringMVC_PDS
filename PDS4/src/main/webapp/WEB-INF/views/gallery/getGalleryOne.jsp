@@ -21,8 +21,7 @@
 			<img width="400px" height="300px" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
 		</c:forEach>
 	</div>
-	<div>
-		<a href="${pageContext.request.contextPath}/deleteGallery?galleryId=${galleryId}">삭제하기</a>
-	</div>
+	<a href="${pageContext.request.contextPath}/updateGallery?galleryId=${galleryId}">수정하기</a>
+	<a href="${pageContext.request.contextPath}/deleteGallery?galleryId=${galleryId}">삭제하기</a>
 </body>
 </html>

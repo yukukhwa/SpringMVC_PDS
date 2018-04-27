@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service
-@Transactional
+@Service @Transactional
 public class GalleryService {
 
 	private static final Logger logger = LoggerFactory.getLogger(GalleryService.class);
@@ -21,7 +20,16 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
+	public void updateGallery(GalleryRequest galleryRequest,String path) {
+		logger.debug("GalleryService.updateGallery 메서드 호출");
+		
+	}
 	
+	/**
+	 * gallery 내용 및 이미지파일을 삭제해주는 서비스이다
+	 * @param galleryId
+	 * @param path
+	 */
 	public void deleteGallery(int galleryId,String path) {
 		logger.debug("GalleryService.deleteGallery 메서드 호출");
 		String fileName = null;

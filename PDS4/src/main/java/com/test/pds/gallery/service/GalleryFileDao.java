@@ -18,12 +18,26 @@ public class GalleryFileDao {
 	@Autowired private SqlSessionTemplate sqlSessionTemplate;
 	private final String NAMESPACE = "com.test.pds.gallery.service.GalleryFileMapper.";
 	
+	/**
+	 * 선택된 gallery에 수정하고자하는 이미지파일을 수정하는 메서드
+	 * @param galleryFile
+	 * @return 수정된 행의 수
+	 */
+	public int updateGalleryFile(GalleryFile galleryFile) {
+		return sqlSessionTemplate.update(NAMESPACE+"updateGalleryFile", galleryFile);
+	}
+	
+	/**
+	 * 삭제하고자하는 이미지파일리스트를 출력하는 메서드
+	 * @param galleryId
+	 * @return 이미지파일 리스트
+	 */
 	public List<GalleryFile> selectGalleryFileList(int galleryId) {
 		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryFileList", galleryId);
 	}
 	
 	/**
-	 * 선택한 gallery에 등록된 file를 삭제하는 메서드
+	 * 선택한 gallery에 등록된 이미지파일을 삭제하는 메서드
 	 * @param galleryId
 	 * @return 삭제된 행의 수
 	 */
