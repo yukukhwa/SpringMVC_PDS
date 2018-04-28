@@ -57,7 +57,7 @@
 					if($(this).val() != ''){
 						var extension = $(this).val().split('.').pop().toLowerCase();
 						console.log('extension: '+extension);
-						if($.inArray(extension,['xwd','xpm','xbm','rgb','ppm','pgm','pbm','pnm','ras','tif','tiff','ief','gif','jpg','jpeg'])==-1){
+						if($.inArray(extension,['xwd','xpm','xbm','rgb','ppm','pgm','pbm','pnm','ras','tif','tiff','ief','gif','jpg','jpeg','png'])==-1){
 							alert('이미지 파일만 등록가능합니다.');
 							insert = false;
 						}

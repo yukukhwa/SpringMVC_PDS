@@ -80,6 +80,7 @@
 	
 	<!-- getGalleryList.jsp 리스트화면에 보여줄 데이터를 select한다 -->
 	<select id="selectGalleryList"
+			parameterType="com.test.pds.Paging"
 			resultType="com.test.pds.gallery.service.Gallery">
 		SELECT
 			gallery.gallery_id AS galleryId
@@ -87,6 +88,7 @@
 			,gallery.gallery_content AS galleryContent
 		FROM gallery
 		ORDER BY gallery.gallery_id DESC
+		LIMIT #{beginRow},#{pagePerRow}
 		
 		<!-- select
 			gallery.galley_id as galleryId
@@ -94,6 +96,11 @@
 			,gallery.gallery_content as galleryContent
 		from gallery
 		order by gallery.galley_id desc -->
+	</select>
+	
+	<select id="countGalleryList"
+			resultType="integer">
+		SELECT COUNT(*) AS totalRow FROM gallery
 	</select>
 	
 	<!-- addGallery.jsp 폼 화면에서 받은 데이터를 데이터베이스에 insert시킨다 -->

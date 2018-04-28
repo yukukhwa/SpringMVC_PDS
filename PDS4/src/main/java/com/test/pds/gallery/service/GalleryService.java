@@ -2,7 +2,10 @@ package com.test.pds.gallery.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -11,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.test.pds.Paging;
 
 @Service @Transactional
 public class GalleryService {
@@ -22,6 +27,9 @@ public class GalleryService {
 	
 	public void updateGallery(GalleryRequest galleryRequest,String path,int galleryId) {
 		logger.debug("GalleryService.updateGallery 메서드 호출");
+		/*
+		 * gallery 타이틀이나 컨텐츠내용을 update하는 부분
+		 */
 		Gallery gallery = new Gallery();
 		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
 		gallery.setGalleryContent(galleryRequest.getGalleryContent());
@@ -29,60 +37,63 @@ public class GalleryService {
 		galleryDao.updateGallery(gallery);
 		
 		List<MultipartFile> list = galleryRequest.getMultipartFile();
-		for(int i=0; i<list.size(); i++) {
-			GalleryFile galleryFile = new GalleryFile();
-			
-			/*
-			 * 파일 이름 생성
-			 */
-			UUID uuid = UUID.randomUUID(); // 이름을 렌덤으로 생성해준다
-			logger.debug("uuid: "+uuid);
-			String fileName = uuid.toString().replace("-", "");
-			logger.debug("fileName: "+fileName);
-			galleryFile.setGalleryFileName(fileName);
-			
-			/*
-			 * 파일 확장자
-			 */
-			int fileNameSize = list.get(i).getOriginalFilename().indexOf(".");
-			String fileExt = list.get(i).getOriginalFilename().substring(fileNameSize+1);
-			logger.debug("fileExt: "+fileExt);
-			galleryFile.setGalleryFileExt(fileExt);
-			
-			/*
-			 * 파일 데이터 타입
-			 */
-			String fileType = list.get(i).getContentType();
-			logger.debug("fileType: "+fileType);
-			galleryFile.setGalleryFileType(fileType);
-			
-			/*
-			 * 파일 데이터 크기
-			 */
-			long fileSize = list.get(i).getSize();
-			logger.debug("fileSize: "+String.valueOf(fileSize));
-			galleryFile.setGalleryFileSize(fileNameSize);
-			
-			gallery.getGalleryFile().add(galleryFile);
-			
-			/*
-			 * 서버내 upload폴더에 화면에서 받아온 파일데이터를 수정하고자하는 파일에 덮어쓰기
-			 */
-			File file = new File(path+"\\"+fileName+"."+fileExt);
-			try {
-				list.get(i).transferTo(file);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		logger.debug("listSize: "+list.size());
+		/*
+		 * 이미지파일 update하는 부분
+		 */
+		if(list.size() != 0) {
+			for(MultipartFile multipartFile : list) {
+				GalleryFile galleryFile = new GalleryFile();
+				/*
+				 * 파일 이름 생성
+				 */
+				UUID uuid = UUID.randomUUID(); // 이름을 렌덤으로 생성해준다
+				logger.debug("uuid: "+uuid);
+				String fileName = uuid.toString().replace("-", "");
+				logger.debug("fileName: "+fileName);
+				galleryFile.setGalleryFileName(fileName);
+				
+				/*
+				 * 파일 확장자
+				 */
+				int fileNameSize = multipartFile.getOriginalFilename().indexOf(".");
+				String fileExt = multipartFile.getOriginalFilename().substring(fileNameSize+1);
+				logger.debug("fileExt: "+fileExt);
+				galleryFile.setGalleryFileExt(fileExt);
+				
+				/*
+				 * 파일 데이터 타입
+				 */
+				String fileType = multipartFile.getContentType();
+				logger.debug("fileType: "+fileType);
+				galleryFile.setGalleryFileType(fileType);
+				
+				/*
+				 * 파일 데이터 크기
+				 */
+				long fileSize = multipartFile.getSize();
+				logger.debug("fileSize: "+String.valueOf(fileSize));
+				galleryFile.setGalleryFileSize(fileNameSize);
+				
+				gallery.getGalleryFile().add(galleryFile);
+				/*
+				 * 서버내 upload폴더에 화면에서 받아온 데이터와 같은 확장자로 임시파일 생성 후 업로드하고자 하는 파일데이터를 덮어쓰기
+				 */
+				File file = new File(path+"\\"+fileName+"."+fileExt);
+				try {
+					multipartFile.transferTo(file);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		}
-		for(GalleryFile file:gallery.getGalleryFile()) {
-			file.setGalleryId(galleryId);
-			logger.debug("file: "+file);
-			galleryFileDao.updateGalleryFile(file);
+			for(GalleryFile file:gallery.getGalleryFile()) {
+				file.setGalleryId(gallery.getGalleryId());
+				galleryFileDao.insertGalleryFile(file);
+			}
 		}
 	}
 	
@@ -134,10 +145,25 @@ public class GalleryService {
 	 * 등록된 gallery리스트를 출력해주는 서비스
 	 * @return gallery리스트
 	 */
-	public List<Gallery> getGalleryList() {
+	public Map<String,Object> getGalleryList(int currentPage,int pagePerRow) {
 		logger.debug("GalleryService.getGalleryList 메서드 호출");
-		logger.debug("list: "+ galleryDao.selectGalleryList());
-		return galleryDao.selectGalleryList();
+		int totalRow = galleryDao.countGalleryList();
+		Paging paging = new Paging(totalRow, pagePerRow, currentPage);
+		logger.debug(paging.toString());
+		List<Integer> pageList = new ArrayList<Integer>();
+		if(totalRow != 0) {
+			for(int i=paging.getStartPage(); i<=paging.getEndPage(); i++) {
+				pageList.add(i);
+			}
+		}
+		List<Gallery> list = galleryDao.selectGalleryList(paging);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", list);
+		map.put("currentPage", currentPage);
+		map.put("totalPage", paging.getTotalPage());
+		map.put("pagePerRow", pagePerRow);
+		map.put("pageList", pageList);
+		return map;
 	}
 	
 	/**

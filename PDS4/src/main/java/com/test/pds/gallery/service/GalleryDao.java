@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.test.pds.Paging;
 /*
  * 데이터베이스 pds내 테이블 gallery에 접근하는 Dao
  */
@@ -56,9 +58,14 @@ public class GalleryDao {
 	 * 등록된 gallery들의 리스트르를 보여주는 메서드
 	 * @return gallery리스트
 	 */
-	public List<Gallery> selectGalleryList() {
+	public List<Gallery> selectGalleryList(Paging paging) {
 		logger.debug("GalleryDao.selectGalleryList 메서드 호출");
-		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryList");
+		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryList",paging);
+	}
+	
+	public int countGalleryList() {
+		logger.debug("GalleryDao.countGalleryList 메서드 호출");
+		return sqlSessionTemplate.selectOne(NAMESPACE+"countGalleryList");
 	}
 	
 	/**

@@ -1,6 +1,8 @@
 package com.test.pds;
 
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,13 +83,19 @@ public class GalleryController {
 	}
 	
 	@RequestMapping(value="/getGalleryList", method=RequestMethod.GET)
-	public String getGalleryList(Model model) {
+	public String getGalleryList(Model model
+								,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+								,@RequestParam(value="pagePerRow",defaultValue="5")int pagePerRow) {
 		logger.debug("GalleryController.getGalleryList get호출");
 		/*
 		 * 서비스에서 gallery 전체리스트를 요청하여 화면에 뿌려준다
 		 */
-		List<Gallery> list = galleryService.getGalleryList();
-		model.addAttribute("list", list);
+		Map<String, Object> map = galleryService.getGalleryList(currentPage, pagePerRow);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("currentPage", map.get("currentPage"));
+		model.addAttribute("totalPage", map.get("totalPage"));
+		model.addAttribute("pagePerRow", map.get("pagePerRow"));
+		model.addAttribute("pageList", map.get("pageList"));
 		return "gallery/getGalleryList";
 	}
 	

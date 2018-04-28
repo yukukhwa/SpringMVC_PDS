@@ -72,7 +72,7 @@ public class Paging {
 		}
 	}
 	public int getCurrentBlock() {
-		return currentBlock*PAGEPERBLOCK-(PAGEPERBLOCK-1);
+		return currentBlock;
 	}
 	public void setCurrentBlock() {
 		this.currentBlock = currentPage/PAGEPERBLOCK;

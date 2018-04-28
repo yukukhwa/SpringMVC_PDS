@@ -1,6 +1,5 @@
 package com.test.pds.gallery.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +14,6 @@ public class GalleryRequest {
 	 */
 	private List<MultipartFile> multipartFile;
 	
-	public GalleryRequest() {
-		this.multipartFile = new ArrayList<MultipartFile>();
-	}
 	public String getGalleryTitle() {
 		return galleryTitle;
 	}
