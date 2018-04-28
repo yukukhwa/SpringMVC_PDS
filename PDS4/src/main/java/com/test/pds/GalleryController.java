@@ -26,10 +26,12 @@ public class GalleryController {
 	
 	@RequestMapping(value="/updateGallery", method=RequestMethod.POST)
 	public String updateGallery(@RequestParam(value="galleryId",required=true)int galleryId
-								,@RequestParam(value="galleryTitle",required=false)String galleryTitle
-								,@RequestParam(value="galleryContent",required=false)String galleryContent
-								,@RequestParam(value="multipartFile",required=false)List<MultipartFile> multipartFile) {
+								,@RequestParam(value="galleryTitle",required=true)String galleryTitle
+								,@RequestParam(value="galleryContent",required=true)String galleryContent
+								,@RequestParam(value="multipartFile",required=false)List<MultipartFile> multipartFile
+								,@RequestParam(value="deleteImg",required=false)List<String> deleteImg) {
 		logger.debug("GalleryController.updateGallery post호출");
+		logger.debug("deleteImgList: "+deleteImg);
 		GalleryRequest galleryRequest = new GalleryRequest();
 		galleryRequest.setGalleryTitle(galleryTitle);
 		galleryRequest.setGalleryContent(galleryContent);
@@ -37,7 +39,7 @@ public class GalleryController {
 		logger.debug("galleryRequest: "+galleryRequest);
 		String path = SystemPath.DOWNLOAD_PATH_2;
 		logger.debug("path: "+path);
-		galleryService.updateGallery(galleryRequest, path, galleryId);
+		galleryService.updateGallery(galleryRequest, path, galleryId, deleteImg);
 		return "redirect:/getGalleryList";
 	}
 	

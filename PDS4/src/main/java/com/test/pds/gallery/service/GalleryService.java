@@ -25,7 +25,7 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
-	public void updateGallery(GalleryRequest galleryRequest,String path,int galleryId) {
+	public void updateGallery(GalleryRequest galleryRequest,String path,int galleryId,List<String> deleteImg) {
 		logger.debug("GalleryService.updateGallery 메서드 호출");
 		/*
 		 * gallery 타이틀이나 컨텐츠내용을 update하는 부분
@@ -93,6 +93,25 @@ public class GalleryService {
 			for(GalleryFile file:gallery.getGalleryFile()) {
 				file.setGalleryId(gallery.getGalleryId());
 				galleryFileDao.insertGalleryFile(file);
+			}
+		}
+		
+		logger.debug("deleteImg.size(): "+deleteImg.size());
+		if(deleteImg.size() != 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("galleryId", galleryId);
+			for(String fileNameExt : deleteImg) {
+				logger.debug("파일명: "+fileNameExt);
+				File file = new File(path+"\\"+fileNameExt);
+				logger.debug("삭제 전 파일 존재여부 확인"+file.exists());
+				file.delete();
+				logger.debug("삭제 후 파일 존재여부 확인"+file.exists());
+				int fileNameSize = fileNameExt.indexOf(".");
+				String fileName = fileNameExt.substring(0,fileNameSize);
+				logger.debug("fileName: "+fileName);
+				map.put("galleryFileName", fileName);
+				logger.debug(map.toString());
+				galleryFileDao.deleteImgFile(map);
 			}
 		}
 	}

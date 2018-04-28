@@ -1,6 +1,7 @@
 package com.test.pds.gallery.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -19,12 +20,11 @@ public class GalleryFileDao {
 	private final String NAMESPACE = "com.test.pds.gallery.service.GalleryFileMapper.";
 	
 	/**
-	 * 선택된 gallery에 수정하고자하는 이미지파일을 수정하는 메서드
-	 * @param galleryFile
-	 * @return 수정된 행의 수
+	 * 업데이트화면에서 이미지 삭제요청이 들어오면 이미지파일을 삭제하는 메서드
+	 * @return 삭제된 행의 수
 	 */
-	public int updateGalleryFile(GalleryFile galleryFile) {
-		return sqlSessionTemplate.update(NAMESPACE+"updateGalleryFile", galleryFile);
+	public int deleteImgFile(Map<String, Object> map) {
+		return sqlSessionTemplate.update(NAMESPACE+"deleteImgFile", map);
 	}
 	
 	/**

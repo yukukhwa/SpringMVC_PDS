@@ -2,20 +2,12 @@
 <!DOCTYPE mapper 
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.test.pds.gallery.service.GalleryFileMapper">
-	<update id="updateGalleryFile"
-			parameterType="com.test.pds.gallery.service.GalleryFile">
-		UPDATE gallery_file
-		SET
-			gallery_file_name=#{galleryFileName}
-			,gallery_file_ext=#{galleryFileExt}
-			,gallery_file_type=#{galleryFileType}
-			,gallery_file_size=#{galleryFileSize}
-		WHERE
-			gallery_id=#{galleryId}
-		AND
-			gallery_file_id=#{galleryFileId}
-	</update>
+<mapper namespace="com.test.pds.gallery.service.GalleryFileMapper">	
+	<!-- 업데이트 화면에서 img파일 삭제요청이 들어오면 연동되어있는 galleryFile를 삭제해준다 -->
+	<delete id="deleteImgFile"
+			parameterType="java.util.Map">
+		delete from gallery_file where gallery_id = #{galleryId} AND gallery_file_name = #{galleryFileName}
+	</delete>
 	
 	<!-- gallery 삭제요청이 들어오면 연동되어있는 galleryFile를 삭제해준다 -->
 	<delete id="deleteGalleryFile"
