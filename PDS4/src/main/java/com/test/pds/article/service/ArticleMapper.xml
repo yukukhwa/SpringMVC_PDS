@@ -3,15 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.test.pds.article.service.ArticleMapper">
-
-	<!-- delete Article -->
-	<delete id="deleteArticle"
-			parameterType="int">		
-			DELETE 
-			FROM article 
-			WHERE article_id=#{articleId}
-	</delete>
-
+	
 	<!-- select resultMap -->
     <resultMap id="resultArticleMap" type="com.test.pds.article.service.Article">
         <id column="article_id" property="articleId" />
@@ -25,6 +17,20 @@
             <result property="articleFileType" column="article_file_type" />
         </collection>
 	</resultMap>
+	
+	<!-- delete Article -->
+	<delete id="deleteArticle"
+			parameterType="int">		
+			DELETE 
+			FROM article 
+			WHERE article_id=#{articleId}
+	</delete>
+	
+	<!-- article List total count -->
+	<select id="countArticleList"
+			resultType="int">
+		SELECT COUNT(*) AS totalRow FROM article			
+	</select>
 		
 	<!-- article join article_file selectOne -->
 	<select id="selectArticleOne"
@@ -46,7 +52,7 @@
         
     <!-- article join article_file selectList -->
     <select id="selectArticleList"
-		parameterType="com.test.pds.article.service.Article"
+		parameterType="com.test.pds.Paging"
 		resultMap="resultArticleMap">
 			SELECT 
 				article.article_id
@@ -59,7 +65,8 @@
 			FROM article
 			INNER JOIN article_file
 			ON article.article_id = article_file.article_id
-			
+			ORDER BY article.article_id DESC <!-- 최근입력된 레코드부터 정렬 -->
+			LIMIT #{beginRow}, #{pagePerRow}
 	</select>
     
     

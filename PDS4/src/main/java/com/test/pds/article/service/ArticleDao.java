@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.test.pds.Paging;
+
 
 @Repository
 public class ArticleDao {	
@@ -17,29 +19,31 @@ public class ArticleDao {
 	
 	// delete Article 메서드
 	public int deleteArticle(int articleId) {
-		LOGGER.debug("ArticleDao deleteArticle");
+		LOGGER.debug("deleteArticle 호출");
 		return sqlSession.delete(NAMESPACE+"deleteArticle", articleId);
 	}
 	
 	// selectOne 메서드
 	public List<Article> selectArticleOne(Article article) {
-		LOGGER.debug("ArticleDao selectArticleOne");	
+		LOGGER.debug("selectArticleOne 호출");	
 		return sqlSession.selectList(NAMESPACE+"selectArticleOne", article);		
 	}
 	
-	// article List 메서드
-	// resultMap의 결과를 List로 받아 리턴
-	public List<Article> selectArticleList() {
-		LOGGER.debug("ArticleDao selectArticleList");
-		//beginRow, perPage 입력받아야함
-		return sqlSession.selectList(NAMESPACE+"selectArticleList");
+	// article List Count 메서드
+	public int countAtricleList() {
+		LOGGER.debug("countAtricleList 호출");
+		return sqlSession.selectOne(NAMESPACE+"countArticleList");		
 	}
-	
+			
+	// article List 메서드
+	public List<Article> selectArticleList(Paging paging) {
+		LOGGER.debug("selectArticleList 호출");
+		return sqlSession.selectList(NAMESPACE+"selectArticleList", paging);
+	}	
 	
 	// article 입력 메서드
 	public int insertArticle(Article article) {
-		LOGGER.debug("ArticleDao.insertArticle");
-		LOGGER.debug("article : " + article);
+		LOGGER.debug("insertArticle 호출");
 		sqlSession.insert(NAMESPACE+"insertArticle", article);
 		return article.getArticleId();
 	}
