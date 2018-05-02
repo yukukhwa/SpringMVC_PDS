@@ -1,0 +1,40 @@
+프로세스 기능정리 = 참고해야할 내용중에 하나가 uml => 유스케어스 다이어그램 / 스토리보드 목업 프로그램
+
+1. 도시농업
+학교( 농촌 특성화 대학, 혹은 고등학교) 와 팜 체험 교육(및 관광)
+
+학교 텃밭같은 곳에 스마트팜 체험 및 보급해 기술에 대해 좀더 알리고 농사재배도 기존 농사체험보다 적은 노동으로 고품질의 생산량을 얻을 수 있도록..
+file:///C:/Users/smart-202-10/Downloads/195_3.pdf
+http://www.nongsaro.go.kr/portal/contentsFileView.do?cntntsNo=207171&fileSeCode=185001&fileSn=1
+https://blog.naver.com/sosh13/220641426196
+작물 뿐만 아니라 화훼 식물까지도
+
+체험- 가상으로만
+2. 단순 농산물생산에만 그치지 않고 농식품 개발까지
+예를들어 잼으로 유명한 기업 복음자리와 팜을 이용한 고품질 작물을 결합하여 
+기업은 가격에 비해 고품질인 작물로 대량생산을 할 수 있고 팜은 고정적인 일정수입을 안정적이게 얻을 수 있도록..
+이러한 농식품들은 지역 축제에 개발한 농식품을 판매할 수도 있고 
+팜에서 생산된 농산물과 기술을 알려 체험 및 지역활성화 까지 할 수 있지 않을까 - 잘 되면 일자리 창출까지..
+
+http://www.gjnewsplaza.com/news/articleView.html?idxno=7152
+
+2.1 농산물->화장품원료로..
+
+
+주말농가--
+체험을 넣자면
+9000개 생산할 수 있다는 땅
+주말농가-그사람이 원하면 주말농가 모집해서 만드는 매개 공간
+농가에대한 신뢰 / 
+-
+http://www.agriedu.net/hrm/index.do
+
+https://agriacademy.jeonbuk.go.kr/_html/scontent10/01_01.php
+http://edu.at.or.kr/EgovPageLinkHtml.do?link=edu/eduCyber&baseMenuNo=101060000
+
+file:///C:/Users/smart-202-10/Downloads/%EC%8A%A4%EB%A7%88%ED%8A%B8%20%ED%8C%9C%20%EC%9A%B4%EC%98%81%EC%8B%A4%ED%83%9C%20%EB%B6%84%EC%84%9D%20%EB%B0%8F%20%EB%B0%9C%EC%A0%84%EB%B0%A9%ED%96%A5%20%EC%97%B0%EA%B5%AC.pdf
+-
+http://www.thekpm.com/news/articleView.html?idxno=8168
+스마트팜 애로사항
+1.시공업체의 사후기술지원서비스 및 교육 미흡
+2.기자재의 비표준화로 인한 낮은 호환성 

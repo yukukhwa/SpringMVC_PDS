@@ -10,7 +10,7 @@
 	<h1>getNoticeList</h1>
 		<table border="1">
 			<caption>getNoticeList</caption>
-				<c:forEach var="notice" items="${list}" >
+				<c:forEach var="notice" items="${list}" varStatus="status">
 					<thead>
 						<tr>
 							<th>Notice Id</th>
@@ -22,13 +22,22 @@
 					</thead>
 					<tbody>
 						<tr>
-								<td>${notice.noticeId}</td>
-								<td>${notice.noticeTitle}</td>
-								<td>${notice.noticeContent}</td>		
-								<td>
-									<a href="${pageContext.request.contextPath}/resources/upload/${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}" download>${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}</a>
-								</td>
-								<td><a href="#">삭제</a></td>
+							<td>
+								${notice.noticeId}
+							</td>
+							<td>
+								${notice.noticeTitle}
+							</td>
+							<td>
+								${notice.noticeContent}
+							</td>		
+							<td>
+								<a href="${pageContext.request.contextPath}/resources/upload/${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}"
+										 download>${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}</a>
+							</td>
+							<td>
+								<a href="${pageContext.request.contextPath}/deleteNotice?noticeId=${notice.noticeId}">삭제</a>
+							</td>
 						</tr>
 				</c:forEach>
 		</table>

@@ -4,6 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.test.pds.notice.service.NoticeFileMapper">
+	<!-- 해당 notice를 삭제할때 noticeFile도 같이 삭제함 -->
+	<delete id="deleteNoticeFile"
+			parameterType="com.test.pds.notice.service.NoticeFile">
+		DELETE FROM notice_file WHERE notice_id=#{noticeId}		
+	</delete>
+
+ 	<!--  notice File의 내용들을 조회한다 (detail뷰를 할지말지 결정을 안했지만 일단 mapper만 써봄)-->
+ 	<select id="selectNoticeFile"
+ 			resultType="com.test.pds.notice.service.NoticeFile">
+ 		SELECT notice_file.notice_file_id
+				, notice_file.notice_id
+				, notice_file_name
+				, notice_file_ext
+				, notice_file_type
+				, notice_file_size
+		FROM notice_file
+		ORDER BY notice_file_id DESC
+ 	</select>
+ 	
  	<!-- notice의 파일 내용들을 인서트 한다 -->
  	<insert id="insertNoticeFile" 
  			parameterType="com.test.pds.notice.service.NoticeFile">

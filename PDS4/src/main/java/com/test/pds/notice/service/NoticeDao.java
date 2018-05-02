@@ -15,6 +15,12 @@ public class NoticeDao {
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeDao.class);
 	private final String NAMESPACE = "com.test.pds.notice.service.NoticeMapper.";
 	
+	// 해당 notice를 삭제하는 메서드 
+	public int deleteNotice(int noticeId) {
+		LOGGER.debug("NoticeDao.deleteNotice 메서드 호출");
+		return sqlSession.delete(NAMESPACE+"deleteNotice",noticeId);
+	}
+	
 	// notice의 카운트 조회하는 메서드
 	public int selectNoticeCount() {
 		LOGGER.debug("NoticeDao.selectNoticeCount 호출");

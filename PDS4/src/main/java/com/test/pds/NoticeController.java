@@ -1,7 +1,5 @@
 package com.test.pds;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.test.pds.notice.service.Notice;
 import com.test.pds.notice.service.NoticeRequest;
 import com.test.pds.notice.service.NoticeService;
 
@@ -22,6 +21,14 @@ import com.test.pds.notice.service.NoticeService;
 public class NoticeController {
 	@Autowired private NoticeService noticeService;
 		private final static Logger LOGGER = LoggerFactory.getLogger(NoticeController.class);
+		
+		@RequestMapping(value="/deleteNotice", method=RequestMethod.GET)
+		public String deleteNotice(int noticeId) {
+			System.out.println("NoticeController noticeId===>"+noticeId);
+			LOGGER.debug("noticeController.deleteNotice 호출");
+			noticeService.deleteNotice(noticeId);
+			return "redirect:/getNoticeList";
+		}
 		
 		/* getNoticeList에서 get으로 요청받아 notice/getNoticeList로 포워드한다
 		 * 페이징하기 위해 currentPage와 pagePerRow를 받아 Service에 넘겨 서비스에서 페이징처리한다.*/

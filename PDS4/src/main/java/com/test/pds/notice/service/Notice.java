@@ -1,7 +1,5 @@
 package com.test.pds.notice.service;
 
-import java.util.List;
-
 /*notice db에 올라가는*/
 public class Notice {
 	private int noticeId; // notice_id
@@ -33,12 +31,11 @@ public class Notice {
 	public void setNoticeFile(NoticeFile noticeFile) {
 		this.noticeFile = noticeFile;
 	}
+	
 	@Override
 	public String toString() {
 		return "Notice [noticeId=" + noticeId + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
 				+ ", noticeFile=" + noticeFile + "]";
 	}
-	
-	
 }
 

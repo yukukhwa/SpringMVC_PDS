@@ -20,6 +20,12 @@
         </collection>
     </resultMap>
     
+    <!-- notice 삭제 -->
+    <delete id="deleteNotice"
+    		parameterType="com.test.pds.notice.service.Notice">
+    	DELETE FROM notice WHERE notice_id = #{noticeId}
+    </delete>
+    
     <!-- notice 카운트 구하기 -->
 	<select id="selectNoticeCount"
 			resultType="integer">
@@ -38,8 +44,8 @@
  				, notice_file_ext
  				, notice_file_type
  				, notice_file_size
-		FROM notice
-   		INNER JOIN notice_file
+		FROM notice_file
+   		INNER JOIN notice
     	ON notice.notice_id = notice_file.notice_id
     	LIMIT #{beginRow}, #{pagePerRow} 
  	</select>
