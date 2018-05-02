@@ -2,7 +2,10 @@ package com.test.pds.article.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.Paging;
 import com.test.pds.SystemPath;
 
 @Service
@@ -23,33 +27,43 @@ public class ArticleService {
 	
 	// Article 삭제
 	public void deleteArticle(Article article) {
-		LOGGER.debug("ArticleService deleteArticle");
+		LOGGER.debug("deleteArticle 호출");
 		ArticleFile articleFile = new ArticleFile();
 		articleFile.setArticleId(article.getArticleId());
 		int resultArticle = articleDao.deleteArticle(articleFileDao.deleteArticleFile(articleFile));
-		LOGGER.debug("삭제성공시 1 : " + resultArticle);
 	}
 	
 	// Article 셀렉트원
 	public List<Article> selectArticleOne(Article article) {
-		LOGGER.debug("ArticleService selectArticleOne");
+		LOGGER.debug("selectArticleOne 호출");
 		return articleDao.selectArticleOne(article);
 	}
 	
 	// Article 리스트
-	public List<Article> selectArticleList() {
-		LOGGER.debug("ArticleService selectArticleList");
-		// 페이징
-		// 레코드시작행beginRow = 0, 5, 10, 15, ... -> /perPage 하면 0, 1, 2, 3, 4, ... beginRow=(beginRow+1)*perPage
-		// perPage = 5; 입력파라미터로 받기
-		// listPage = (총 레코드수/perPage) 
-		return articleDao.selectArticleList();
+	public Map<String, Object> selectArticleList(int currentPage, int pagePerRow) {
+		LOGGER.debug("selectArticleList 호출");
+		int totalRow = articleDao.countAtricleList();
+		// 페이징 메서드  Paging(totalRow, pagePerRow, currentPage)		
+		Paging paging = new Paging(totalRow, pagePerRow, currentPage);
+
+		List<Integer> pagelist = new ArrayList<Integer>();
+		if(totalRow != 0) { // 레코드가 있으면
+			for(int i=paging.getStartPage(); i<=paging.getEndPage(); i++) { // 1~5, 6~10, ...
+				pagelist.add(i);
+			}
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", articleDao.selectArticleList(paging));
+		map.put("pageList", pagelist);
+		map.put("totalPage", paging.getTotalPage());
+		map.put("pagePerRow", pagePerRow);
+		map.put("currentPage", currentPage);		
+		return map;
 	}
 
 	// Article 등록(제목,내용 + 파일 업로드)
 	public void insertArticle(ArticleRequest articleRequest) {
-		LOGGER.debug("ArticleService.addArticle");
-		LOGGER.debug("articleRequest : "+articleRequest);	
+		LOGGER.debug("insertArticle 호출");
 		
 		// 입력으로 쓸 객체 article 세팅(id(auto), title, content, articlefile)
 		Article article = new Article();
@@ -63,11 +77,10 @@ public class ArticleService {
 		ArticleFile articleFile = new ArticleFile();
 		
 		// file데이터 담을 multipartFile객체를 생성
-		List<MultipartFile> list = articleRequest.getMultipartFile();
+		List<MultipartFile> list = articleRequest.getMultipartFile();;
 		
 		// article_id당 여러개의 파일이 올라가야 하니까 리스트[0] 올리고, 리스트[1] 올리고, ... 리스트[N]까지.
 		for(MultipartFile multipartFile : list){
-						
 			// 파일이름
 			UUID uuid = UUID.randomUUID(); // 중복되는 이름을 가질수 없도록 자동으로 이름을 생성해주는 api
 			String fileName = uuid.toString();
@@ -102,9 +115,9 @@ public class ArticleService {
 			// for문이 돌때마다 멀티파트파일 리스트[0,1,2,...] 
 			// 세팅된 articlefile 객체가 article에 세팅된다. 
 			article.setArticleFile(articleFile); 
+			
 			// for문이 돌때마다 파일인서트 
-			articleFileDao.insertArticleFile(articleFile); 			
-		}				
-	
+			articleFileDao.insertArticleFile(articleFile);
+		}					
 	}
 }

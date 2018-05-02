@@ -14,16 +14,14 @@ public class ArticleFileDao {
 	
 	// ArticleFile 삭제
 	public int deleteArticleFile(ArticleFile articleFile) {
-		LOGGER.debug("ArticleFileDao deleteArticleFile");
-		LOGGER.debug("articleFile.articleId : " + articleFile.getArticleId());
+		LOGGER.debug("deleteArticleFile 호출");
 		sqlSession.delete(NAMESPACE+"deleteArticleFile", articleFile);
 		return articleFile.getArticleId();
 	}
 	
 	// ArticleFile 입력
 	public int insertArticleFile(ArticleFile articleFile) {
-		LOGGER.debug("ArticleFileDao insertArticleFile");
-		LOGGER.debug("articleFile.articleId : " + articleFile.getArticleId());
+		LOGGER.debug("insertArticleFile 호출");
 		return sqlSession.insert(NAMESPACE+"insertArticleFile", articleFile);
 	}
 }

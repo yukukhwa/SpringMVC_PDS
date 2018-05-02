@@ -25,10 +25,16 @@
             <result property="resumeFileType" column="resume_file_type" />
         </association>
 	</resultMap>
+	
+	<!-- resume List total count -->
+	<select id="countResumeList"
+			resultType="int">
+		SELECT COUNT(*) AS totalRow FROM resume
+	</select>
 
 	<!-- resume 리스트 select -->
 	<select id="selectResumeList"
-			parameterType="com.test.pds.resume.service.Resume"
+			parameterType="com.test.pds.Paging"
 			resultMap="resultResumeMap">
 			SELECT
 				resume.resume_id
@@ -40,7 +46,9 @@
 				,resume_file.resume_file_type
 			FROM resume
 			INNER JOIN resume_file
-			ON resume.resume_id = resume_file.resume_id;
+			ON resume.resume_id = resume_file.resume_id
+			ORDER BY resume.resume_id DESC
+			LIMIT #{beginRow}, #{pagePerRow}
 	</select>
 
 	<!-- resume 입력하고난 다음(after) 셀렉트키로 PK(resumeId)를 리턴 -->

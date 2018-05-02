@@ -1,5 +1,7 @@
 package com.test.pds;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,17 +43,24 @@ public class ArticleController {
 	// getArticleList.jsp 포워드
 	// file이 있는 레코드만 출력
 	@RequestMapping(value="/getArticleList", method=RequestMethod.GET)
-	public String selectArticleList(Model model) {
-		LOGGER.debug("ArticleController selectArticleList GET");
-		model.addAttribute("list", articleService.selectArticleList());
+	public String selectArticleList(Model model,
+									@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+									@RequestParam(value="pagePerRow", defaultValue="3") int pagePerRow) {
+		LOGGER.debug("selectArticleList GET 호출");
+		Map<String, Object> map = articleService.selectArticleList(currentPage, pagePerRow);
+		// model에 매핑 풀어서 넘겨주기
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("pageList", map.get("pageList"));
+		model.addAttribute("totalPage", map.get("totalPage"));
+		model.addAttribute("pagePerRow", map.get("pagePerRow"));
+		model.addAttribute("currentPage", map.get("currentPage"));
 		return "article/getArticleList";
 	}	
 	
 	// addArticle.jsp 에서 보낸 articleRequest 받아 입력처리 후 home으로 리다이렉트
 	@RequestMapping(value = "/addArticle", method = RequestMethod.POST)
 	public String insertArticle(ArticleRequest articleRequest) {
-		LOGGER.debug("ArticleController insertArticle POST");
-		LOGGER.debug("articleRequest : " + articleRequest);
+		LOGGER.debug("insertArticle POST 호출");
 		articleService.insertArticle(articleRequest);
 		return "redirect:/";
 	}
@@ -59,7 +68,7 @@ public class ArticleController {
 	// addArticle.jsp로 포워드
 	@RequestMapping(value = "/addArticle", method = RequestMethod.GET)
 	public String insertArticle() {
-		LOGGER.debug("ArticleController insertArticle GET");
+		LOGGER.debug("insertArticle GET호출");
 		return "article/addArticle";
 	}	
 }
