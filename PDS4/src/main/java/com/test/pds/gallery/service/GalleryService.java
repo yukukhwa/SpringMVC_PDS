@@ -25,8 +25,16 @@ public class GalleryService {
 	@Autowired private GalleryDao galleryDao;
 	@Autowired private GalleryFileDao galleryFileDao;
 	
+	/**
+	 * gallery(gallery-galleryFile)를 수정하는 서비스
+	 * @param galleryRequest
+	 * @param path
+	 * @param galleryId
+	 * @param deleteImg
+	 */
 	public void updateGallery(GalleryRequest galleryRequest,String path,int galleryId,List<String> deleteImg) {
-		logger.debug("GalleryService.updateGallery 메서드 호출");
+		logger.debug("서비스 호출");
+		logger.info("서비스 호출");
 		/*
 		 * gallery 타이틀이나 컨텐츠내용을 update하는 부분
 		 */
@@ -40,8 +48,9 @@ public class GalleryService {
 		logger.debug("listSize: "+list.size());
 		/*
 		 * 이미지파일 update하는 부분
+		 * 만약 새로 추가되는 이미지 파일이 있다면 들록하고, 삭제되는 이미지 파일이 있다면 삭제한다
 		 */
-		if(list.size() != 0) {
+		if(list.size() != 0) {// 추가되는 이미지 파일있다면 새로 등록해주는 부분
 			for(MultipartFile multipartFile : list) {
 				GalleryFile galleryFile = new GalleryFile();
 				/*
@@ -96,8 +105,7 @@ public class GalleryService {
 			}
 		}
 		
-		logger.debug("deleteImg.size(): "+deleteImg.size());
-		if(deleteImg.size() != 0) {
+		if(deleteImg != null) {// 삭제되는 이미지 파일이 있다면 삭제하는 부분
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("galleryId", galleryId);
 			for(String fileNameExt : deleteImg) {

@@ -17,6 +17,7 @@
 		</collection>
 	</resultMap>
 	
+	<!-- gallery 수정 요청이 들어오면 해당 gallery의 타이틀과 컨텐츠를 수정한다 -->
 	<update id="updateGallery"
 			parameterType="com.test.pds.gallery.service.Gallery">
 		UPDATE gallery

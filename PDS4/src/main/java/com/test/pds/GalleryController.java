@@ -31,7 +31,11 @@ public class GalleryController {
 								,@RequestParam(value="multipartFile",required=false)List<MultipartFile> multipartFile
 								,@RequestParam(value="deleteImg",required=false)List<String> deleteImg) {
 		logger.debug("GalleryController.updateGallery post호출");
-		logger.debug("deleteImgList: "+deleteImg);
+		logger.debug(String.valueOf(deleteImg));
+		/*
+		 * 수정되는 데이터중 작성자id와 게시글타이틀 및 컨텐츠내용은 꼭 받아야하며 이미지파일은 추가하거나 삭제하는 상황은 일정하지 않으므로 꼭 받아오지 않아도 된다
+		 * 화면에서 받아온 데이터를 GalleryRequest에 답고 파일을 담고있는 폴더위치와 함께 서비스롤 넘겨준다
+		 */
 		GalleryRequest galleryRequest = new GalleryRequest();
 		galleryRequest.setGalleryTitle(galleryTitle);
 		galleryRequest.setGalleryContent(galleryContent);
@@ -48,6 +52,9 @@ public class GalleryController {
 								,Model model) {
 		logger.debug("GalleryController.updateGallery get호출");
 		logger.debug("galleryId: "+galleryId);
+		/*
+		 * gallery상세화면에서 수정화면요청이 들어오면 수정가능한 화면에 다시한번 상세데이터를 보내준다
+		 */
 		List<Gallery> list = galleryService.getGalleryOne(galleryId);
 		model.addAttribute("galleryFileList", list.get(0).getGalleryFile());
 		model.addAttribute("galleryTitle", list.get(0).getGalleryTitle());
