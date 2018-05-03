@@ -23,5 +23,6 @@
 	</c:forEach>
 	<a href="${pageContext.request.contextPath}/updateGallery?galleryId=${galleryId}">수정하기</a>
 	<a href="${pageContext.request.contextPath}/deleteGallery?galleryId=${galleryId}">삭제하기</a>
+	<a href="${pageContext.request.contextPath}/getGalleryList">목록으로</a>
 </body>
 </html>

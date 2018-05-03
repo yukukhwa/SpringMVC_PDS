@@ -24,6 +24,7 @@ public class GalleryFileDao {
 	 * @return 삭제된 행의 수
 	 */
 	public int deleteImgFile(Map<String, Object> map) {
+		logger.debug("deleteImgFile dao 실행");
 		return sqlSessionTemplate.update(NAMESPACE+"deleteImgFile", map);
 	}
 	
@@ -33,6 +34,7 @@ public class GalleryFileDao {
 	 * @return 이미지파일 리스트
 	 */
 	public List<GalleryFile> selectGalleryFileList(int galleryId) {
+		logger.debug("selectGalleryFileList dao 실행");
 		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryFileList", galleryId);
 	}
 	
@@ -42,7 +44,7 @@ public class GalleryFileDao {
 	 * @return 삭제된 행의 수
 	 */
 	public int deleteGalleryFile(int galleryId) {
-		logger.debug("GalleryFileDao.deleteGalleryFile 메서드 실행");
+		logger.debug("deleteGalleryFile dao 실행");
 		return sqlSessionTemplate.delete(NAMESPACE+"deleteGalleryFile", galleryId);
 	}
 	

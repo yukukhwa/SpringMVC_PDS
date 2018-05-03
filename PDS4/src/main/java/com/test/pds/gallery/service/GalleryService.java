@@ -107,41 +107,44 @@ public class GalleryService {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("galleryId", galleryId);
 			for(String fileNameExt : deleteImg) {
-				logger.debug("파일명: "+fileNameExt);
+				logger.debug("파일풀네임: "+fileNameExt);
 				File file = new File(path+"\\"+fileNameExt);
-				logger.debug("삭제 전 파일 존재여부 확인"+file.exists());
+				logger.debug("삭제 전 파일 존재여부 확인: "+file.exists());
 				file.delete();
-				logger.debug("삭제 후 파일 존재여부 확인"+file.exists());
+				logger.debug("삭제 후 파일 존재여부 확인: "+file.exists());
 				int fileNameSize = fileNameExt.indexOf(".");
 				String fileName = fileNameExt.substring(0,fileNameSize);
-				logger.debug("fileName: "+fileName);
 				map.put("galleryFileName", fileName);
-				logger.debug(map.toString());
+				logger.debug("galleryFileMap(작성자&삭제하고자하는 파일명): "+map.toString());
 				galleryFileDao.deleteImgFile(map);
 			}
 		}
 	}
 	
 	/**
-	 * gallery 내용 및 이미지파일을 삭제해주는 서비스이다
+	 * gallery 내용 및 이미지파일을 전체삭제해주는 서비스이다
 	 * @param galleryId
 	 * @param path
 	 */
 	public void deleteGallery(int galleryId,String path) {
-		logger.debug("GalleryService.deleteGallery 메서드 호출");
+		logger.debug("deleteGallery 서비스 실행");
 		String fileName = null;
 		String fileExt = null;
 		List<GalleryFile> list = galleryFileDao.selectGalleryFileList(galleryId);
-		logger.debug("list: "+list);
-		for(GalleryFile galleryFile : list) {
+		logger.debug("DB에 저장되어있는 galleryFile목록: "+list);
+		for(GalleryFile galleryFile : list) {// DB내 파일목록을 삭제하기전 파일데이터목록을 삭제한다
 			fileName = galleryFile.getGalleryFileName();
 			fileExt = galleryFile.getGalleryFileExt();
 			logger.debug("파일명: "+fileName+"."+fileExt);
 			File file = new File(path+"\\"+fileName+"."+fileExt);
-			logger.debug("삭제 전 파일 존재여부 확인"+file.exists());
+			logger.debug("삭제 전 파일 존재여부 확인: "+file.exists());
 			file.delete();
-			logger.debug("삭제 후 파일 존재여부 확인"+file.exists());
+			logger.debug("삭제 후 파일 존재여부 확인: "+file.exists());
 		}
+		/*
+		 * DB내 galleryFile을 삭제후 gallery를 지운다
+		 * 외래키로 묶여있어 순서대로 지워야 한다, 반대로 지우면 에러발생!
+		 */
 		galleryFileDao.deleteGalleryFile(galleryId);
 		galleryDao.deleteGallery(galleryId);
 	}
@@ -152,9 +155,9 @@ public class GalleryService {
 	 * @return 선택한 gallry의 상세내용
 	 */
 	public List<Gallery> getGalleryOne(int galleryId) {
-		logger.debug("GalleryService.getGalleryOne 메서드 호출");
+		logger.debug("getGalleryOne 서비스 실행");
 		List<Gallery> list = galleryDao.selectGalleryOne(galleryId);
-		logger.debug("list: "+String.valueOf(list));
+		logger.debug("gallery목록: "+String.valueOf(list));
 		return list;
 	}
 	
@@ -171,10 +174,10 @@ public class GalleryService {
 	 * @return gallery리스트
 	 */
 	public Map<String,Object> getGalleryList(int currentPage,int pagePerRow) {
-		logger.debug("GalleryService.getGalleryList 메서드 호출");
+		logger.debug("getGalleryList 서비스 실행");
 		int totalRow = galleryDao.countGalleryList();
 		Paging paging = new Paging(totalRow, pagePerRow, currentPage);
-		logger.debug(paging.toString());
+		logger.debug("페이징상황: "+paging.toString());
 		List<Integer> pageList = new ArrayList<Integer>();
 		if(totalRow != 0) {
 			for(int i=paging.getStartPage(); i<=paging.getEndPage(); i++) {
@@ -197,7 +200,7 @@ public class GalleryService {
 	 * @param path
 	 */
 	public void addGallery(GalleryRequest galleryRequest, String path) {
-		logger.debug("GalleryService.addGallery 메서드 호출");
+		logger.debug("addGallery 서비스 실행");
 		Gallery gallery = new Gallery();
 		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
 		gallery.setGalleryContent(galleryRequest.getGalleryContent());
@@ -252,7 +255,7 @@ public class GalleryService {
 				e.printStackTrace();
 			}
 		}
-		logger.debug("gallertyFileList: "+gallery.getGalleryFile());
+		logger.debug("등록하고자하는 이미지파일목록: "+gallery.getGalleryFile());
 		for(GalleryFile file:gallery.getGalleryFile()) {
 			file.setGalleryId(gallery.getGalleryId());
 			galleryFileDao.insertGalleryFile(file);

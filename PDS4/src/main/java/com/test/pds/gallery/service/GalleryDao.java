@@ -26,6 +26,7 @@ public class GalleryDao {
 	 * @return 수정된 행의 수
 	 */
 	public int updateGallery(Gallery gallery) {
+		logger.debug("updateGallery dao 실행");
 		return sqlSessionTemplate.update(NAMESPACE+"updateGallery", gallery);
 	}
 	
@@ -35,7 +36,7 @@ public class GalleryDao {
 	 * @return 삭제된 행의 수
 	 */
 	public int deleteGallery(int galleryId) {
-		logger.debug("GalleryDao.deleteGallery 메서드 호출");
+		logger.debug("deleteGallery dao 실행");
 		return sqlSessionTemplate.delete(NAMESPACE+"deleteGallery", galleryId);
 	}
 	
@@ -45,7 +46,7 @@ public class GalleryDao {
 	 * @return 선택된 gallery의 상세내용
 	 */
 	public List<Gallery> selectGalleryOne(int galleryId){
-		logger.debug("GalleryDao.selectGaelleryOne 메서드 호출");
+		logger.debug("selectGaelleryOne dao 실행");
 		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryOne", galleryId);
 	}
 	
@@ -59,12 +60,12 @@ public class GalleryDao {
 	 * @return gallery리스트
 	 */
 	public List<Gallery> selectGalleryList(Paging paging) {
-		logger.debug("GalleryDao.selectGalleryList 메서드 호출");
+		logger.debug("selectGalleryList dao 실행");
 		return sqlSessionTemplate.selectList(NAMESPACE+"selectGalleryList",paging);
 	}
 	
 	public int countGalleryList() {
-		logger.debug("GalleryDao.countGalleryList 메서드 호출");
+		logger.debug("countGalleryList dao 실행");
 		return sqlSessionTemplate.selectOne(NAMESPACE+"countGalleryList");
 	}
 	
@@ -74,7 +75,7 @@ public class GalleryDao {
 	 * @return 등록된 행의 수
 	 */
 	public int insertGallery(Gallery gallery) {
-		logger.debug("GalleryDao.insertGallery 메서드 호출");
+		logger.debug("insertGallery dao 실행");
 		return sqlSessionTemplate.insert(NAMESPACE+"insertGallery", gallery);
 	}
 }

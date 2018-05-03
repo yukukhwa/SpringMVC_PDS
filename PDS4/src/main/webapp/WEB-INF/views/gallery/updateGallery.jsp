@@ -8,6 +8,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			/* 에러발생시 */
+			${error}
+			
 			/* 추가버튼 클릭시 파일을 담을 수 있는 공간생성 */
 			$('#add').click(function(){
 				$('#upload').append('<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>');
