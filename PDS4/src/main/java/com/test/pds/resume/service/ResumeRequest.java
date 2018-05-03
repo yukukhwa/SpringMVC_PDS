@@ -6,21 +6,20 @@ import org.springframework.web.multipart.MultipartFile;
  * addResume.jsp
  */
 public class ResumeRequest {
-	private String ResumeTitle;
-	private String ResumeContent;
+	private String resumeTitle;
+	private String resumeContent;
 	private MultipartFile Multipartfile;
-	
 	public String getResumeTitle() {
-		return ResumeTitle;
+		return resumeTitle;
 	}
 	public void setResumeTitle(String resumeTitle) {
-		ResumeTitle = resumeTitle;
+		this.resumeTitle = resumeTitle;
 	}
 	public String getResumeContent() {
-		return ResumeContent;
+		return resumeContent;
 	}
 	public void setResumeContent(String resumeContent) {
-		ResumeContent = resumeContent;
+		this.resumeContent = resumeContent;
 	}
 	public MultipartFile getMultipartfile() {
 		return Multipartfile;
@@ -30,7 +29,7 @@ public class ResumeRequest {
 	}
 	@Override
 	public String toString() {
-		return "ResumeRequest [ResumeTitle=" + ResumeTitle + ", ResumeContent=" + ResumeContent + ", Multipartfile="
+		return "ResumeRequest [resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent + ", Multipartfile="
 				+ Multipartfile + "]";
 	}
 	

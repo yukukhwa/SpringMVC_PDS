@@ -4,21 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.test.pds.resume.service.ResumeMapper">
 
-	<!--프로젝트의 데이터 베이스와 모델클래스간의 명명규칙이 언더 바와 낙타기법이라면, mapUnderscoreToCamelCase설정을 true로 설정함으로써 
-		결과매핑 정의를 하지 않아도 된다.	
-	<settings>
-       	<setting name="mapUnderscoreToCamelCase" value="true" />
-	</settings>-->
-
 	<!-- 디비 컬럼명과 모델 클래스간에 자동 세팅을 위해 셀렉트 결과를 맵핑한다. 
 		 다른 테이블과 조인한다는 가정하에 1:1 관계에서는 association, 1:N 관계에서는 collection 
 		기능적으로 동일하지만 association에서 속성javaType,  collection에서 속성ofType 으로 구분된다. -->
-	<resultMap id="resultResumeMap" type="com.test.pds.resume.service.Resume">
+	<resultMap id="resultMap" type="com.test.pds.resume.service.Resume">
         <id column="resume_id" property="resumeId" />
         <result column="resume_title" property="resumeTitle" />
         <result column="resume_content" property="resumeContent" />
-        <association property="resumeFile" column="resumeId" javaType="com.test.pds.resume.service.ResumeFile">
-			<id property="resumeFileId" column="resume_file_id" />
+        <association property="resumeFile" javaType="com.test.pds.resume.service.ResumeFile">
+        	<id property="resumeFileId" column="resume_file_id" />
+        	<result property="resumeId" column="resume_id" />
             <result property="resumeFileName" column="resume_file_name" />
             <result property="resumeFileSize" column="resume_file_size" />
             <result property="resumeFileExt" column="resume_file_ext" />
@@ -26,27 +21,59 @@
         </association>
 	</resultMap>
 	
-	<!-- resume List total count -->
+	<!-- delete Resume -->
+	<delete id="deleteResume"
+			parameterType="int">		
+			DELETE 
+			FROM resume 
+			WHERE resume=#{resumeId}
+	</delete>
+	
+	<!-- resume update -->
+	<update id="updateResume"
+			parameterType="com.test.pds.resume.service.Resume">
+		UPDATE resume
+		SET
+			resume_title=#{resumeTitle}
+			,resume_content=#{resumeContent}
+		WHERE 
+			resume_id = #{resumeId}
+	</update>
+	
+	<!-- resume select One -->
+	<select id="selectResumeOne"
+			parameterType="integer"
+			resultMap="resultMap">
+		SELECT
+			resume.resume_id
+			,resume.resume_title
+			,resume.resume_content
+			,resume_file.resume_file_id
+			,resume_file.resume_file_name
+			,resume_file.resume_file_ext
+			,resume_file.resume_file_size
+			,resume_file.resume_file_type
+		FROM resume
+		JOIN resume_file
+		ON resume.resume_id = resume_file.resume_id
+		WHERE resume.resume_id = #{resumeId}
+	</select>
+	
+	<!-- resume total count -->
 	<select id="countResumeList"
-			resultType="int">
+			resultType="integer">
 		SELECT COUNT(*) AS totalRow FROM resume
 	</select>
 
-	<!-- resume 리스트 select -->
+	<!-- resume select List -->
 	<select id="selectResumeList"
 			parameterType="com.test.pds.Paging"
-			resultMap="resultResumeMap">
+			resultType="com.test.pds.resume.service.Resume">
 			SELECT
-				resume.resume_id
-				,resume.resume_title
-				,resume.resume_content
-				,resume_file.resume_file_name
-				,resume_file.resume_file_ext
-				,resume_file.resume_file_size
-				,resume_file.resume_file_type
-			FROM resume
-			INNER JOIN resume_file
-			ON resume.resume_id = resume_file.resume_id
+				resume.resume_id AS resumeId
+				,resume.resume_title AS resumeTitle
+				,resume.resume_content AS resumeContent
+			FROM resume			
 			ORDER BY resume.resume_id DESC
 			LIMIT #{beginRow}, #{pagePerRow}
 	</select>
@@ -55,7 +82,7 @@
 	<!-- parameterType은 만일 <typeAlias>설정을 하지 않았다면 패키지 명+클래스 전체이름으로 설정-->
 	<insert id="insertResume"
 			parameterType="com.test.pds.resume.service.Resume"> 
-		<selectKey resultType="int"
+		<selectKey resultType="integer"
 					keyProperty="resumeId"
 					order="AFTER">
 			SELECT LAST_INSERT_ID()

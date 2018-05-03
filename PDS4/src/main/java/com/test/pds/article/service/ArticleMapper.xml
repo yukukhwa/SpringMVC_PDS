@@ -5,22 +5,23 @@
 <mapper namespace="com.test.pds.article.service.ArticleMapper">
 	
 	<!-- select resultMap -->
-    <resultMap id="resultArticleMap" type="com.test.pds.article.service.Article">
+   <!--  <resultMap id="resultArticleMap" type="com.test.pds.article.service.Article">
         <id column="article_id" property="articleId" />
         <result column="article_title" property="articleTitle" />
         <result column="article_content" property="articleContent" />
-        <collection property="articleFile" column="articleId" ofType="com.test.pds.article.service.ArticleFile">
+        <collection property="articleFile" ofType="com.test.pds.article.service.ArticleFile">
 			<id property="articleFileId" column="article_file_id" />
+			<result property="articleId" column="article_id" />
             <result property="articleFileName" column="article_file_name" />
             <result property="articleFileSize" column="article_file_size" />
             <result property="articleFileExt" column="article_file_ext" />
             <result property="articleFileType" column="article_file_type" />
         </collection>
-	</resultMap>
+	</resultMap> -->
 	
 	<!-- delete Article -->
 	<delete id="deleteArticle"
-			parameterType="int">		
+			parameterType="integer">		
 			DELETE 
 			FROM article 
 			WHERE article_id=#{articleId}
@@ -28,24 +29,25 @@
 	
 	<!-- article List total count -->
 	<select id="countArticleList"
-			resultType="int">
+			resultType="integer">
 		SELECT COUNT(*) AS totalRow FROM article			
 	</select>
 		
 	<!-- article join article_file selectOne -->
 	<select id="selectArticleOne"
-			parameterType="com.test.pds.article.service.Article"
+			parameterType="integer"
 			resultMap="resultArticleMap">
 			SELECT 
 				article.article_id
 				, article.article_title
 				, article.article_content
+				, article_file.article_file_id
 				, article_file.article_file_name
 				, article_file.article_file_ext
 				, article_file.article_file_type
 				, article_file.article_file_size
 			FROM article
-			INNER JOIN article_file
+			JOIN article_file
 			ON article.article_id = article_file.article_id
 			WHERE article.article_id=#{articleId}
 	</select>
@@ -53,27 +55,22 @@
     <!-- article join article_file selectList -->
     <select id="selectArticleList"
 		parameterType="com.test.pds.Paging"
-		resultMap="resultArticleMap">
+		resultMap="com.test.pds.article.service.Article">
 			SELECT 
 				article.article_id
 				, article.article_title
 				, article.article_content
-				, article_file.article_file_name
-				, article_file.article_file_ext
-				, article_file.article_file_type
-				, article_file.article_file_size
-			FROM article
-			INNER JOIN article_file
-			ON article.article_id = article_file.article_id
+				
+			FROM article			
 			ORDER BY article.article_id DESC <!-- 최근입력된 레코드부터 정렬 -->
 			LIMIT #{beginRow}, #{pagePerRow}
 	</select>
     
     
-    <!-- article 입력하고나서(after) PK(articleId)를 셀렉트키로 리턴 -->
+    <!-- article 입력하고나서(after) 마지막으로 등록한 PK(articleId)를 셀렉트키로 리턴 -->
    	<insert id="insertArticle" 
    			parameterType="com.test.pds.article.service.Article">
-		<selectKey resultType="int" 
+		<selectKey resultType="integer" 
 					keyProperty="articleId" 
 					order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -88,4 +85,3 @@
 		)
 	</insert>
 </mapper>
-

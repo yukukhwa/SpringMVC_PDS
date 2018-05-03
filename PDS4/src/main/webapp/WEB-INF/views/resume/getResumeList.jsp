@@ -5,6 +5,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>getResumeList</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('select').val(${pagePerRow});
+			$('select').change(function(){
+				$('form').submit();
+			});
+		});
+	</script>
 </head>
 <body>
 	<h1>Resume List</h1>
@@ -21,25 +30,19 @@
 				<td>resume ID</td>
 				<td>resume Title</td>
 				<td>resume Content</td>
-				<td>resume File Name</td>
-				<td>resume File Size</td>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${list}"  var="list">
+			<c:forEach items="${list}"  var="resume">
 				<tr>
-					<td>${list.resumeId}</td>
-					<td>${list.resumeTitle}</td>
-					<td>${list.resumeContent}</td>
-					<td><a href="${pageContext.request.contextPath}/resources/upload/
-							${list.resumeFile.resumeFileName}.${list.resumeFile.resumeFileExt}" download>
-							${list.resumeFile.resumeFileName}.${list.resumeFile.resumeFileExt}</a></td>
-					<td>${list.resumeFile.resumeFileSize } KB</td>
+					<td>${resume.resumeId}</td>
+					<td><a href="${pageContext.request.contextPath }/getResumeOne?resumeId=${resume.resumeId}">${resume.resumeTitle}</a></td>
+					<td>${resume.resumeContent}</td>
 				</tr>
 			</c:forEach>
 		</tbody>	
 	</table>
-	<%-- <c:if test="${currentPage > 1}">
+	<c:if test="${currentPage > 1}">
 		<a href="${pageContext.request.contextPath}/getResumeList?currentPage=1&pagePerRow=${pagePerRow}">[처음]</a>
 		<a href="${pageContext.request.contextPath}/getResumeList?currentPage=${currentPage - 1}&pagePerRow=${pagePerRow}">[이전]</a>
 	</c:if>
@@ -49,6 +52,6 @@
 	<c:if test="${currentPage < totalPage}">
 		<a href="${pageContext.request.contextPath}/getResumeList?currentPage=${currentPage + 1}&pagePerRow=${pagePerRow}">[다음]</a>
 		<a href="${pageContext.request.contextPath}/getResumeList?currentPage=${totalPage}&pagePerRow=${pagePerRow}">[마지막]</a>
-	</c:if> --%>
+	</c:if>
 </body>
 </html>

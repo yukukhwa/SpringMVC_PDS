@@ -29,11 +29,7 @@
 			<tr>
 				<th>article ID</th>
 				<th>article Title</th>
-				<th>article Content</th>
-				<th>article File Name</th>
-				<th>article File Size</th>
-				<th>보기</th>
-				<th>삭제</th>
+				<th>article Content</th>				
 			</tr>
 		</thead>
 		<tbody>
@@ -41,14 +37,8 @@
 				<tr>
 					<td>${list.articleId}</td>
 					<td>${list.articleTitle}</td>
-					<td>${list.articleContent}</td>
-					<td><a href="${pageContext.request.contextPath}/resources/upload/
-							${list.articleFile.articleFileName}.${list.articleFile.articleFileExt}" download>
-							${list.articleFile.articleFileName}.${list.articleFile.articleFileExt}</a></td>
-					<td>${list.articleFile.articleFileSize} KB</td>
-					<td><a href="${pageContext.request.contextPath}/getArticle?articleId=${list.articleId}">보기</a></td>
-					<td><a href="${pageContext.request.contextPath}/deleteArticle?articleId=${list.articleId}">삭제</a></td>
-				</tr>		
+					<td><a href="${pageContext.request.contextPath }/getArticleOne?articleId=${article.articleId}">${list.articleContent}</a></td>
+					</tr>		
 			</c:forEach>
 		</tbody>	
 	</table>

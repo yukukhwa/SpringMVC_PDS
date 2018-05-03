@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds.Paging;
 import com.test.pds.SystemPath;
+import com.test.pds.article.service.Article;
+import com.test.pds.article.service.ArticleFile;
 
 @Service
 @Transactional
@@ -25,13 +27,34 @@ public class ResumeService {
 	@Autowired private ResumeFileDao resumeFileDao;
 	final static Logger LOGGER = LoggerFactory.getLogger(ResumeService.class);
 	
+	// Resume delete
+		public void deleteResume(Resume resume) {
+			LOGGER.debug("ResumeService.deleteResume 호출");
+			ResumeFile resumeFile = new ResumeFile();
+			resumeFile.setResumeId(resume.getResumeId());
+			resumeDao.deleteResume(resumeFileDao.deleteResumeFile(resumeFile));
+		}
+	
+	// Resume update
+	public int updateResume(Resume resume) {
+		LOGGER.debug("ResumeService.updateResume 호출");		
+		return resumeDao.updateResume(resume);
+	}
+	
+	// Resume One
+	public Resume selectResumeOne(int resumeId) {
+		LOGGER.debug("ResumeService.selectResumeOne 호출");
+		LOGGER.debug("dao에서 받은 resume: "+resumeDao.selectResumeOne(resumeId));
+		return resumeDao.selectResumeOne(resumeId);
+	}
+	
 	// Resume 리스트
-	public Map<String, Object> selectResumeList(int pagePerRow, int currentPage) {
-		LOGGER.debug("selectResumeList 호출");		
+	public Map<String, Object> selectResumeList(int currentPage, int pagePerRow) {
+		LOGGER.debug("ResumeService.selectResumeList 호출");
+		LOGGER.debug("서비스 입력받은 현재페이지: "+currentPage + ", 페이지퍼: "+pagePerRow);
 		int totalRow = resumeDao.countResumeList();
 		// 페이징 메서드  Paging(totalRow, pagePerRow, currentPage)		
 		Paging paging = new Paging(totalRow, pagePerRow, currentPage);
-
 		List<Integer> pagelist = new ArrayList<Integer>();
 		if(totalRow != 0) { // 레코드가 있으면
 			for(int i=paging.getStartPage(); i<=paging.getEndPage(); i++) { // 1~5, 6~10, ...
@@ -40,7 +63,7 @@ public class ResumeService {
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", resumeDao.selectResumeList(paging));
-		LOGGER.debug("서비스에서 리스트 : " + resumeDao.selectResumeList(paging));
+		LOGGER.debug("dao 리턴값(resume객체): " + resumeDao.selectResumeList(paging));
 		map.put("pageList", pagelist);
 		map.put("totalPage", paging.getTotalPage());
 		map.put("pagePerRow", pagePerRow);
@@ -50,7 +73,7 @@ public class ResumeService {
 	
 	// Resume 등록(제목, 내용, 파일)
 	public void insertResume(ResumeRequest resumeRequest) {
-		LOGGER.debug("insertResume 호출");
+		LOGGER.debug("ResumeService.insertResume 호출");
 		
 		// ResumeRequest에 있는 file 담을 객체(multipartFile) 생성
 		MultipartFile multipartFile = resumeRequest.getMultipartfile();
@@ -72,6 +95,7 @@ public class ResumeService {
 		
 		// 파일 저장(SystemPath를 이용)
 		File file = new File(SystemPath.DOWNLOAD_PATH_1+"\\"+fileName+"."+fileExt);
+		LOGGER.debug("파일 경로: "+file.getPath());
 		try {
 			multipartFile.transferTo(file);
 		} catch (IllegalStateException e) {

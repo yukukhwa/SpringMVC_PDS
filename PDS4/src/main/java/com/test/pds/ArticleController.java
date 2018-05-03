@@ -1,5 +1,6 @@
 package com.test.pds;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds.article.service.Article;
 import com.test.pds.article.service.ArticleRequest;
@@ -20,7 +22,7 @@ public class ArticleController {
 	@Autowired private ArticleService articleService;	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleController.class);
 	
-	// delete Article
+	// delete Article GET
 	@RequestMapping(value="/deleteArticle", method=RequestMethod.GET)
 	public String deleteArticle(Article article,
 								@RequestParam(value="articleId") int articleId) {
@@ -29,9 +31,9 @@ public class ArticleController {
 		return "redirect:/getArticleList";
 	}
 	
-	// getAtricle GET
+	// getArticleOne GET
 	// 파일이 여러개일 경우 마지막 레코드만 출력되는 문제가....있음
-	@RequestMapping(value="/getArticle", method=RequestMethod.GET)
+	@RequestMapping(value="/getArticleOne", method=RequestMethod.GET)
 	public String selectArticleOne(Model model, Article article, 
 									@RequestParam(value="articleId") int articleId) {
 		LOGGER.debug("ArticleController selectArticleOne GET");		
@@ -57,15 +59,18 @@ public class ArticleController {
 		return "article/getArticleList";
 	}	
 	
-	// addArticle.jsp 에서 보낸 articleRequest 받아 입력처리 후 home으로 리다이렉트
+	// addArticle.jsp POST
 	@RequestMapping(value = "/addArticle", method = RequestMethod.POST)
-	public String insertArticle(ArticleRequest articleRequest) {
+	public String insertArticle(ArticleRequest articleRequest, Model model) {
 		LOGGER.debug("insertArticle POST 호출");
+		LOGGER.debug("articleRequest: "+articleRequest);
+		List<MultipartFile> list = articleRequest.getMultipartFile();
+		LOGGER.debug("filelist: "+list);
 		articleService.insertArticle(articleRequest);
 		return "redirect:/";
 	}
 	
-	// addArticle.jsp로 포워드
+	// addArticle.jsp GET
 	@RequestMapping(value = "/addArticle", method = RequestMethod.GET)
 	public String insertArticle() {
 		LOGGER.debug("insertArticle GET호출");
