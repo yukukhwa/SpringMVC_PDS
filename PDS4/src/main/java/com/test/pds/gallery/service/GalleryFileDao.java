@@ -56,7 +56,7 @@ public class GalleryFileDao {
 	 * @return 등록된 행의 수
 	 */
 	public int insertGalleryFile(GalleryFile galleryFile) {
-		logger.debug("GalleryFileDao.insertGalleryFile 메서드 실행");
+		logger.info("insertGalleryFile dao 실행");
 		return sqlSessionTemplate.insert("insertGalleryFile", galleryFile);
 	}
 }

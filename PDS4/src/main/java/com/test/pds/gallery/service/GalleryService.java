@@ -33,8 +33,7 @@ public class GalleryService {
 	 * @param deleteImg
 	 */
 	public void updateGallery(GalleryRequest galleryRequest,String path,int galleryId,List<String> deleteImg) {
-		logger.debug("서비스 호출");
-		logger.info("서비스 호출");
+		logger.info("updateGallery 서비스 실행");
 		/*
 		 * gallery 타이틀이나 컨텐츠내용을 update하는 부분
 		 */
@@ -45,7 +44,6 @@ public class GalleryService {
 		galleryDao.updateGallery(gallery);
 		
 		List<MultipartFile> list = galleryRequest.getMultipartFile();
-		logger.debug("listSize: "+list.size());
 		/*
 		 * 이미지파일 update하는 부분
 		 * 만약 새로 추가되는 이미지 파일이 있다면 들록하고, 삭제되는 이미지 파일이 있다면 삭제한다
