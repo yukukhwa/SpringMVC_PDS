@@ -2,8 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>addGallery</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="./resources/assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="./resources/assets/css/main.css" />
+	<!--[if lte IE 9]><link rel="stylesheet" href="./resources/assets/css/ie9.css" /><![endif]-->
+	<!--[if lte IE 8]><link rel="stylesheet" href="./resources/assets/css/ie8.css" /><![endif]-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -66,28 +71,37 @@
 				
 				/* insert=true이면 제출 */
 				if(insert){
-					$('form').submit();
+					$('form#gallery').submit();
 				}
 			});
 		});
 	</script>
 </head>
 <body>
-	<h1>addGallery</h1>
-	<form action="${pageContext.request.contextPath}/addGallery" method="post" enctype="multipart/form-data">
-		<div>
-			주제<br>
-			<input name="galleryTitle" type="text" value="${galleryTitle}" placeholder="등록하고자하는 이미지의 타이틍을 입력해주세요">
+	<%@ include file="../module/tap.jsp" %>
+	
+	<!-- Main -->
+	<div id="main">
+		<div class="inner">
+			<h1>addGallery</h1>
+			<form id="gallery" action="${pageContext.request.contextPath}/addGallery" method="post" enctype="multipart/form-data">
+				<div>
+					주제<br>
+					<input name="galleryTitle" type="text" value="${galleryTitle}" placeholder="등록하고자하는 이미지의 타이틍을 입력해주세요">
+				</div>
+				<div>
+					본문<br>
+					<textarea name="galleryContent" rows="5" cols="100" placeholder="등록한 이미지에 관한 부연설명을 입력해주세요">${galleryContent}</textarea>
+				</div>
+				<div id="upload">
+					<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>
+				</div>
+				<button id="add" type="button">이미지추가</button>
+				<br><button id="insert" type="button">Gallery등록</button>
+			</form>
 		</div>
-		<div>
-			본문<br>
-			<textarea name="galleryContent" rows="5" cols="100" placeholder="등록한 이미지에 관한 부연설명을 입력해주세요">${galleryContent}</textarea>
-		</div>
-		<div id="upload">
-			<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>
-		</div>
-		<button id="add" type="button">이미지추가</button>
-		<br><button id="insert" type="button">Gallery등록</button>
-	</form>
+	</div>
+	
+	<%@ include file="../module/bottom.jsp" %>
 </body>
 </html>

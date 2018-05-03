@@ -3,8 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>updateGallery</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="./resources/assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="./resources/assets/css/main.css" />
+	<!--[if lte IE 9]><link rel="stylesheet" href="./resources/assets/css/ie9.css" /><![endif]-->
+	<!--[if lte IE 8]><link rel="stylesheet" href="./resources/assets/css/ie8.css" /><![endif]-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -46,13 +51,13 @@
 				}
 				
 				/* galleryFile 최대 3개까지 등록가능하도록 제한 */
-				if($(document).find('input[type="file"]').length+$(document).find('img').length >= 4){
+				if($(document).find('input[type="file"]').length+$(document).find('img#dbGallery').length >= 4){
 					alert('이미지파일을 최대 3개까지 등록가능합니다.');
 					update = false;
 					return;
 				}
 				
-				if($(document).find('input[type="file"]').length+$(document).find('img').length == 0){
+				if($(document).find('input[type="file"]').length+$(document).find('img#dbGallery').length == 0){
 					alert('이미지파일을 최소 1개이상 등록해야합니다.');
 					$('#upload').append('<div><input name="multipartFile" type="file"></div>');
 					update = false;
@@ -77,34 +82,41 @@
 				
 				/* insert=true이면 제출 */
 				if(update){
-					$('form').submit();
+					$('form#updateGallery').submit();
 				}
 			});
 		});
 	</script>
 </head>
 <body>
-	<h1>updateGallery</h1>
-	<form action="${pageContext.request.contextPath}/updateGallery" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="galleryId" value="${galleryId}">
-		<div>
-			주제<br>
-			<input name="galleryTitle" type="text" value="${galleryTitle}">
-		</div>
-		<div>
-			본문<br>
-			<textarea name="galleryContent" rows="5" cols="100">${galleryContent}</textarea>
-		</div>
-		<c:forEach var="galleryFile" items="${galleryFileList}">
-			<div>
-				<img width="400px" height="300px" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
-				<button id="imgDel" type="button">이미지삭제</button>
+	<%@ include file="../module/tap.jsp" %>
+	<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<h1>updateGallery</h1>
+				<form id="updateGallery" action="${pageContext.request.contextPath}/updateGallery" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="galleryId" value="${galleryId}">
+					<div>
+						주제<br>
+						<input name="galleryTitle" type="text" value="${galleryTitle}">
+					</div>
+					<div>
+						본문<br>
+						<textarea name="galleryContent" rows="5" cols="100">${galleryContent}</textarea>
+					</div>
+					<c:forEach var="galleryFile" items="${galleryFileList}">
+						<div>
+							<img id="dbGallery" width="400px" height="300px" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
+							<button id="imgDel" type="button">이미지삭제</button>
+						</div>
+					</c:forEach>
+					<div id="upload">
+					</div>
+					<button id="add" type="button">이미지추가</button>
+					<br><button id="update" type="button">재등록하기</button>
+				</form>
 			</div>
-		</c:forEach>
-		<div id="upload">
 		</div>
-		<button id="add" type="button">이미지추가</button>
-		<br><button id="update" type="button">재등록하기</button>
-	</form>
+	<%@ include file="../module/bottom.jsp" %>
 </body>
 </html>
