@@ -22,21 +22,15 @@
     
     <!-- notice 삭제 -->
     <delete id="deleteNotice"
-    		parameterType="com.test.pds.notice.service.Notice">
+    		parameterType="integer">
     	DELETE FROM notice WHERE notice_id = #{noticeId}
     </delete>
     
-    <!-- notice 카운트 구하기 -->
-	<select id="selectNoticeCount"
-			resultType="integer">
-		SELECT count(*) FROM notice
-	</select>
-
-	<!-- notice와 noticeFile을 조인시켜 리스트를 조회 -->
- 	<select id="selectNoticeList"
- 			parameterType="java.util.Map"
- 			resultMap="resultNotice">
- 		SELECT notice.notice_id
+    <!-- 해당 notice를 noticeFile과 조인시켜 조회 -->
+    <select id="selectNoticeOne"
+    		parameterType="integer"
+    		resultMap="resultNotice">
+    	SELECT notice.notice_id
  				, notice_file_id
  				, notice_title
  				, notice_content
@@ -44,9 +38,24 @@
  				, notice_file_ext
  				, notice_file_type
  				, notice_file_size
-		FROM notice_file
-   		INNER JOIN notice
+		FROM notice_file JOIN notice
     	ON notice.notice_id = notice_file.notice_id
+    	WHERE notice_file.notice_id=#{noticeId}
+    </select>
+    
+    <!-- notice 카운트 구하기 -->
+	<select id="selectNoticeCount"
+			resultType="integer">
+		SELECT count(*) FROM notice
+	</select>
+
+	<!-- notice의 리스트를 조회 + 페이징 -->
+ 	<select id="selectNoticeList"
+ 			parameterType="java.util.Map"
+ 			resultType="com.test.pds.notice.service.Notice">
+ 		SELECT notice_id AS noticeId
+ 				, notice_title AS noticeTitle
+		FROM notice
     	LIMIT #{beginRow}, #{pagePerRow} 
  	</select>
  	

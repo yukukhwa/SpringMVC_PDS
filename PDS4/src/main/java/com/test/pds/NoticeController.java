@@ -1,5 +1,6 @@
 package com.test.pds;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pds.notice.service.Notice;
+import com.test.pds.notice.service.NoticeFile;
 import com.test.pds.notice.service.NoticeRequest;
 import com.test.pds.notice.service.NoticeService;
 
@@ -22,12 +24,35 @@ public class NoticeController {
 	@Autowired private NoticeService noticeService;
 		private final static Logger LOGGER = LoggerFactory.getLogger(NoticeController.class);
 		
+		@RequestMapping(value="updateNotice", method=RequestMethod.POST)
+		public String updateNotice() {
+			LOGGER.debug("NoticeController.updateNotice POST 호출");
+			return "redirect:/getNoticeList";
+		}
+		
+		@RequestMapping(value="/updateNotice", method=RequestMethod.GET)
+		public String updateNotice(int noticeId) {
+			LOGGER.debug("NoticeController.updateNotice GET 호출");
+			return "notice/updateNotice";
+		}
+		
+		// 삭제
 		@RequestMapping(value="/deleteNotice", method=RequestMethod.GET)
 		public String deleteNotice(int noticeId) {
 			System.out.println("NoticeController noticeId===>"+noticeId);
 			LOGGER.debug("noticeController.deleteNotice 호출");
 			noticeService.deleteNotice(noticeId);
 			return "redirect:/getNoticeList";
+		}
+		  
+		//상세보기
+		@RequestMapping(value="/getNoticeOne", method=RequestMethod.GET)
+		public String getNoticeOne(int noticeId, Model model) {
+			LOGGER.debug("NoticeContent.getNoticeOne 호출");
+			System.out.println("selectNoticeOne 컨트롤러 매개변수 noticeId==>"+noticeId);
+			List<Notice> list = noticeService.selectNoticeOne(noticeId);
+			model.addAttribute("list", list);
+			return "notice/getNoticeOne";
 		}
 		
 		/* getNoticeList에서 get으로 요청받아 notice/getNoticeList로 포워드한다

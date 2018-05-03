@@ -21,6 +21,12 @@ public class NoticeDao {
 		return sqlSession.delete(NAMESPACE+"deleteNotice",noticeId);
 	}
 	
+	public List<Notice> selectNoticeOne(int noticeId) {
+		LOGGER.debug("NoticeDao.selectNoticeOne");
+		List<Notice> list = sqlSession.selectList(NAMESPACE+"selectNoticeOne",noticeId);
+		return list;
+	}
+	
 	// notice의 카운트 조회하는 메서드
 	public int selectNoticeCount() {
 		LOGGER.debug("NoticeDao.selectNoticeCount 호출");
@@ -31,6 +37,7 @@ public class NoticeDao {
 	// pagePerRow와 beginRow가 저장되어있는 map을 매개변수로 받아 리스트를 출력하는 메서드
 	public List<Notice> selectNoticeList(Map<String, Integer> map) {
 		LOGGER.debug("NoticeDao.selectNoticeList 호출");
+		System.out.println("NoticeDao.selectNoticeList"+map);
 		System.out.println("noticeDao 리스트: "+sqlSession.selectList(NAMESPACE+"selectNoticeList", map));
 		return sqlSession.selectList(NAMESPACE+"selectNoticeList", map);
 	}

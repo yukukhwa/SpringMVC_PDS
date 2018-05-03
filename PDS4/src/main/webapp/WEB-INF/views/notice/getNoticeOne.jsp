@@ -10,37 +10,45 @@
 	<h1>get Notice One</h1>
 	<table>
 		<thead>
-			<tr>
-				<th>notice Id</th>
-				<th>notice File Name</th>
-				<th>notice File Ext</th>
-				<th>notice File Type</th>
-				<th>notice File Size</th>
-				<th>notice File	DownLoad</th>
-			</tr>
+			<caption>getNoticeOne</caption>
 		</thead>
 		<tbody>
-			<c:forEach var="noticeFile" items="${noticeFileList}">
-			<tr>
-				<td>
-					${noticeFile.noticeId}
-				</td>
-				<td>
-					${noticeFile.noticeFileName}
-				</td>
-				<td>
-					${noticeFile.noticeFileExt}
-				</td>
-				<td>
-					${noticeFile.noticeFileType}
-				</td>
-				<td>
-					${noticeFile.noticeFileSize}
-				</td>
-				<td>
-					<a href="#">파일다운로드</a>	
-				</td>
-			</tr>
+			<c:forEach var="notice" items="${list}">
+				<tr>
+					<th>noticeTitle : </th>
+					<td><input type="text" name="noticeTitle" value="${notice.noticeTitle}" readonly="readonly"></td>
+				</tr>
+				<tr>
+					<th>noticeContent : </th>
+					<td><textarea rows="20" cols="80" readonly="readonly" name="noticeContent">${notice.noticeContent}</textarea> </td>
+				</tr>
+				<tr>
+					<th>notice File Name : </th>
+					<td>${notice.noticeFile.noticeFileName}</td>
+				</tr>
+				<tr>
+					<th>notice File Ext : </th>
+					<td>${notice.noticeFile.noticeFileExt}</td>
+				</tr>
+				<tr>
+					<th>notice File Type : </th>
+					<td>${notice.noticeFile.noticeFileType}</td>
+				</tr>
+				<tr>
+					<th>notice File Size : </th>
+					<td>${notice.noticeFile.noticeFileSize}</td>
+				</tr>
+				<tr>
+					<th>notice File	DownLoad : </th>
+					<td><a href="${pageContext.request.contextPath}/resources/upload/${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}" download>${notice.noticeFile.noticeFileName}.${notice.noticeFile.noticeFileExt}</a></td>
+				</tr>
+				<tr>
+					<td>
+						<a href="${pageContext.request.contextPath}/getNoticeList">[리스트로 돌아가기]</a>
+						<a href="${pageContext.request.contextPath}/updateNoticeForm?noticeId=${notice.noticeId}">[수정]</a>
+						<a href="${pageContext.request.contextPath}/deleteNotice?noticeId=${notice.noticeId}">[삭제]</a>
+					</td>
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>

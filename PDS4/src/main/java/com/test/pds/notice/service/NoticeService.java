@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds.SystemPath;
@@ -24,10 +25,15 @@ public class NoticeService {
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeService.class);
 		public void deleteNotice(int noticeId) {
 			LOGGER.debug("NoticeService.deleteNotice 호출");
-			// 트랜잭션
-			
-			noticeDao.deleteNotice(noticeId);
 			noticeFileDao.deleteNoticeFile(noticeId);
+			noticeDao.deleteNotice(noticeId);
+			
+		}
+		
+		public List<Notice> selectNoticeOne(int noticeId){
+			LOGGER.debug("NoticeService.selectNoticeOne 호출");
+			List<Notice> list = noticeDao.selectNoticeOne(noticeId);
+			return list;
 		}
 	
 		/* 리스트 출력 + 페이징 하기 위해 int타입의 currentPage와 pagePerRow를 매개변수로 받는다 */
@@ -77,7 +83,6 @@ public class NoticeService {
 		notice.setNoticeContent(noticeRequest.getNoticeContent());
 		int noticeId = noticeDao.insertNotice(notice);
 
-		
 		/* for문: 파일이 두개이상이기 때문에
 		 * noticeRequest객체의 multipartFile정보들을 겟팅해  multipartFile에 담고 
 		 * 그 배열에 담긴 값들을 files변수에 대입해 반복할때마다
