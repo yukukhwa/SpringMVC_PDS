@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pds.board.service.Board;
+import com.test.pds.board.service.BoardFile;
 import com.test.pds.board.service.BoardRequest;
 import com.test.pds.board.service.BoardService;
 
@@ -24,9 +25,10 @@ public class BoardController {
 	@Autowired private BoardService boardService;
 	
 	@RequestMapping(value = "/getBoardOne", method = RequestMethod.GET)
-	public String selectBoardOne(Model model, int boardId) {
+	public String selectBoardOne(Model model, int boardId) {		
 		Map<String, Object> map = boardService.selectBoardOne(boardId);
-		model.addAttribute("map", map);
+		model.addAttribute("board", map.get("board"));
+		model.addAttribute("boardFileList", map.get("boardFileList"));
 		return "board/getBoardOne";
 	}
 	

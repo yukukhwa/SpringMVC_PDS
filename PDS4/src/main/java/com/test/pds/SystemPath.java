@@ -8,6 +8,6 @@ public class SystemPath {
 	// 김재희
 	public static final String DOWNLOAD_PATH_3 = "C:\\Users\\smart-202-10\\git\\SpringMVC_PDS4\\PDS4\\src\\main\\webapp\\resources\\upload";
 	// 배건혜
-	public static final String DOWNLOAD_PATH_4 = "C:\\Users\\smart-202-18\\Desktop\\Baegeonhye\\pds4\\workspace_sts_pds_backup\\SpringMVC_PDS4\\PDS4\\src\\main\\webapp\\resources\\upload";
+	public static final String DOWNLOAD_PATH_4 = "C:\\Users\\smart-202-18\\Desktop\\Baegeonhye\\pds4\\workspace_sts_pds_backup\\SpringMVC_PDS\\PDS4\\src\\main\\webapp\\resources\\upload";
 
 }

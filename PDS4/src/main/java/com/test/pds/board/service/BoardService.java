@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.Paging;
 import com.test.pds.SystemPath;
 
 @Service
@@ -25,12 +26,19 @@ public class BoardService {
 	@Autowired private BoardDao boardDao;
 	@Autowired private BoardFileDao boardFileDao;
 	
+	public void deleteBoard(int boardId) {
+		boardDao.deleteBoard(boardId);
+		boardFileDao.deleteBoardFile(boardId);
+	}
+	
 	public Map<String, Object> selectBoardOne(int boardId){
-		Board board = boardDao.selectBoardone(boardId);
+		Board board = boardDao.selectBoardOne(boardId);
+		logger.debug("BoardDao 호출, board: "+board.toString());
 		List<BoardFile> boardFile = boardFileDao.selectBoardFileList(boardId);
+		logger.debug("BoardFileDao 호출, boardFile"+boardFile);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("board", board);
-		map.put("boardFile", boardFile);
+		map.put("boardFileList", boardFile);
 		return map;
 	}
 	
@@ -96,7 +104,7 @@ public class BoardService {
 		}
 		
 		
-		boardFile.setBoardId(boardRow);
+		boardFile.setBoardId(board.getBoardId());
 		boardFile.setBoardFileName(fileName);
 		boardFile.setBoardFileExt(fileExt);
 		boardFile.setBoardFileType(fileType);

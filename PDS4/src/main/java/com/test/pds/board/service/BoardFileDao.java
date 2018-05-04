@@ -8,15 +8,20 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class BoardFileDao {
-	@Autowired private SqlSessionTemplate sqlSession;
-	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+
 	final private String NAMESPACE = "com.test.pds.board.service.BoardFileMapper.";
-	
-	public List<BoardFile> selectBoardFileList( int boardFileId) {
-		return sqlSession.selectList(NAMESPACE+"selectBoardFileList", boardFileId);
+
+	public int deleteBoardFile(int boardFileId) {
+		return sqlSession.delete(NAMESPACE +"deleteBoardFile", boardFileId);
 	}
-	
+
+	public List<BoardFile> selectBoardFileList(int boardId) {
+		return sqlSession.selectList(NAMESPACE + "selectBoardFileList", boardId);
+	}
+
 	public int insertBoardFile(BoardFile boardFile) {
-		return sqlSession.insert(NAMESPACE+"insertBoardFile", boardFile);
+		return sqlSession.insert(NAMESPACE + "insertBoardFile", boardFile);
 	}
 }

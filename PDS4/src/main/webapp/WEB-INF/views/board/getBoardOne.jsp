@@ -3,66 +3,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>getBoardOne</title>
+	<title>getBoardOne</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="./resources/assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="./resources/assets/css/main.css" />
+	<!--[if lte IE 9]><link rel="stylesheet" href="./resources/assets/css/ie9.css" /><![endif]-->
+	<!--[if lte IE 8]><link rel="stylesheet" href="./resources/assets/css/ie8.css" /><![endif]-->
 </head>
 <body>
-	<h1>getBoardOne</h1>
-	<form action="">
-		<table border="1">
-			<thead>
-				<tr>
-					<td>
-						boardId
-					</td>
-					<td>
-						boardFileName
-					</td>
-					<td>
-						boardFileExt
-					</td>
-					<td>
-						baordFileType
-					</td>
-					<td>
-						boardFileSize
-					</td>	
-					<td>
-						수정
-					</td>	
-					<td>
-						삭제
-					</td>				
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="boardFile" items="${boardFileList}">
-					<tr>
-						<td>
-							${boardFile.boardId}
-						</td>
-						<td>
-							${boardFile.boardFileName}
-						</td>
-						<td>
-							${boardFile.boardFileExt}
-						</td>
-						<td>
-							${boardFile.boardFileType}
-						</td>
-						<td>
-							${boardFile.boardFileSize}
-						</td>
-						<td>
-							<a href="#">수정</a>
-						</td>
-						<td>
-							<a href="${pageContext.request.contextPath}/getBoardOne?boardId=${boardFile.boardId}">삭제</a>
-						</td>
-					</tr>
+	<%@ include file="../module/tap.jsp" %>
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<h1>getBoardOne</h1>
+				<div>
+					boardTitle<br>
+					<input type="text" name="boardTitle" value="${board.boardTitle}">
+				</div>	
+				<div>
+					boardContent<br>
+					<textarea name="boardContent">${board.boardContent}</textarea>
+				</div>
+				<c:forEach var="boardFileList" items="${boardFileList}">
+				<div>
+					boardFile <br>
+					<a href="${pageContext.request.contextPath}/resources/upload/${boardFileList.boardFileName}.${boardFileList.boardFileExt}">${boardFileList.boardFileName}.${boardFileList.boardFileExt}</a>
+				</div>
 				</c:forEach>
-			</tbody>
-		</table>
-	</form>
+				<div>
+					<a href="#">수정</a>
+				</div>
+				<div>
+					<a href="#">삭제</a>
+				</div>
+			</div>
+		</div>
+	<%@ include file="../module/bottom.jsp" %>
 </body>
 </html>

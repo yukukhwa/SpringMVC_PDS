@@ -16,23 +16,22 @@
 			<result column="board_file_size" property="boardFileSize"/>
 		</collection>		
 	</resultMap>
+	
+	<delete id="deleteBoard" 
+			parameterType="Integer">
+	DELETE FROM board WHERE board_id=#{boardId}
+	
+	</delete>
+	
 	<select id="selectBoardOne"
-			parameterType="java.util.Map"
+			parameterType="com.test.pds.board.service.Board"
 			resultMap="board">
 		select
 			board.board_id
 			,board.board_title
 			,board.board_content
-			,board_file.board_file_id
-			,board_file.board_file_name
-			,board_file.board_file_ext
-			,board_file.board_file_type
-			,board_file.board_file_size
-		from board join board_file
-		on board.board_id = board_file.board_id
-		where board_file.board_id = #{boardId}
-		ORDER BY board_id DESC
-		LIMIT #{beginRow},#{pagePerRow}			
+		from board
+		where board_id = #{boardId}	
 	</select>
 	
 	<select id="totalCountBoard"

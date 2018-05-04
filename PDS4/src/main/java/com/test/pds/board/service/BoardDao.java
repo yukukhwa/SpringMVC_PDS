@@ -14,7 +14,11 @@ public class BoardDao {
 	
 	final private String NAMESPACE = "com.test.pds.board.service.BoardMapper.";
 	
-	public Board selectBoardone(int boardId) {
+	public int deleteBoard(int boardId) {
+		return sqlSession.delete(NAMESPACE+"deleteBoard", boardId);
+	}
+	
+	public Board selectBoardOne(int boardId) {
 		return sqlSession.selectOne(NAMESPACE+"selectBoardOne", boardId);
 	}
 	
