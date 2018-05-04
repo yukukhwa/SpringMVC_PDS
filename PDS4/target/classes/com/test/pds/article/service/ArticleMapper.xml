@@ -5,19 +5,30 @@
 <mapper namespace="com.test.pds.article.service.ArticleMapper">
 	
 	<!-- select resultArticleMap -->
-    <resultMap id="resultArticleMap" type="com.test.pds.article.service.Article">
-        <id column="article_id" property="articleId" />
-        <result column="article_title" property="articleTitle" />
-        <result column="article_content" property="articleContent" />
-        <collection property="articleFile" ofType="com.test.pds.article.service.ArticleFile">
-			<id property="articleFileId" column="article_file_id" />
-			<result property="articleId" column="article_id" />
-            <result property="articleFileName" column="article_file_name" />
-            <result property="articleFileSize" column="article_file_size" />
-            <result property="articleFileExt" column="article_file_ext" />
-            <result property="articleFileType" column="article_file_type" />
-        </collection>
+    <resultMap type="com.test.pds.article.service.Article" id="resultArticleMap">
+		<id column="article_id" property="articleId"/>
+		<result column="article_title" property="articleTitle"/>
+		<result column="article_content" property="articleContent"/>
+		<collection property="articleFile" ofType="com.test.pds.article.service.ArticleFile">
+			<id column="article_file_id" property="articleFileId"/>
+			<result column="article_id" property="articleId"/>
+			<result column="article_file_name" property="articleFileName"/>
+			<result column="article_file_ext" property="articleFileExt"/>
+			<result column="article_file_type" property="articleFileType"/>
+			<result column="article_file_size" property="articleFileSize"/>
+		</collection>
 	</resultMap>
+	
+	<!-- update Article -->
+	<update id="updateArticle"
+			parameterType="com.test.pds.article.service.Article">
+		UPDATE article
+		SET
+			article_title=#{articleTitle}
+			,article_content=#{articleContent}
+		WHERE 
+			article_id = #{articleId}
+	</update>
 	
 	<!-- delete Article -->
 	<delete id="deleteArticle"
@@ -49,7 +60,7 @@
 			FROM article
 			JOIN article_file
 			ON article.article_id = article_file.article_id
-			WHERE article.article_id=#{articleId}
+			WHERE article_file.article_id=#{articleId}
 	</select>
         
     <!-- article join article_file selectList -->
@@ -57,9 +68,9 @@
 		parameterType="com.test.pds.Paging"
 		resultType="com.test.pds.article.service.Article">
 			SELECT 
-				article.article_id
-				, article.article_title
-				, article.article_content
+				article.article_id AS articleID
+				, article.article_title AS articleTitle
+				, article.article_content AS articleContent
 				
 			FROM article			
 			ORDER BY article.article_id DESC <!-- 최근입력된 레코드부터 정렬 -->

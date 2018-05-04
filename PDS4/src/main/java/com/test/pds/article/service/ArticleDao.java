@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.test.pds.Paging;
+import com.test.pds.gallery.service.Gallery;
+import com.test.pds.resume.service.Resume;
 
 
 @Repository
@@ -23,10 +25,16 @@ public class ArticleDao {
 		return sqlSession.delete(NAMESPACE+"deleteArticle", articleId);
 	}
 	
+	// article update
+	public int updateArticle(Article article) {
+		LOGGER.debug("ArticleDao.updateArticle 호출");
+		return sqlSession.update(NAMESPACE+"updateArticle", article);
+	}
+	
 	// selectOne 메서드
-	public List<Article> selectArticleOne(int articleId) {
-		LOGGER.debug("selectArticleOne 호출");	
-		return sqlSession.selectList(NAMESPACE+"selectArticleOne", articleId);		
+	public List<Article> selectArticleOne(int articleId){
+		LOGGER.debug("selectArticleOne 호출");
+		return sqlSession.selectList(NAMESPACE+"selectArticleOne", articleId);
 	}
 	
 	// article List Count 메서드
@@ -38,6 +46,7 @@ public class ArticleDao {
 	// article List 메서드
 	public List<Article> selectArticleList(Paging paging) {
 		LOGGER.debug("selectArticleList 호출");
+		LOGGER.debug("list: "+sqlSession.selectList(NAMESPACE+"selectArticleList", paging));
 		return sqlSession.selectList(NAMESPACE+"selectArticleList", paging);
 	}	
 	

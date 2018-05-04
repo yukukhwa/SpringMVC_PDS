@@ -16,11 +16,37 @@ import org.springframework.web.multipart.MultipartFile;
 import com.test.pds.article.service.Article;
 import com.test.pds.article.service.ArticleRequest;
 import com.test.pds.article.service.ArticleService;
+import com.test.pds.resume.service.Resume;
 
 @Controller
 public class ArticleController {
 	@Autowired private ArticleService articleService;	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleController.class);
+	
+	// updateArticle.jsp POST
+	@RequestMapping(value="/updateArticle", method=RequestMethod.POST)
+	public String updateArticle(Article article, Model model) {
+		LOGGER.debug("updateArticle POST 호출");
+		LOGGER.debug("입력받은article: "+article);
+		articleService.updateArticle(article);
+		model.addAttribute("articleId", article.getArticleId());
+		return "redirect:/getArticleOne";
+	}
+		
+	// updateArticle.jsp GET
+	@RequestMapping(value="/updateArticle", method=RequestMethod.GET)
+	public String updateArticle(Model model,
+								@RequestParam(value="articleId", required=true) int articleId) {	
+		LOGGER.debug("updateArticle GET 호출");
+		LOGGER.debug("받은 아이디: "+articleId);
+		List<Article> list = articleService.selectArticleOne(articleId);
+		LOGGER.debug("list: "+list);
+		model.addAttribute("articleId", list.get(0).getArticleId());
+		model.addAttribute("articleTitle", list.get(0).getArticleTitle());
+		model.addAttribute("articleContent", list.get(0).getArticleContent());
+		model.addAttribute("articleFilelist", list.get(0).getArticleFile());	
+		return "article/updateArticle";
+	}
 	
 	// delete Article GET
 	@RequestMapping(value="/deleteArticle", method=RequestMethod.GET)
@@ -32,14 +58,17 @@ public class ArticleController {
 	}
 	
 	// getArticleOne GET
-	// 파일이 여러개일 경우 마지막 레코드만 출력되는 문제가....있음
 	@RequestMapping(value="/getArticleOne", method=RequestMethod.GET)
-	public String selectArticleOne(Model model, Article article, 
-									@RequestParam(value="articleId") int articleId) {
-		LOGGER.debug("ArticleController selectArticleOne GET");		
-		LOGGER.debug("article.articleId : " + article.getArticleId());
-		model.addAttribute("list", articleService.selectArticleOne(articleId));
-		return "article/getArticle";
+	public String selectArticleOne(Model model,
+									@RequestParam(value="articleId", required=true) int articleId) {
+		LOGGER.debug("ArticleController selectArticleOne GET");
+		LOGGER.debug("받은 아이디: "+articleId);
+		List<Article> list = articleService.selectArticleOne(articleId);
+		model.addAttribute("articleId", list.get(0).getArticleId());
+		model.addAttribute("articleTitle", list.get(0).getArticleTitle());
+		model.addAttribute("articleContent", list.get(0).getArticleContent());
+		model.addAttribute("articleFilelist", list.get(0).getArticleFile());		
+		return "article/getArticleOne";
 	}	
 	
 	// getArticleList.jsp 포워드

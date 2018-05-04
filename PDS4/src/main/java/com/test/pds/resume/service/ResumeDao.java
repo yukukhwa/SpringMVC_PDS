@@ -30,22 +30,20 @@ public class ResumeDao {
 	}
 	
 	// resume selectOne
-	// resultMap은 리스트로 반환하지만 resume은 1:1 관계라 객체(One)로 반환함
+	// resultMap은 리스트로 반환하지만 resume은 1:1 관계라 객체(One)로 받아서 리턴
 	public Resume selectResumeOne(int resumeId){
-		LOGGER.debug("ResumeDao.selectResumeOne 호출");		
+		LOGGER.debug("ResumeDao.selectResumeOne 호출");	
 		return sqlSession.selectOne(NAMESPACE+"selectResumeOne", resumeId);
 	}
 	// resume count(리스트 레코드행의 갯수)
 	public int countResumeList() {
 		LOGGER.debug("ResumeDao.countResumeList 호출");
-		LOGGER.debug("카운트: "+sqlSession.selectOne(NAMESPACE+"countResumeList"));
 		return sqlSession.selectOne(NAMESPACE+"countResumeList");
 	}
 	
 	// resume selectList
 	public List<Resume> selectResumeList(Paging paging) {
 		LOGGER.debug("ResumeDao.selectResumeList 호출");
-		LOGGER.debug("dao에서 리스트 : "+sqlSession.selectList(NAMESPACE+"selectResumeList", paging));
 		return sqlSession.selectList(NAMESPACE+"selectResumeList", paging);
 	}
 	

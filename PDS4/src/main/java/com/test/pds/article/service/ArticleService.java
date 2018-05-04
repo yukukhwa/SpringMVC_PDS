@@ -33,10 +33,18 @@ public class ArticleService {
 		articleDao.deleteArticle(articleFileDao.deleteArticleFile(articleFile));
 	}
 	
+	// Article update
+	public int updateArticle(Article article) {
+		LOGGER.debug("updateArticle 호출");		
+		return articleDao.updateArticle(article);
+	}
+	
 	// Article 셀렉트원
-	public List<Article> selectArticleOne(int articleID) {
+	public List<Article> selectArticleOne(int articleId) {
 		LOGGER.debug("selectArticleOne 호출");
-		return articleDao.selectArticleOne(articleID);
+		List<Article> list = articleDao.selectArticleOne(articleId);
+		LOGGER.debug("리절트맵: "+String.valueOf(list));
+		return list;
 	}
 	
 	// Article 리스트
