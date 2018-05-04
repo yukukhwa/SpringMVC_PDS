@@ -16,23 +16,39 @@
 	<!-- Main -->
 		<div id="main">
 			<div class="inner">
-				<h1>getGalleryOne</h1>
-				<div>
-					주제<br>
-					<input name="galleryTitle" type="text" value="${galleryTitle}" disabled="disabled">
-				</div>
-				<div>
-					본문<br>
-					<textarea name="galleryContent" rows="5" cols="100" disabled="disabled">${galleryContent}</textarea>
-				</div>
-				<c:forEach var="galleryFile" items="${galleryFileList}">
+				<section>
+					<h1>getGalleryOne</h1>
 					<div>
-						<img width="400px" height="300px" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
+						주제<br>
+						<blockquote>${galleryTitle}</blockquote>
 					</div>
-				</c:forEach>
-				<a href="${pageContext.request.contextPath}/updateGallery?galleryId=${galleryId}">수정하기</a>
-				<a href="${pageContext.request.contextPath}/deleteGallery?galleryId=${galleryId}">삭제하기</a>
-				<a href="${pageContext.request.contextPath}/getGalleryList">목록으로</a>
+					<div>
+						본문<br>
+						<blockquote>${galleryContent}</blockquote>
+					</div>
+					<div class="box alt">
+						<div class="row uniform">
+							<c:forEach var="galleryFile" items="${galleryFileList}">
+								<div class="4u 12u(small)">
+									<span class="image fit">
+										<img alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
+									</span>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+					<ul class="actions fit">
+						<li>
+							<a href="${pageContext.request.contextPath}/updateGallery?galleryId=${galleryId}" class="button fit">수정하기</a>
+						</li>
+						<li>
+							<a href="${pageContext.request.contextPath}/deleteGallery?galleryId=${galleryId}" class="button fit">삭제하기</a>
+						</li>
+						<li>
+							<a href="${pageContext.request.contextPath}/getGalleryList" class="button fit">목록으로</a>
+						</li>					
+					</ul>
+				</section>
 			</div>
 		</div>
 	<%@ include file="../module/bottom.jsp" %>

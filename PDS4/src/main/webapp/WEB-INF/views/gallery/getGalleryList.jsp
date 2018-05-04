@@ -27,57 +27,75 @@
 		<!-- Main -->
 		<div id="main">
 			<div class="inner">
-				<h1>getGalleryList</h1>
-				<table border="1">
-					<thead>
-						<tr>
-							<th>
-								GalleryId
-							</th>
-							<th>
-								GalleryTitle
-							</th>
-							<th>
-								GalleryContent
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="gallery" items="${list}">
+				<section>
+					<h1>getGalleryList</h1>
+					<table border="1">
+						<thead>
 							<tr>
-								<td>
-									${gallery.galleryId}
-								</td>
-								<td>
-									${gallery.galleryTitle}
-								</td>
-								<td>
-									<a href="${pageContext.request.contextPath}/getGalleryOne?galleryId=${gallery.galleryId}">${f:substring(gallery.galleryContent,0,3)}...</a>
-								</td>
+								<th>
+									GalleryId
+								</th>
+								<th>
+									GalleryTitle
+								</th>
+								<th>
+									GalleryContent
+								</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				<form id="pagePerRow" action="${pageContext.request.contextPath}/getGalleryList" method="get">
-					<input type="hidden" name="currentPage" value="${currentPage}">
-					<select name="pagePerRow">
-						<option value="3">3줄씩보기
-						<option value="5">5줄씩보기
-						<option value="10">10줄씩보기
-						<option value="20">20줄씩보기
-					</select>
-				</form>
-				<c:if test="${currentPage > 1}">
-					<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=1&pagePerRow=${pagePerRow}">[처음으로]</a>
-					<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${currentPage - 1}&pagePerRow=${pagePerRow}">[이전]</a>
-				</c:if>
-				<c:forEach var="i" items="${pageList}">
-					<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${i}&pagePerRow=${pagePerRow}">[${i}]</a>
-				</c:forEach>
-				<c:if test="${currentPage < totalPage}">
-					<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${currentPage + 1}&pagePerRow=${pagePerRow}">[다음]</a>
-					<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${totalPage}&pagePerRow=${pagePerRow}">[마지막으로]</a>
-				</c:if>
+						</thead>
+						<tbody>
+							<c:forEach var="gallery" items="${list}">
+								<tr>
+									<td>
+										${gallery.galleryId}
+									</td>
+									<td>
+										${gallery.galleryTitle}
+									</td>
+									<td>
+										<a href="${pageContext.request.contextPath}/getGalleryOne?galleryId=${gallery.galleryId}">${f:substring(gallery.galleryContent,0,3)}...</a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<div class="row uniform">
+						<div class="3u 12u(small)">
+							<form id="pagePerRow" action="${pageContext.request.contextPath}/getGalleryList" method="get">
+								<input type="hidden" name="currentPage" value="${currentPage}">
+								<div class="select-wrapper">
+									<select name="pagePerRow">
+										<option value="3">3줄씩보기
+										<option value="5">5줄씩보기
+										<option value="10">10줄씩보기
+										<option value="20">20줄씩보기
+									</select>
+								</div>
+							</form>
+						</div>
+						<div class="9u 12u(small)" style="text-align: center;">
+							<ul class="actions">
+								<c:if test="${currentPage > 1}">
+									<li>
+										<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=1&pagePerRow=${pagePerRow}">[처음으로]</a>
+										<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${currentPage - 1}&pagePerRow=${pagePerRow}">[이전]</a>
+									</li>
+								</c:if>
+								<li>
+									<c:forEach var="i" items="${pageList}">
+										<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${i}&pagePerRow=${pagePerRow}">[${i}]</a>
+									</c:forEach>
+								</li>
+								<c:if test="${currentPage < totalPage}">
+									<li>
+										<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${currentPage + 1}&pagePerRow=${pagePerRow}">[다음]</a>
+										<a href="${pageContext.request.contextPath}/getGalleryList?currentPage=${totalPage}&pagePerRow=${pagePerRow}">[마지막으로]</a>
+									</li>
+								</c:if>
+							</ul>
+						</div>
+					</div>
+				</section>
 			</div>
 		</div>
 	

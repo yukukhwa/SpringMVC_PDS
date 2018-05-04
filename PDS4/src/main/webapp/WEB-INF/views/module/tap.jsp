@@ -25,10 +25,10 @@
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/">Home</a></li>
-							<li><a href="${pageContext.request.contextPath}/getArticleList">Article</a></li>
-							<li><a href="${pageContext.request.contextPath}/getBoardList">Board</a></li>
-							<li><a href="${pageContext.request.contextPath}/getGalleryList">Gallery</a></li>
-							<li><a href="${pageContext.request.contextPath}/getNoticeList">Notice</a></li>
-							<li><a href="${pageContext.request.contextPath}/getResumeList">Resume</a></li>
+							<li><a href="${pageContext.request.contextPath}/getArticleList">ArticleList</a></li>
+							<li><a href="${pageContext.request.contextPath}/getNoticeList">NoticeList</a></li>
+							<li><a href="${pageContext.request.contextPath}/getResumeList">ResumeList</a></li>
+							<li><a href="${pageContext.request.contextPath}/getBoardList">BoardList</a></li>
+							<li><a href="${pageContext.request.contextPath}/getGalleryList">GalleryList</a></li>
 						</ul>
 					</nav>

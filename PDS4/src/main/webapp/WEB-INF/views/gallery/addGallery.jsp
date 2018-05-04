@@ -17,7 +17,7 @@
 			
 			/* 추가버튼 클릭시 파일을 담을 수 있는 공간생성 */
 			$('#add').click(function(){
-				$('#upload').append('<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>');
+				$('#upload').append('<div><input name="multipartFile" type="file"><button id="del" type="button" class="button special small">삭제</button></div>');
 			});
 			
 			/* 지우기버튼 클릭시 해당 파일공간 전체를 지운다 */
@@ -35,6 +35,7 @@
 				/* galleryTitle를 작성했는지 검사 */
 				if($('input[name="galleryTitle"]').val() == ''){
 					alert('galleryTitle를 작성해주세요.');
+					$('input[name="galleryTitle"]').focus();
 					insert = false;
 					return;
 				}
@@ -42,6 +43,7 @@
 				/* galleryContent를 작성했는지 검사  */
 				if($('textarea[name="galleryContent"]').val() == ''){
 					alert('galleryContent를 작성해주세요');
+					$('textarea[name="galleryContent"]').focus();
 					insert = false;
 					return;
 				}
@@ -83,22 +85,33 @@
 	<!-- Main -->
 	<div id="main">
 		<div class="inner">
-			<h1>addGallery</h1>
-			<form id="gallery" action="${pageContext.request.contextPath}/addGallery" method="post" enctype="multipart/form-data">
-				<div>
-					주제<br>
-					<input name="galleryTitle" type="text" value="${galleryTitle}" placeholder="등록하고자하는 이미지의 타이틍을 입력해주세요">
-				</div>
-				<div>
-					본문<br>
-					<textarea name="galleryContent" rows="5" cols="100" placeholder="등록한 이미지에 관한 부연설명을 입력해주세요">${galleryContent}</textarea>
-				</div>
-				<div id="upload">
-					<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>
-				</div>
-				<button id="add" type="button">이미지추가</button>
-				<br><button id="insert" type="button">Gallery등록</button>
-			</form>
+			<section>
+				<h1>addGallery</h1>
+				<form id="gallery" action="${pageContext.request.contextPath}/addGallery" method="post" enctype="multipart/form-data">
+					<div>
+						주제<br>
+						<input name="galleryTitle" type="text" value="${galleryTitle}" placeholder="등록하고자하는 이미지의 타이틍을 입력해주세요">
+					</div>
+					<br>
+					<div>
+						본문<br>
+						<textarea name="galleryContent" placeholder="등록한 이미지에 관한 부연설명을 입력해주세요">${galleryContent}</textarea>
+					</div>
+					<br>
+					<div id="upload">
+						<div><input name="multipartFile" type="file"><button id="del" type="button" class="button special small">삭제</button></div>
+					</div>
+					<br>
+					<ul class="actions fit">
+						<li>
+							<button id="add" type="button" class="button fit icon fa-upload">이미지추가</button>
+						</li>
+						<li>
+							<button id="insert" type="button" class="button fit icon fa-save">Gallery등록</button>
+						</li>
+					</ul>
+				</form>
+			</section>
 		</div>
 	</div>
 	

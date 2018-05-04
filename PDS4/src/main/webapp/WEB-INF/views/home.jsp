@@ -25,17 +25,17 @@
 							<header>
 								<h1><a href="http://www.ksmart.or.kr/" target="_blank">한국스마트정보교육원</a><br />
 								Team by <a href="https://github.com/yukukhwa/SpringMVC_PDS.git" target="_blank">SPAM</a>.</h1>
-								<p>Article, Board, Gallery, Notice, Resume</p>
+								<p>팀장 : 유국화 / 팀원 : 김재희, 배건혜, 나성수</p>
 							</header>
 							<section class="tiles">
 								<article class="style1">
 									<span class="image">
 										<img src="./resources/images/pic01.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Magna</h2>
+									<a>
+										<h2>유국화</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>팀장/Article담당</p>
 										</div>
 									</a>
 								</article>
@@ -43,10 +43,10 @@
 									<span class="image">
 										<img src="./resources/images/pic02.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Lorem</h2>
+									<a href="${pageContext.request.contextPath}/addArticle">
+										<h2>Article</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>article를 추가해보세요</p>
 										</div>
 									</a>
 								</article>
@@ -54,10 +54,10 @@
 									<span class="image">
 										<img src="./resources/images/pic03.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Feugiat</h2>
+									<a>
+										<h2>지정안됨</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>내용을 지정해주세요</p>
 										</div>
 									</a>
 								</article>
@@ -65,10 +65,10 @@
 									<span class="image">
 										<img src="./resources/images/pic04.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Tempus</h2>
+									<a>
+										<h2>유국화</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>팀장/Resume담당</p>
 										</div>
 									</a>
 								</article>
@@ -76,10 +76,10 @@
 									<span class="image">
 										<img src="./resources/images/pic05.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Aliquam</h2>
+									<a href="${pageContext.request.contextPath}/addResume">
+										<h2>Resume</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>resume을 추가해보세요</p>
 										</div>
 									</a>
 								</article>
@@ -87,76 +87,109 @@
 									<span class="image">
 										<img src="./resources/images/pic06.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Veroeros</h2>
+									<a>
+										<h2>지정안됨</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style2">
-									<span class="image">
-										<img src="./resources/images/pic07.jpg" alt="" />
-									</span>
-									<a href="#">
-										<h2>Ipsum</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style3">
-									<span class="image">
-										<img src="./resources/images/pic08.jpg" alt="" />
-									</span>
-									<a href="#">
-										<h2>Dolor</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>내용을 지정해주세요</p>
 										</div>
 									</a>
 								</article>
 								<article class="style1">
 									<span class="image">
-										<img src="./resources/images/pic09.jpg" alt="" />
+										<img src="./resources/images/pic01.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Nullam</h2>
+									<a>
+										<h2>김재희</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>팀원/Notice담당</p>
 										</div>
 									</a>
 								</article>
-								<article class="style5">
+								<article class="style2">
 									<span class="image">
-										<img src="./resources/images/pic10.jpg" alt="" />
+										<img src="./resources/images/pic02.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Ultricies</h2>
+									<a href="${pageContext.request.contextPath}/addNotice">
+										<h2>Notice</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>notice를 추가해보세요</p>
 										</div>
 									</a>
 								</article>
-								<article class="style6">
+								<article class="style3">
 									<span class="image">
-										<img src="./resources/images/pic11.jpg" alt="" />
+										<img src="./resources/images/pic03.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Dictum</h2>
+									<a>
+										<h2>지정안됨</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>내용을 지정해주세요</p>
 										</div>
 									</a>
 								</article>
 								<article class="style4">
 									<span class="image">
-										<img src="./resources/images/pic12.jpg" alt="" />
+										<img src="./resources/images/pic04.jpg" alt="" />
 									</span>
-									<a href="#">
-										<h2>Pretium</h2>
+									<a>
+										<h2>배건혜</h2>
 										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+											<p>팀원/Board담당</p>
+										</div>
+									</a>
+								</article>
+								<article class="style5">
+									<span class="image">
+										<img src="./resources/images/pic05.jpg" alt="" />
+									</span>
+									<a href="${pageContext.request.contextPath}/addBoard">
+										<h2>Board</h2>
+										<div class="content">
+											<p>board를 추가해보세요</p>
+										</div>
+									</a>
+								</article>
+								<article class="style6">
+									<span class="image">
+										<img src="./resources/images/pic06.jpg" alt="" />
+									</span>
+									<a>
+										<h2>지정안됨</h2>
+										<div class="content">
+											<p>내용을 지정해주세요</p>
+										</div>
+									</a>
+								</article>
+								<article class="style1">
+									<span class="image">
+										<img src="./resources/images/pic01.jpg" alt="" />
+									</span>
+									<a>
+										<h2>나성수</h2>
+										<div class="content">
+											<p>팀원/Gallery파트 담당</p>
+										</div>
+									</a>
+								</article>
+								<article class="style2">
+									<span class="image">
+										<img src="./resources/images/pic02.jpg" alt="" />
+									</span>
+									<a href="${pageContext.request.contextPath}/addGallery">
+										<h2>Gallery</h2>
+										<div class="content">
+											<p>gallery를 추가해보세요</p>
+										</div>
+									</a>
+								</article>
+								<article class="style6">
+									<span class="image">
+										<img src="./resources/images/pic06.jpg" alt="" />
+									</span>
+									<a>
+										<h2>지정안됨</h2>
+										<div class="content">
+											<p>내용을 지정해주세요</p>
 										</div>
 									</a>
 								</article>

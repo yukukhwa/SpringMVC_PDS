@@ -18,7 +18,7 @@
 			
 			/* 추가버튼 클릭시 파일을 담을 수 있는 공간생성 */
 			$('#add').click(function(){
-				$('#upload').append('<div><input name="multipartFile" type="file"><button id="del" type="button">삭제</button></div>');
+				$('#upload').append('<div><input name="multipartFile" type="file"><button id="del" type="button" class="button special small">삭제</button></div>');
 			});
 			
 			/* 지우기버튼 클릭시 해당 파일공간 전체를 지운다 */
@@ -27,10 +27,9 @@
 			});
 			
 			$(document).on('click','#imgDel',function(){
-				var alt = $(this).parent('div').find('img').attr('alt');
+				var alt = $(this).parents('div.4u').find('img').attr('alt');
 				$(this).parents('form').append('<input name="deleteImg" type="hidden" value="'+alt+'">');
-				$(this).parent('div').find('img').remove();
-				$(this).remove();
+				$(this).parents('div.4u').remove();
 			});
 			
 			/* 재등록버튼 클릭시 유효성 검사 */
@@ -93,28 +92,45 @@
 	<!-- Main -->
 		<div id="main">
 			<div class="inner">
-				<h1>updateGallery</h1>
-				<form id="updateGallery" action="${pageContext.request.contextPath}/updateGallery" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="galleryId" value="${galleryId}">
-					<div>
-						주제<br>
-						<input name="galleryTitle" type="text" value="${galleryTitle}">
-					</div>
-					<div>
-						본문<br>
-						<textarea name="galleryContent" rows="5" cols="100">${galleryContent}</textarea>
-					</div>
-					<c:forEach var="galleryFile" items="${galleryFileList}">
+				<section>
+					<h1>updateGallery</h1>
+					<form id="updateGallery" action="${pageContext.request.contextPath}/updateGallery" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="galleryId" value="${galleryId}">
 						<div>
-							<img id="dbGallery" width="400px" height="300px" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
-							<button id="imgDel" type="button">이미지삭제</button>
+							주제<br>
+							<input name="galleryTitle" type="text" value="${galleryTitle}">
 						</div>
-					</c:forEach>
-					<div id="upload">
-					</div>
-					<button id="add" type="button">이미지추가</button>
-					<br><button id="update" type="button">재등록하기</button>
-				</form>
+						<br>
+						<div>
+							본문<br>
+							<textarea name="galleryContent" rows="5" cols="100">${galleryContent}</textarea>
+						</div>
+						<br>
+						<div class="box alt">
+							<div class="row uniform">
+								<c:forEach var="galleryFile" items="${galleryFileList}">
+									<div class="4u 12u(small)">
+										<span class="image fit">
+											<img id="dbGallery" width="400px" height="300px" alt="${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}" src="${pageContext.request.contextPath}/resources/upload/${galleryFile.galleryFileName}.${galleryFile.galleryFileExt}">
+											<button id="imgDel" type="button" class="button fit small">이미지삭제</button>
+										</span>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+						<div id="upload">
+						</div>
+						<br>
+						<ul class="actions fit">
+							<li>
+								<button id="add" type="button" class="button fit icon fa-upload">이미지추가</button>
+							</li>
+							<li>
+								<button id="update" type="button" class="button fit icon fa-save">재등록하기</button>
+							</li>				
+						</ul>						
+					</form>
+				</section>
 			</div>
 		</div>
 	<%@ include file="../module/bottom.jsp" %>

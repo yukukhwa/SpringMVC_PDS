@@ -175,15 +175,38 @@ public class GalleryService {
 	 */
 	public Map<String,Object> getGalleryList(int currentPage,int pagePerRow) {
 		logger.debug("getGalleryList 서비스 실행");
+		/*
+		 * 총 몇개의 gallery게시글이 있는지 카운트를 샌다
+		 */
 		int totalRow = galleryDao.countGalleryList();
+		/*
+		 * 총 게시글 리스트 수, 한페이지당 보여줄 리스트 수, 현재페이지번호를 가지고 페이징 작업을 한다
+		 */
 		Paging paging = new Paging(totalRow, pagePerRow, currentPage);
 		logger.debug("페이징상황: "+paging.toString());
+		/*
+		 * 만약 5줄보기+마지막페이지를 보고있던상황에서 10줄보기롤 리스트형태를 바꾸면 페이지형태가 달라지므로
+		 * 10줄보기+마지막페이지가 되도록 다시 페이징작업을 해준다
+		 */
+		int endPage = paging.getEndPage();
+		if(currentPage > endPage) {
+			currentPage = endPage;
+			paging = new Paging(totalRow, pagePerRow, currentPage);
+			logger.debug("다시한 페이징상황: "+paging.toString());
+		}
+		/*
+		 * 페이지 넘버를 리스트화 해주는데 만약 게시글이 없다면 만들어줄 필요가 없다
+		 */
 		List<Integer> pageList = new ArrayList<Integer>();
 		if(totalRow != 0) {
 			for(int i=paging.getStartPage(); i<=paging.getEndPage(); i++) {
 				pageList.add(i);
 			}
 		}
+		/*
+		 * 완성된 페이징결과값중 beginRow와 pagePerRow값을 활용해
+		 * 해당 페이지에 보여줄 게시글들을 리스트화 해준다
+		 */
 		List<Gallery> list = galleryDao.selectGalleryList(paging);
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("list", list);
