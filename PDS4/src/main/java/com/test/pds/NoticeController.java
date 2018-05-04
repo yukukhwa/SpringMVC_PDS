@@ -30,16 +30,24 @@ public class NoticeController {
 			return "redirect:/getNoticeList";
 		}
 		
+		// 수정화면폼으로 가서 수정화면에 해당 notice정보들을 가져오기
 		@RequestMapping(value="/updateNotice", method=RequestMethod.GET)
-		public String updateNotice(int noticeId) {
+		public String updateNotice(int noticeId, Model model) {
 			LOGGER.debug("NoticeController.updateNotice GET 호출");
+			List<Notice> list = noticeService.selectNoticeOne(noticeId);
+			System.out.println("무엇이 들어있을까요?LIST ===>"+list);
+			model.addAttribute("noticeTitle", list.get(0).getNoticeTitle());
+			model.addAttribute("noticeContent", list.get(0).getNoticeContent());
+			model.addAttribute("noticeFile", list.get(0).getNoticeFile());
+			model.addAttribute("noticeId", list.get(0).getNoticeId());
 			return "notice/updateNotice";
 		}
 		
 		// 삭제
 		@RequestMapping(value="/deleteNotice", method=RequestMethod.GET)
-		public String deleteNotice(int noticeId) {
-			System.out.println("NoticeController noticeId===>"+noticeId);
+		public String deleteNotice(@RequestParam(value="noticeId") int noticeId) {
+			
+			System.out.println("NoticeController notice===>"+noticeId);
 			LOGGER.debug("noticeController.deleteNotice 호출");
 			noticeService.deleteNotice(noticeId);
 			return "redirect:/getNoticeList";
@@ -51,7 +59,11 @@ public class NoticeController {
 			LOGGER.debug("NoticeContent.getNoticeOne 호출");
 			System.out.println("selectNoticeOne 컨트롤러 매개변수 noticeId==>"+noticeId);
 			List<Notice> list = noticeService.selectNoticeOne(noticeId);
-			model.addAttribute("list", list);
+			System.out.println("NoticeController의 list===>"+list);
+			model.addAttribute("noticeFile",list.get(0).getNoticeFile());
+			model.addAttribute("noticeTitle",list.get(0).getNoticeTitle());
+			model.addAttribute("noticeContent",list.get(0).getNoticeContent());
+			model.addAttribute("noticeId",list.get(0).getNoticeId());
 			return "notice/getNoticeOne";
 		}
 		

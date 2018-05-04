@@ -21,6 +21,7 @@ public class NoticeDao {
 		return sqlSession.delete(NAMESPACE+"deleteNotice",noticeId);
 	}
 	
+	// noticeList 하나를 조회하는 메서드
 	public List<Notice> selectNoticeOne(int noticeId) {
 		LOGGER.debug("NoticeDao.selectNoticeOne");
 		List<Notice> list = sqlSession.selectList(NAMESPACE+"selectNoticeOne",noticeId);

@@ -23,13 +23,14 @@ public class NoticeService {
 	@Autowired NoticeDao noticeDao;
 	@Autowired NoticeFileDao noticeFileDao;
 	private final static Logger LOGGER = LoggerFactory.getLogger(NoticeService.class);
+		//해당 notice파일들과 notice내용삭제
 		public void deleteNotice(int noticeId) {
 			LOGGER.debug("NoticeService.deleteNotice 호출");
 			noticeFileDao.deleteNoticeFile(noticeId);
 			noticeDao.deleteNotice(noticeId);
-			
 		}
 		
+		// notice의 리스트 상세보기
 		public List<Notice> selectNoticeOne(int noticeId){
 			LOGGER.debug("NoticeService.selectNoticeOne 호출");
 			List<Notice> list = noticeDao.selectNoticeOne(noticeId);
@@ -134,11 +135,15 @@ public class NoticeService {
 			noticeFile.setNoticeFileType(fileType);
 			noticeFile.setNoticeFileSize((int)fileSize);
 			noticeFile.setNoticeId(noticeId);
-			notice.setNoticeFile(noticeFile);
+			for(NoticeFile noticeFiles : notice.getNoticeFile()) {
+				noticeFiles.setNoticeId(noticeId);
+				noticeFileDao.insertNoticeFile(noticeFile);
+			}
+
 			/*notice.setNoticeFile(noticeFile);*/
 			/* noticeFile을 매개변수로 넘겨 insertNoticeFile메소드를 실행해
 			 * noticeFile정보들을 noticeFiledb에 저장하는 sql문을 실행해 배열들을 저장한다 */
-			noticeFileDao.insertNoticeFile(noticeFile);
+			
 		}	
 	}
 }
