@@ -24,15 +24,15 @@ public class ArticleDao {
 	}
 	
 	// selectOne 메서드
-	public List<Article> selectArticleOne(Article article) {
+	public List<Article> selectArticleOne(int articleId) {
 		LOGGER.debug("selectArticleOne 호출");	
-		return sqlSession.selectList(NAMESPACE+"selectArticleOne", article);		
+		return sqlSession.selectList(NAMESPACE+"selectArticleOne", articleId);		
 	}
 	
 	// article List Count 메서드
 	public int countAtricleList() {
 		LOGGER.debug("countAtricleList 호출");
-		return sqlSession.selectOne(NAMESPACE+"countArticleList");		
+		return sqlSession.selectOne(NAMESPACE+"countArticleList");
 	}
 			
 	// article List 메서드

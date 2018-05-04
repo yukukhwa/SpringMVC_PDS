@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.test.pds.article.service.ArticleMapper">
 	
-	<!-- select resultMap -->
-   <!--  <resultMap id="resultArticleMap" type="com.test.pds.article.service.Article">
+	<!-- select resultArticleMap -->
+    <resultMap id="resultArticleMap" type="com.test.pds.article.service.Article">
         <id column="article_id" property="articleId" />
         <result column="article_title" property="articleTitle" />
         <result column="article_content" property="articleContent" />
@@ -17,7 +17,7 @@
             <result property="articleFileExt" column="article_file_ext" />
             <result property="articleFileType" column="article_file_type" />
         </collection>
-	</resultMap> -->
+	</resultMap>
 	
 	<!-- delete Article -->
 	<delete id="deleteArticle"
@@ -55,7 +55,7 @@
     <!-- article join article_file selectList -->
     <select id="selectArticleList"
 		parameterType="com.test.pds.Paging"
-		resultMap="com.test.pds.article.service.Article">
+		resultType="com.test.pds.article.service.Article">
 			SELECT 
 				article.article_id
 				, article.article_title

@@ -34,9 +34,9 @@ public class ArticleService {
 	}
 	
 	// Article 셀렉트원
-	public List<Article> selectArticleOne(Article article) {
+	public List<Article> selectArticleOne(int articleID) {
 		LOGGER.debug("selectArticleOne 호출");
-		return articleDao.selectArticleOne(article);
+		return articleDao.selectArticleOne(articleID);
 	}
 	
 	// Article 리스트

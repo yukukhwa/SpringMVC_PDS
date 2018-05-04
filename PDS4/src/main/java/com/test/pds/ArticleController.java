@@ -38,7 +38,7 @@ public class ArticleController {
 									@RequestParam(value="articleId") int articleId) {
 		LOGGER.debug("ArticleController selectArticleOne GET");		
 		LOGGER.debug("article.articleId : " + article.getArticleId());
-		model.addAttribute("list", articleService.selectArticleOne(article));
+		model.addAttribute("list", articleService.selectArticleOne(articleId));
 		return "article/getArticle";
 	}	
 	

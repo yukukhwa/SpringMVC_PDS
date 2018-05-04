@@ -7,7 +7,7 @@
 	<!-- 디비 컬럼명과 모델 클래스간에 자동 세팅을 위해 셀렉트 결과를 맵핑한다. 
 		 다른 테이블과 조인한다는 가정하에 1:1 관계에서는 association, 1:N 관계에서는 collection 
 		기능적으로 동일하지만 association에서 속성javaType,  collection에서 속성ofType 으로 구분된다. -->
-	<resultMap id="resultMap" type="com.test.pds.resume.service.Resume">
+	<resultMap id="resultResumeMap" type="com.test.pds.resume.service.Resume">
         <id column="resume_id" property="resumeId" />
         <result column="resume_title" property="resumeTitle" />
         <result column="resume_content" property="resumeContent" />
@@ -43,7 +43,7 @@
 	<!-- resume select One -->
 	<select id="selectResumeOne"
 			parameterType="integer"
-			resultMap="resultMap">
+			resultMap="resultResumeMap">
 		SELECT
 			resume.resume_id
 			,resume.resume_title

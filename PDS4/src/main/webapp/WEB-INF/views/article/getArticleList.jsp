@@ -35,10 +35,10 @@
 		<tbody>
 			<c:forEach items="${list}"  var="list">
 				<tr>
-					<td>${list.articleId}</td>
+					<%-- <td>${list.articleId}</td>
 					<td>${list.articleTitle}</td>
 					<td><a href="${pageContext.request.contextPath }/getArticleOne?articleId=${article.articleId}">${list.articleContent}</a></td>
-					</tr>		
+					</tr>	 --%>	
 			</c:forEach>
 		</tbody>	
 	</table>
