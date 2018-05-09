@@ -1,13 +1,20 @@
 package com.test.pds;
 
-public class SystemPath {
-	// 유국화
-	public static final String DOWNLOAD_PATH_1 = "C:\\Users\\Administrator\\Documents\\workspace-sts-3.9.4.RELEASE\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\PDS4\\resources\\upload";
-	// 나성수
-	public static final String DOWNLOAD_PATH_2 = "D:\\\\jjdev\\\\backup\\\\SpringMVC_PDS\\\\PDS4\\\\src\\\\main\\\\webapp\\\\resources\\\\upload";
-	// 김재희
-	public static final String DOWNLOAD_PATH_3 = "C:\\Users\\smart-202-10\\git\\SpringMVC_PDS4\\PDS4\\src\\main\\webapp\\resources\\upload";
-	// 배건혜
-	public static final String DOWNLOAD_PATH_4 = "C:\\Users\\smart-202-18\\Desktop\\Baegeonhye\\pds4\\workspace_sts_pds_backup\\SpringMVC_PDS\\PDS4\\src\\main\\webapp\\resources\\upload";
+import java.io.File;
 
+public class SystemPath {
+	/*
+	 * cafe24 호스팅 서비스 이용시 /home/hosting_users/(자신의 id)폴더를 제공받는다
+	 * 파일은 /home/hosting_users/(자신의 id)/tomcat/webapps/ROOT/resources/upload내에
+	 * 저장하기로 했으므로 절대경로를 찾아준다
+	 */
+	private static File file = new File("tomcat/webapps/ROOT/resources/upload");
+	// 유국화
+	public static final String DOWNLOAD_PATH_1 = file.getAbsolutePath();
+	// 나성수
+	public static final String DOWNLOAD_PATH_2 = file.getAbsolutePath();
+	// 김재희
+	public static final String DOWNLOAD_PATH_3 = file.getAbsolutePath();
+	// 배건혜
+	public static final String DOWNLOAD_PATH_4 = file.getAbsolutePath();
 }

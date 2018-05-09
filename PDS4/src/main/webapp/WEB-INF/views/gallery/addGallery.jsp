@@ -101,7 +101,9 @@
 					<div id="upload">
 						<div><input name="multipartFile" type="file"><button id="del" type="button" class="button special small">삭제</button></div>
 					</div>
-					<br>
+					<p>
+						파일경로 : ${path}
+					</p>
 					<ul class="actions fit">
 						<li>
 							<button id="add" type="button" class="button fit icon fa-upload">이미지추가</button>

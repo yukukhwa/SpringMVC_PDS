@@ -159,8 +159,9 @@ public class GalleryController {
 	}
 	
 	@RequestMapping(value="/addGallery", method=RequestMethod.GET)
-	public String addGallery() {
+	public String addGallery(Model model) {
 		logger.debug("addGallery get호출");
+		model.addAttribute("path", SystemPath.DOWNLOAD_PATH_2);
 		return "gallery/addGallery";
 	}
 }

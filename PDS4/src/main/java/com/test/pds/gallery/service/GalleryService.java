@@ -86,7 +86,7 @@ public class GalleryService {
 				/*
 				 * 서버내 upload폴더에 화면에서 받아온 데이터와 같은 확장자로 임시파일 생성 후 업로드하고자 하는 파일데이터를 덮어쓰기
 				 */
-				File file = new File(path+"\\"+fileName+"."+fileExt);
+				File file = new File(path+"/"+fileName+"."+fileExt);
 				try {
 					multipartFile.transferTo(file);
 				} catch (IllegalStateException e) {
@@ -108,7 +108,7 @@ public class GalleryService {
 			map.put("galleryId", galleryId);
 			for(String fileNameExt : deleteImg) {
 				logger.debug("파일풀네임: "+fileNameExt);
-				File file = new File(path+"\\"+fileNameExt);
+				File file = new File(path+"/"+fileNameExt);
 				logger.debug("삭제 전 파일 존재여부 확인: "+file.exists());
 				file.delete();
 				logger.debug("삭제 후 파일 존재여부 확인: "+file.exists());
@@ -136,7 +136,7 @@ public class GalleryService {
 			fileName = galleryFile.getGalleryFileName();
 			fileExt = galleryFile.getGalleryFileExt();
 			logger.debug("파일명: "+fileName+"."+fileExt);
-			File file = new File(path+"\\"+fileName+"."+fileExt);
+			File file = new File(path+"/"+fileName+"."+fileExt);
 			logger.debug("삭제 전 파일 존재여부 확인: "+file.exists());
 			file.delete();
 			logger.debug("삭제 후 파일 존재여부 확인: "+file.exists());
@@ -267,7 +267,7 @@ public class GalleryService {
 			/*
 			 * 서버내 upload폴더에 화면에서 받아온 데이터와 같은 확장자로 임시파일 생성 후 업로드하고자 하는 파일데이터를 덮어쓰기
 			 */
-			File file = new File(path+"\\"+fileName+"."+fileExt);
+			File file = new File(path+"/"+fileName+"."+fileExt);
 			try {
 				multipartFile.transferTo(file);
 			} catch (IllegalStateException e) {
